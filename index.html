@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content"ie=edge">
     <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" media="screen,projection" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	  <title>bds authentication</title>
+	  <title>bdsapp</title>
   </head>
   <body class="grey lighten-3">
     <div class="navbar-fixed">
@@ -55,13 +55,13 @@
         <a href="#" class="modal-trigger collection-item logged-out" data-target="signon">SignOn</a>           
         <a href="#" class="signout collection-item logged-in">SignOut</a>
         <a href="#" class="profile collection-item logged-in">Profile</a>
-        <a href="#" class="workqueue collection-item logged-in">Workqueue</a>
+        <a href="#" class="workqueue collection-item logged-in" onclick="wkClicked()">Workqueue</a>
         <a href="#" class="createworkque collection-item logged-in">Create Workqueue</a>
       </div>
     </div>
 
 <div id="bdsmain">
-  <ul id="collapsible" class="collapsible"></ul>
+  <!-- <ul class="collapsible"></ul> -->
 </div>
 
     <div id="signup" class="modal">
@@ -111,6 +111,7 @@
 	<script type="module" src="modules/bdsworkque.js"></script>
 	<script type="module" src="modules/bdsterms.js"></script>
 	<script type="module" src="modules/bdshome.js"></script>
-	<!-- <script type="module" src="index.js"></script> -->
+  <!-- <script type="module" src="index.js"></script> -->
+  
   </body>
 </html>
