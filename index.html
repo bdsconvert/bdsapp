@@ -8,10 +8,10 @@
 	  <title>bdsapp</title>
   </head>
   <body class="grey lighten-3">
-    <div class="navbar-fixed">
+    <div class="navbar-fixed z-depth-4">
       <nav class="z-depth-0 teal nav-extended">
         <div class="nav-wrapper">
-          <a href="#" class="brand-logo home"><i class="material-icons">library_books</i>BookDataSolutions</a>
+          <a href="#" class="brand-logo home">BookDataSolutions</a> <!--<i class="material-icons">library_books</i>-->
           <a href="#" data-target="mobile-demo" class="sidenav-trigger"> <i class="material-icons">menu</i></a>
           
           <ul id="nav-mobile" class="right hide-on-med-and-down">
@@ -24,7 +24,7 @@
 			      <!--<li class="logged-in"><a href="#" class="signout">SignOut</a></li> -->
           </ul>
         </div>
-        <div>        
+        <div class="right">        
           <ul id="nav-mobile" class="left hide-on-med-and-down nav-content">
 			      <li class="logged-in"><a href="#" class="workqueue">Workqueue</a></li>
 			      <!-- <li class="logged-in"><a href="#!" class="dropdown-trigger" data-target="profiledropdown">Profile<i class="material-icons right">arrow_drop_down</i></a></li> -->
@@ -55,13 +55,14 @@
         <a href="#" class="modal-trigger collection-item logged-out" data-target="signon">SignOn</a>           
         <a href="#" class="signout collection-item logged-in">SignOut</a>
         <a href="#" class="profile collection-item logged-in">Profile</a>
-        <a href="#" class="workqueue collection-item logged-in" onclick="wkClicked()">Workqueue</a>
-        <a href="#" class="createworkque collection-item logged-in">Create Workqueue</a>
+        <a href="#" class="workqueue collection-item logged-in">Workqueue</a>
+        <!-- <a href="#" class="createworkque collection-item logged-in">Create Workqueue</a> -->
+        <a href="#" class="modal-trigger collection-item" data-target="uploadfile">Upload File</a>
       </div>
     </div>
 
-<div id="bdsmain">
-  <!-- <ul class="collapsible"></ul> -->
+<div class="row">
+  <div id="bdsmain" class="col s12 m12 l12"></div>
 </div>
 
     <div id="signup" class="modal">
@@ -105,7 +106,29 @@
         </form>
       </div>
     </div>
-	
+
+    <div id="uploadfile" class="modal">
+      <div class="modal-content">
+        <h4>Upload File</h4>
+        <form action="#" class="z-depth-0">
+          <div class="file-field input-field center">
+            <div class="btn">
+              <span>Browse</span>
+              <input type="file" id="bdsfile">
+            </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate" type="text" placeholder="Upload Onix or Excel file">
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  
+    <div id="exportfile" class="modal z-depth-4">
+      <div class="modal-content">
+      </div>
+    </div>
+
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 	<script type="module" src="modules/bdsauth.js"></script>
 	<script type="module" src="modules/bdsworkque.js"></script>

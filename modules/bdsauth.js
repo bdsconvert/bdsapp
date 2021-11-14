@@ -14,20 +14,8 @@ onAuthStateChanged(authObj.auth, (user) => {
     //document.querySelectorAll(".profile").forEach(item => item.innerHTML = `${authObj.bdsuser.email}`);
     //document.querySelectorAll(".workqueue").forEach(item => item.innerHTML = `Workqueue`);
 
-    document
-      .querySelectorAll(".logged-in")
-      .forEach((item) => (item.style.display = "block"));
-    document
-      .querySelectorAll(".logged-out")
-      .forEach((item) => (item.style.display = "none"));
-
-    // Retrieve Signed User's Workqueue
-    // const q = query(collection(fbdb, authObj.bdsuser.email), limit(5));
-    // onSnapshot(q, (docs) => {
-    //   docs.forEach((doc) => {
-    //     console.log(doc.data());
-    //   });
-    // });
+    document.querySelectorAll(".logged-in").forEach((item) => (item.style.display = "block"));
+    document.querySelectorAll(".logged-out").forEach((item) => (item.style.display = "none"));
 
     // Redirect to Workqueue
     document.querySelector(".workqueue").click();
@@ -36,12 +24,8 @@ onAuthStateChanged(authObj.auth, (user) => {
     authObj.bdsuser = "";
 
     // Show logged out menu
-    document
-      .querySelectorAll(".logged-in")
-      .forEach((item) => (item.style.display = "none"));
-    document
-      .querySelectorAll(".logged-out")
-      .forEach((item) => (item.style.display = "block"));
+    document.querySelectorAll(".logged-in").forEach((item) => (item.style.display = "none"));
+    document.querySelectorAll(".logged-out").forEach((item) => (item.style.display = "block"));
     // Redict to Home
     document.querySelector(".home").click();
   }

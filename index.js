@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
   M.Modal.init(modals);
 
   //M.Collapsible.init(document.querySelector(".collapsible"));
-  M.Tabs.init(document.querySelectorAll(".tabs"));
+  M.Tabs.init(document.querySelectorAll(".tabs", { swipeable: true, responsiveThreshold: 1920 }));
 });
 
 const firebaseConfig = {
