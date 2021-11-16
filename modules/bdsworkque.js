@@ -6,9 +6,11 @@ import {
   query,
   where,
   limit,
+  arrayUnion,
   doc,
   getDocs,
   setDoc,
+  updateDoc,
   onSnapshot,
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-firestore.js";
@@ -25,6 +27,7 @@ let userfile = {
   FileType: "",
   timestamp: 0,
   fields: [],
+  templates: [],
   titles: []
 };
 let contents = {
@@ -104,11 +107,48 @@ exportfile.addEventListener("click", (e) => {
     selectall.indeterminate = false;
   }
 
+  if (e.target.id === "createsavetemplate") {
+    const flds = Array.from(fieldschecked).map((field) => field.value);
+    SaveTemplate(flds, document.getElementById("template").value);
+  }
+
   if (e.target.id === "download") {
     const flds = Array.from(fieldschecked).map((field) => field.value);
     ExportToCSV(flds);
   }
 });
+
+exportfile.addEventListener("change", (e) => {
+  if (e.target.id === "template") {
+    console.log(e.target.value);
+    const chkd = userfile.templates[e.target.value];
+    if (chkd && chkd.length > 0) {
+      chkd.forEach((fld) => {
+        document.querySelector(`input[value=${fld}]`).checked = true;
+      });
+    } else {
+      userfile.fields.forEach((fld) => {
+        document.querySelector(`input[value=${fld}]`).checked = false;
+      });
+    }
+  }
+});
+////////////////////////////////////////////////////////////////////////////
+
+const SaveTemplate = async (flds, template) => {
+  console.log(flds);
+  const et = {};
+  et[template] = flds;
+  await setDoc(
+    doc(collection(fbdb, authObj.bdsuser), userfile.FileName),
+    { templates: et },
+    //{
+    //Exporttemplates: arrayUnion({ name: template, fields: flds })
+    //},
+    { merge: true }
+  );
+};
+
 ////////////////////////////////////////////////////////////////////////////
 
 const ExportToCSV = (flds) => {
@@ -157,7 +197,13 @@ const GetWorqueueItems = () => {
   return new Promise((resolve) => {
     onSnapshot(query(collection(fbdb, authObj.bdsuser), limit(10)), (docs) => {
       docs.forEach((doc) => {
-        userfiles.push({ filename: doc.id, filetype: doc.data().filetype, timestamp: doc.data().timestamp, fields: doc.data().fields });
+        userfiles.push({
+          filename: doc.id,
+          filetype: doc.data().filetype,
+          timestamp: doc.data().timestamp,
+          fields: doc.data().fields,
+          templates: doc.data().templates
+        });
       });
       resolve();
     });
@@ -174,6 +220,10 @@ const GetTitles = (filetype, fileid) => {
       userfile.fields = userfiles.find((item) => {
         return item.filename === fileid;
       }).fields;
+      userfile.templates = [];
+      userfile.templates = userfiles.find((item) => {
+        return item.filename === fileid;
+      }).templates;
       userfile.titles = [];
       docs.forEach((doc) => {
         userfile.titles.push(doc.data());
@@ -283,7 +333,7 @@ const DisplayContents = (fileid) => {
 ////////////////////////////////////////////////////////////////////////////
 
 const ExportToExcel = () => {
-  const ofilename = `${userfile.FileName}${userfile.FileType.includes("Onix") ? ".csv" : ".xml"}`;
+  const ofilename = `${userfile.FileName}`; //${userfile.FileType.includes("Onix") ? ".csv" : ".xml"}`;
   let flds = "";
   userfile.fields.forEach((item) => {
     flds += `
@@ -293,22 +343,37 @@ const ExportToExcel = () => {
     `;
   });
 
+  let tmplts = "";
+  console.log(userfile.templates);
+  for (let key in userfile.templates) {
+    tmplts += `<option value=${key}></options>`;
+  }
+
   const exportfile = document.getElementById("exportfile");
   const exp = `
     <div style="margin:2em;">
-      <div><h5>Export to ${ofilename}</h5></div>
+      <div><h5>Export ${ofilename}</h5></div>
       <div class="divider"></div>
       <br/>
         <div class="row">
-          <div class="col s4"><h6>Select Fields to Export</h6></div>
-          <div class="col s5 right-align"><a class="waves-effect waves-light btn" id="savefields"><i class="material-icons left">save</i>Save Fields</a></div>
-          <div class="col s3 right-align"><a class="waves-effect waves-light btn" id="download"><i class="material-icons left">download</i>Export</a></div>
+          <div class="col s4">
+            <input list="templates" name="template" id="template" placeholder="Select/Create Template" />
+            <datalist id="templates">
+              ${tmplts}
+            </datalist>
+          </div>
+          <div class="col s8 right-align">
+            <a class="waves-effect waves-light btn" id="createsavetemplate"><i class="material-icons left">save</i>Create/Save Template</a>
+            <a class="waves-effect waves-light btn" id="download"><i class="material-icons left">download</i>Export</a>
+          </div>
         </div>
-        <form action="#">
-          <label><input type="checkbox" id="selectall" /><span>Select All</span></label>
-        <div class="divider"></div>
-        ${flds}
-        </form>
+        <div class="row">
+          <form action="#">
+            <label><input type="checkbox" id="selectall" /><span>Select All</span></label>
+          <div class="divider"></div>
+          ${flds}
+          </form>
+        </div>
     </div>
   `;
   exportfile.innerHTML = exp;
@@ -418,6 +483,7 @@ const ExtractOnixTitles = (file, onix) => {
     const Product = xml2json(child, "\t");
     //console.log(Product);
     let ProductFlat = flatten(Product, "Product");
+    // Make all nodes array!
     const Productarray = JSON.stringify(ProductFlat)
       .replace(/([a-zA-Z])_([a-zA-Z])/g, "$1_0_$2")
       .replace(/([a-zA-Z])\":/g, '$1_0":');
@@ -426,43 +492,43 @@ const ExtractOnixTitles = (file, onix) => {
     // Extract distinct fields for excel export
     ref.add("Product_0_RecordReference_0");
     ntf.add("Product_0_NotificationType_0");
-    for (let elem of new Set(objkeys.filter((key) => key.includes("Product_0_ProductIdentifier")))) {
+    for (let elem of new Set(objkeys.filter((key) => key.startsWith("Product_0_ProductIdentifier")))) {
       pid.add(elem);
     }
-    for (let elem of new Set(objkeys.filter((key) => key.includes("Product_0_DescriptiveDetail_0_Product")))) {
+    for (let elem of new Set(objkeys.filter((key) => key.startsWith("Product_0_DescriptiveDetail_0_Product")))) {
       ddg.add(elem);
     }
-    for (let elem of new Set(objkeys.filter((key) => key.includes("Product_0_DescriptiveDetail_0_Measure")))) {
+    for (let elem of new Set(objkeys.filter((key) => key.startsWith("Product_0_DescriptiveDetail_0_Measure")))) {
       ddm.add(elem);
     }
-    for (let elem of new Set(objkeys.filter((key) => key.includes("Product_0_DescriptiveDetail_0_Collection")))) {
+    for (let elem of new Set(objkeys.filter((key) => key.startsWith("Product_0_DescriptiveDetail_0_Collection")))) {
       ddc.add(elem);
     }
-    for (let elem of new Set(objkeys.filter((key) => key.includes("Product_0_DescriptiveDetail_0_TitleDetail")))) {
+    for (let elem of new Set(objkeys.filter((key) => key.startsWith("Product_0_DescriptiveDetail_0_TitleDetail")))) {
       ddt.add(elem);
     }
-    for (let elem of new Set(objkeys.filter((key) => key.includes("Product_0_DescriptiveDetail_0_Contributor")))) {
+    for (let elem of new Set(objkeys.filter((key) => key.startsWith("Product_0_DescriptiveDetail_0_Contributor")))) {
       dda.add(elem);
     }
-    for (let elem of new Set(objkeys.filter((key) => key.includes("Product_0_DescriptiveDetail_0_Language")))) {
+    for (let elem of new Set(objkeys.filter((key) => key.startsWith("Product_0_DescriptiveDetail_0_Language")))) {
       ddl.add(elem);
     }
-    for (let elem of new Set(objkeys.filter((key) => key.includes("Product_0_DescriptiveDetail_0_Subject")))) {
+    for (let elem of new Set(objkeys.filter((key) => key.startsWith("Product_0_DescriptiveDetail_0_Subject")))) {
       dds.add(elem);
     }
-    for (let elem of new Set(objkeys.filter((key) => key.includes("Product_0_DescriptiveDetail_0_Audience")))) {
+    for (let elem of new Set(objkeys.filter((key) => key.startsWith("Product_0_DescriptiveDetail_0_Audience")))) {
       ddu.add(elem);
     }
-    for (let elem of new Set(objkeys.filter((key) => key.includes("Product_0_CollateralDetail")))) {
+    for (let elem of new Set(objkeys.filter((key) => key.startsWith("Product_0_CollateralDetail")))) {
       cdg.add(elem);
     }
-    for (let elem of new Set(objkeys.filter((key) => key.includes("Product_0_PublishingDetail")))) {
+    for (let elem of new Set(objkeys.filter((key) => key.startsWith("Product_0_PublishingDetail")))) {
       pdg.add(elem);
     }
-    for (let elem of new Set(objkeys.filter((key) => key.includes("Product_0_RelatedMaterial")))) {
+    for (let elem of new Set(objkeys.filter((key) => key.startsWith("Product_0_RelatedMaterial")))) {
       rmg.add(elem);
     }
-    for (let elem of new Set(objkeys.filter((key) => key.includes("Product_0_ProductSupply")))) {
+    for (let elem of new Set(objkeys.filter((key) => key.startsWith("Product_0_ProductSupply")))) {
       psg.add(elem);
     }
 
