@@ -215,7 +215,7 @@ export function unflatten(data) {
 ////////////////////////////////////////////////////////////////////////////
 
 export function formatJson(json) {
-  const js = JSON.parse(json.replace(/[Pp]roduct\./g, ""));
+  const js = json ? JSON.parse(json.replace(/[Pp]roduct\./g, "")) : "";
   let table = `<style>
 					tr:nth-child(odd) {background-color:rgb(250, 250, 250);}
 					td {max-width:24vw;overflow-wrap:break-word;border-right:5px solid white;padding:5px;} 

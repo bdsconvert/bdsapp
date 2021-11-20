@@ -21,7 +21,7 @@ const uploadfile = document.getElementById("uploadfile");
 const bdswq = document.querySelectorAll(".workqueue"); // class "workqueue" in main nav and side nav!
 const exportfile = document.getElementById("exportfile");
 
-const userfiles = [];
+let userfiles = [];
 let userfile = {
   FileName: "",
   FileType: "",
@@ -43,7 +43,8 @@ bdswq.forEach((wq) => {
     e.preventDefault();
     if (authObj.bdsuser) {
       bdsmain.innerHTML = "";
-      await GetWorqueueItems();
+      await GetWorqueueItems("");
+      DisplayWorkqueueHeader();
       DisplayWorkqueueItems();
     }
   });
@@ -86,6 +87,25 @@ bdsmain.addEventListener("click", async (e) => {
     console.log(e.target.id);
     await GetContents(userfile.FileName, e.target.id);
     DisplayContents(userfile.FileName);
+  }
+});
+////////////////////////////////////////////////////////////////////////////
+
+bdsmain.addEventListener("change", async (e) => {
+  // Search Workqueue
+  if (e.target.id === "searchworkqueue") {
+    console.log(`Keyword => ${e.target.value.length}`);
+    //bdsmain.innerHTML = "";
+    await GetWorqueueItems(e.target.value.trim().length > 0 ? e.target.value : "");
+    DisplayWorkqueueHeader();
+    DisplayWorkqueueItems();
+  } else {
+    if (e.target.id === "searchtitles") {
+      await GetTitles("Onix30", userfile.FileName, e.target.value.trim().length > 0 ? e.target.value : "");
+      await GetContents(userfile.FileName, userfile.titles[0].RecordReference);
+      DisplayTitles(userfile.FileName);
+      DisplayContents(userfile.FileName);
+    }
   }
 });
 ////////////////////////////////////////////////////////////////////////////
@@ -136,17 +156,9 @@ exportfile.addEventListener("change", (e) => {
 ////////////////////////////////////////////////////////////////////////////
 
 const SaveTemplate = async (flds, template) => {
-  console.log(flds);
   const et = {};
   et[template] = flds;
-  await setDoc(
-    doc(collection(fbdb, authObj.bdsuser), userfile.FileName),
-    { templates: et },
-    //{
-    //Exporttemplates: arrayUnion({ name: template, fields: flds })
-    //},
-    { merge: true }
-  );
+  await setDoc(doc(collection(fbdb, authObj.bdsuser), userfile.FileName), { templates: et }, { merge: true });
 };
 
 ////////////////////////////////////////////////////////////////////////////
@@ -193,43 +205,56 @@ const ExportToCSV = (flds) => {
 };
 ////////////////////////////////////////////////////////////////////////////
 
-const GetWorqueueItems = () => {
+const GetWorqueueItems = (keyword) => {
   return new Promise((resolve) => {
-    onSnapshot(query(collection(fbdb, authObj.bdsuser), limit(10)), (docs) => {
-      docs.forEach((doc) => {
-        userfiles.push({
-          filename: doc.id,
-          filetype: doc.data().filetype,
-          timestamp: doc.data().timestamp,
-          fields: doc.data().fields,
-          templates: doc.data().templates
+    onSnapshot(
+      query(collection(fbdb, authObj.bdsuser), where("filename", ">=", keyword), where("filename", "<=", keyword + "\uf8ff"), limit(10)),
+      (docs) => {
+        console.log(docs);
+        userfiles = [];
+        docs.forEach((doc) => {
+          userfiles.push({
+            filename: doc.id,
+            filetype: doc.data().filetype,
+            timestamp: doc.data().timestamp ? doc.data().timestamp : Date.now(),
+            fields: doc.data().fields ? doc.data().fields : [],
+            templates: doc.data().templates ? doc.data().templates : []
+          });
         });
-      });
-      resolve();
-    });
+        resolve();
+      }
+    );
   });
 };
 /////////////////////////////////////////////////////////////////////////
 
-const GetTitles = (filetype, fileid) => {
+const GetTitles = (filetype, fileid, keyword = "") => {
   console.log(`Getting titles for ${fileid}`);
   return new Promise((resolve) => {
-    onSnapshot(query(collection(fbdb, authObj.bdsuser, fileid, "Titles"), limit(10)), (docs) => {
-      userfile.FileName = fileid;
-      userfile.FileType = filetype;
-      userfile.fields = userfiles.find((item) => {
-        return item.filename === fileid;
-      }).fields;
-      userfile.templates = [];
-      userfile.templates = userfiles.find((item) => {
-        return item.filename === fileid;
-      }).templates;
-      userfile.titles = [];
-      docs.forEach((doc) => {
-        userfile.titles.push(doc.data());
-      });
-      resolve();
-    });
+    onSnapshot(
+      query(
+        collection(fbdb, authObj.bdsuser, fileid, "Titles"),
+        where("Title", ">=", keyword),
+        where("Title", "<=", keyword + "\uf8ff"),
+        limit(10)
+      ),
+      (docs) => {
+        userfile.FileName = fileid;
+        userfile.FileType = filetype;
+        userfile.fields = userfiles.find((item) => {
+          return item.filename === fileid;
+        }).fields;
+        userfile.templates = [];
+        userfile.templates = userfiles.find((item) => {
+          return item.filename === fileid;
+        }).templates;
+        userfile.titles = [];
+        docs.forEach((doc) => {
+          userfile.titles.push(doc.data());
+        });
+        resolve();
+      }
+    );
   });
 };
 /////////////////////////////////////////////////////////////////////////
@@ -249,15 +274,29 @@ const GetContents = (fileid, titleid) => {
 };
 ////////////////////////////////////////////////////////////////////////////
 
-const DisplayWorkqueueItems = () => {
+const DisplayWorkqueueHeader = () => {
   const user = authObj.bdsuser.split("@")[0].toLowerCase();
-  let bdslist = `
+  let wqhdr = `
     <div class="row z-depth-4" style="margin-top:1em;">
-      <span class="col s4 input-field"><input type="text" id="search"><label for="search">Search Workqueue</label></span>  
-      <span class="col s8"><h5>${user.charAt(0).toUpperCase()}${user.substr(1)}'s Workqueue</h5></span>
+      <span class="col s5 input-field"><i class="material-icons prefix">search</i><input type="text" id="searchworkqueue"><label for="search">Search Workqueue</label></span>  
+      <span class="col s7"><h5>${user.charAt(0).toUpperCase()}${user.substr(1)}'s Workqueue</h5></span>
     </div>
   `;
-  bdslist += `
+  bdsmain.innerHTML = wqhdr;
+  M.updateTextFields();
+};
+
+////////////////////////////////////////////////////////////////////////////
+
+const DisplayWorkqueueItems = () => {
+  //const user = authObj.bdsuser.split("@")[0].toLowerCase();
+  // let bdslist = `
+  //   <div class="row z-depth-4" style="margin-top:1em;">
+  //     <span class="col s5 input-field"><i class="material-icons prefix">search</i><input type="text" id="searchworkqueue"><label for="search">Search Workqueue</label></span>
+  //     <span class="col s7"><h5>${user.charAt(0).toUpperCase()}${user.substr(1)}'s Workqueue</h5></span>
+  //   </div>
+  // `;
+  let bdslist = `
     <ul class="collapsible" style="margin-top:-1em;">
   `;
 
@@ -278,7 +317,7 @@ const DisplayWorkqueueItems = () => {
   bdslist += `
     </ul>
   `;
-  bdsmain.innerHTML = bdslist;
+  bdsmain.innerHTML += bdslist;
   M.Collapsible.init(document.querySelectorAll(".collapsible"));
 };
 /////////////////////////////////////////////////////////////////////////
@@ -290,7 +329,7 @@ const DisplayTitles = (fileid) => {
   <div class="row z-depth-1"> 
     <div class="col s4" style="border-right:1px solid lightgray;">
       <div class="collection">
-      <div class="input-field"><input type="text" id="search"><label for="search">Search Titles</label></div>
+      <div class="input-field"><input type="text" id="searchtitles"><label for="search">Search Titles</label></div>
         <div style="overflow:auto; height:40vh;">`;
   for (let i = 0; i < userfile.titles.length; i++) {
     const title = userfile.titles[i];
@@ -417,6 +456,7 @@ const SaveFile = async () => {
   const bdsfiles = collection(fbdb, authObj.bdsuser);
   // Set Userfile collection
   await setDoc(doc(bdsfiles, userfile.FileName), {
+    filename: userfile.FileName,
     filetype: userfile.FileType,
     timestamp: Date.now(),
     fields: userfile.fields
