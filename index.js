@@ -1,31 +1,41 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-auth.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-firestore.js";
+import { BDSHome } from "./views/bdshome.js";
+import { BDSSignup } from "./views/bdssignup.js";
+import { BDSSignon } from "./views/bdssignon.js";
 
-document.addEventListener("DOMContentLoaded", function () {
-  var elems = document.querySelectorAll(".sidenav");
-  var instances = M.Sidenav.init(elems);
+const router = async () => {
+  const routes = [
+    { path: "/", view: BDSHome },
+    { path: "/contact", view: () => console.log("Contact Page!") },
+    { path: "/terms", view: () => console.log("Terms Page!") },
+    { path: "/signup", view: BDSSignup },
+    { path: "/signon", view: BDSSignon },
+    { path: "/signout", view: () => console.log("SignOut Page!") },
+    { path: "/profile", view: () => console.log("Profile Page!") },
+    { path: "/workqueue", view: () => console.log("Workqueue Page!") },
+    { path: "/uploadfile", view: () => console.log("UploadFile Page!") }
+  ];
 
-  M.Dropdown.init(document.querySelector(".dropdown-trigger"));
-
-  var modals = document.querySelectorAll(".modal");
-  M.Modal.init(modals);
-
-  //M.Collapsible.init(document.querySelector(".collapsible"));
-  M.Tabs.init(document.querySelectorAll(".tabs", { swipeable: true, responsiveThreshold: 1920 }));
-});
-
-const firebaseConfig = {
-  apiKey: "AIzaSyAzf-SzZyk_UdU7jwjaccHjeCPQXIdfxtY",
-  authDomain: "bdsapp-21.firebaseapp.com",
-  databaseURL: "https://bdsapp-21-default-rtdb.firebaseio.com",
-  projectId: "bdsapp-21",
-  storageBucket: "bdsapp-21.appspot.com",
-  messagingSenderId: "705002556975",
-  appId: "1:705002556975:web:3194bbec5b39ff4d0f40da",
-  measurementId: "G-4QMY1LSYKM"
+  let match = routes.find((route) => location.pathname === route.path);
+  match = match ? match : { path: routes[0].path, view: routes[0].view };
+  const view = new match.view();
+  document.getElementById("main").innerHTML = await view.getPage();
 };
 
-export const fbapp = initializeApp(firebaseConfig);
-export const authObj = { auth: getAuth(fbapp), bdsuser: null };
-export const fbdb = getFirestore(fbapp);
+const navigateTo = (url) => {
+  history.pushState(null, null, url);
+  router();
+};
+
+window.addEventListener("popstate", router());
+
+document.addEventListener("DOMContentLoaded", (e) => {
+  M.Sidenav.init(document.querySelectorAll(".sidenav"), {});
+
+  document.body.addEventListener("click", (e) => {
+    if (e.target.matches("[data-link]")) {
+      e.preventDefault();
+      navigateTo(e.target.href);
+    }
+  });
+  // router();
+});
