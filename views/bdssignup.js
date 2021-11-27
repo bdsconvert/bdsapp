@@ -1,3 +1,11 @@
+import { authObj } from "../data/bdsfirebase.js";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/9.0.2/firebase-auth.js";
+
 export class BDSSignup {
   async getPage() {
     return `
@@ -20,5 +28,20 @@ export class BDSSignup {
           </form>
       </div>    
     `;
+  }
+
+  async signUp(id) {
+    const signupForm = document.getElementById(id);
+    const email = signupForm["signup-email"].value;
+    const password = signupForm["signup-password"].value;
+
+    createUserWithEmailAndPassword(authObj.auth, email, password)
+      .then((cred) => {
+        signupForm.reset();
+        alert(`User "${email}" Registered Successfully`);
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
   }
 }

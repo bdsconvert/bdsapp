@@ -16,10 +16,12 @@
       border-bottom:1px solid lightgray;
       height: 12vh;
     }
-
-    sidenav>div>a#contact, sidenav>div>a#terms, sidenav>div>a#signup, sidenav>div>a#signon {
+    
+    /* sidenav>div>a.contact, sidenav>div>a.terms, sidenav>div>a.signup, sidenav>div>a.signon,
+    sidenav>div>a#signout, sidenav>div>a#profile, sidenav>div>a#workqueue, sidenav>div>a#uploadfile {
       display:none;
-    }
+    } */
+    
 
     header, main, footer {
       padding-left: 300px;
@@ -33,9 +35,9 @@
         padding-left: 0;
       }
       
-      sidenav>div>a#contact, sidenav>div>a#terms, sidenav>div>a#signup, sidenav>div>a#signon {
+      /* sidenav>div>a.contact, sidenav>div>a.terms {
         display:block;
-      }
+      } */
     }
   </style> 
 
@@ -45,13 +47,14 @@
       <div class="navbar z-depth-0">
         <nav class="white z-depth-0 nav-extended">
           <div class="nav-wrapper">
-              <a href="/" class="brand-logo home teal-text left" data-link><h5>BookDataSolutions</h5></a> <!--<i class="material-icons">library_books</i>-->    
+              <a href="/" class="brand-logo home teal-text left" page-link><i class="material-icons teal-text">local_library</i>BDS</a>  
               <ul class="right hide-on-med-and-down">
-                <!-- <li><a href="/" class="teal-text home" title="Contact" data-link><i class="material-icons left">home</i>Home</a></li> -->
-                <li><a href="/contact" class="teal-text contact" title="Contact" data-link><i class="material-icons left">contact_page</i>Contact</a></li>
-                <li><a href="/terms" class="teal-text terms" title="Terms" data-link><i class="material-icons left">policy</i>Terms</a></li>
-                <li><a href="/signup" class="modal-trigger teal-text logged-out signup" data-target="signup" title="Signup" data-link><i class="material-icons left">app_registration</i>Signup</a></li>
-                <li><a href="/signon" class="modal-trigger teal-text logged-out signin" data-target="signon" title="Signon" data-link><i class="material-icons left">login</i>Signon</a></li>               
+                <!-- <li><a href="/" class="teal-text home" page-link><i class="material-icons left">home</i>Home</a></li> -->
+                <!-- <li><a href="/contact" class="teal-text contact" page-link><i class="material-icons left" page-link id="contact">contact_page</i>Contact</a></li> -->
+                <!-- <li><a href="/terms" class="teal-text terms" page-link><i class="material-icons left" page-link id="terms">policy</i>Terms</a></li> -->
+                <li><a href="/signup" class="teal-text logged-out signup" page-link><i class="material-icons left" page-link id="signup">app_registration</i>Signup</a></li>
+                <li><a href="/signon" class="teal-text logged-out signon" page-link><i class="material-icons left" page-link id="signon">login</i>Signon</a></li>               
+                <li><a href="/signout" class="teal-text logged-in signout"><i class="material-icons left signout" page-link id="signout">logout</i>SignOut</a></li>
               </ul>
               <a href="#" data-target="mobile" class="sidenav-trigger right teal-text"><i class="material-icons">menu</i></a>      
           </div>
@@ -63,19 +66,19 @@
     <!-- Side Navigation -->
     <sidenav>
       <div class="sidenav sidenav-fixed collection with-header z-depth-0" id="mobile">
-          <div class="collection-item center home teal-text" data-link><i class="large material-icons">local_library</i><h4>BDS</h4></div>
-          <a href="/" class="collection-item home" id="home" data-link><i class="material-icons left">home</i>Home</a>
-          <a href="/contact" class="collection-item contact" id="contact" data-link><i class="material-icons left">contact_page</i>Contact</a>
-          <a href="/terms" class="collection-item terms" id="terms" data-link><i class="material-icons left">policy</i>Terms</a>
-          <a href="/signup" class="modal-trigger collection-item logged-out signup" data-target="signup" id="signup" data-link><i class="material-icons left">app_registration</i>SignUp</a>
-          <a href="/signon" class="modal-trigger collection-item logged-out signon" data-target="signon" id="signon" data-link><i class="material-icons left">login</i>SignOn</a>       
-          <a href="/signout" class="collection-item logged-in signout" data-link><i class="material-icons left">logout</i>SignOut</a>
-          <a href="/profile" class="collection-item logged-in profile" data-link><i class="material-icons left">person_outline</i>Profile</a>
-          <a href="/workqueue" class="collection-item logged-in workqueue" data-link><i class="material-icons left">list</i>Workqueue</a>
-          <a href="/uploadfile" class="modal-trigger collection-item uploadfile" data-target="uploadfile" data-link><i class="material-icons left">file_upload</i>Upload File</a>
+          <div class="collection-item center home teal-text" page-link><i class="large material-icons">local_library</i><h5>BookDataSolutions</h5></div>
+          <a href="/" class="sidenav-close collection-item home" page-link><i class="material-icons left" page-link id="home">home</i>Home</a>
+          <a href="/contact" class="sidenav-close collection-item contact" page-link><i class="material-icons left" page-link id="contact">contact_page</i>Contact</a>
+          <a href="/terms" class="sidenav-close collection-item terms" page-link><i class="material-icons left" page-link id="policy">policy</i>Terms</a>
+          <a href="/signup" class="sidenav-close collection-item logged-out signup" page-link><i class="material-icons left" page-link id="signup">app_registration</i>SignUp</a>
+          <a href="/signon" class="sidenav-close collection-item logged-out signon" page-link><i class="material-icons left" page-link id="signon">login</i>SignOn</a>       
+          <a href="/signout" class="sidenav-close collection-item logged-in signout" page-link><i class="material-icons left signout" page-link id="signout">logout</i>SignOut</a>
+          <a href="/profile" class="sidenav-close collection-item logged-in profile" page-link><i class="material-icons left" page-link id="profile">person_outline</i>Profile</a>
+          <a href="/workqueue" class="sidenav-close collection-item logged-in workqueue" page-link><i class="material-icons left" page-link id="workqueue">list</i>Workqueue</a>
+          <a href="/uploadfile" class="sidenav-close collection-item logged-in uploadfile" page-link><i class="material-icons left" page-link id="fileupload">file_upload</i>Upload File</a>
       </div>
     </sidenav>
-    <main id="main" class="z-depth-0"><h4>Main Content Here!</h4></main>
+    <main id="main" class="z-depth-0"></main>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script type="module" src="index.js"></script>
