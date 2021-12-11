@@ -1,8 +1,8 @@
 export class BDSHome {
   async getPage() {
-    return `
+    document.getElementById("bdsheader").innerHTML = `<h4>Welcome to BookDataSolutions</h4>`;
+    document.getElementById("bdscontent").innerHTML = `
       <div>
-        <h4>Welcome to BookDataSolutions</h4>
         <h5>Book Solutions Made Easy </h5>
         <p>
           Book data is widely exchanged between publishers, libraries, and book retailers in ONIX formatted files.

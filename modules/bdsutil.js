@@ -218,7 +218,7 @@ export function formatJson(json) {
   const js = json ? JSON.parse(json.replace(/[Pp]roduct\./g, "")) : "";
   let table = `<style>
 					tr:nth-child(odd) {background-color:rgb(250, 250, 250);}
-					td {max-width:24vw;overflow-wrap:break-word;border-right:5px solid white;padding:5px;} 
+					td {max-width:24vw;overflow-wrap:break-word;border-right:5px solid white;padding:5px;font-size:0.9rem;} 
 				 </style> 
 				 <table><tbody>`;
   //white-space:nowrap;text-overflow:ellipsis;

@@ -3,16 +3,17 @@ import { signOut } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-auth.
 
 export class BDSSignout {
   async getPage() {
-    return "<h4>Signing Out...</h4>";
+    this.signOut();
+    document.getElementById("bdsheader").innerHTML = ``;
+    document.getElementById("bdscontent").innerHTML = `<h4>${authObj.bdsuser} Logged Out!</h4>`;
   }
 
-  async signOut() {
+  signOut() {
     const user = authObj.bdsuser;
     console.log(`Signing Out ${user}`);
     signOut(authObj.auth)
       .then(() => {
-        alert(`${user} Signed Out!`);
-        document.querySelector(".home").click();
+        localStorage.clear();
       })
       .catch((err) => alert(err.message));
   }

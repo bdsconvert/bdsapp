@@ -6,6 +6,8 @@ import { BDSTerms } from "./views/bdsterms.js";
 import { BDSContact } from "./views/bdscontact.js";
 import { BDSProfile } from "./views/bdsprofile.js";
 import { BDSWorkqueue } from "./views/bdsworkqueue.js";
+import { BDSTitles } from "./views/bdstitles.js";
+import { BDSExport } from "./views/bdsexport.js";
 import { BDSUploadfile } from "./views/bdsuploadfile.js";
 
 export const router = async () => {
@@ -22,9 +24,15 @@ export const router = async () => {
   ];
 
   let match = routes.find((route) => window.location.pathname === route.path);
-  //match = match ? match : { path: routes[0].path, view: routes[0].view };
+  match = match ? match : { path: routes[0].path, view: routes[0].view }; // Go home if no match
   const view = new match.view();
-  document.getElementById("main").innerHTML = await view.getPage();
+  await view.getPage();
+  //document.getElementById("bdsheader").innerHTML = "";
+  //document.getElementById("bdscontent").innerHTML = await view.getPage();
+  //initialize materialize components
+  // if (match.path === "/workqueue") {
+  //   M.Collapsible.init(document.querySelectorAll(".collapsible"));
+  // }
 };
 
 export const navigateTo = (url) => {
@@ -38,9 +46,10 @@ export const navigateTo = (url) => {
 //////////////////////////////////////////////////////////////////
 
 document.addEventListener("DOMContentLoaded", (e) => {
+  M.Modal.init(document.querySelectorAll(".modal"), {});
   M.Sidenav.init(document.querySelectorAll(".sidenav"), {});
-  //router();
-  navigateTo("/");
+  navigateTo("/"); // Go Home
+  localStorage.clear();
 });
 //////////////////////////////////////////////////////////////////
 
@@ -51,21 +60,57 @@ document.body.addEventListener("click", async (e) => {
     e.preventDefault();
     let href = e.target.href;
     if (!href) {
-      const icon = document.getElementById(e.target.id);
-      href = icon.parentElement.href;
+      //const icon = document.getElementById(e.target.id);
+      //href = icon.parentElement.href;
+      href = e.target.parentElement.href;
     }
     console.log(href);
     navigateTo(href);
   }
-  if (e.target.matches(".signout")) {
-    const bdssignout = new BDSSignout();
-    await bdssignout.signOut();
+
+  // File Click
+  else if (e.target.matches("[file-link]")) {
+    const bdstitles = new BDSTitles(e.target.id, "");
+  }
+
+  // Title Click
+  else if (e.target.matches("[rec-link]")) {
+    console.log(e.target.parentElement.id);
+    BDSTitles.DisplayContents(e.target.parentElement.id);
+  }
+
+  // Export click
+  else if (e.target.matches("[export-link]")) {
+    const bdsexport = new BDSExport(e.target.id); //, exp.dataset.fields, exp.dataset.templates);
+  }
+
+  // Export Select All click
+  else if (e.target.id === "selectall") {
+    console.log("Select All Clicked");
+    BDSExport.SelectAllExportFields();
+  }
+
+  // Export Checkbox click
+  else if (e.target.matches("p label input[type=checkbox]")) {
+    console.log("Checkbox Clicked");
+    BDSExport.SelectExportFields();
+  }
+
+  // Save Template Click
+  else if (e.target.id === "createsavetemplate") {
+    BDSExport.SaveTemplate(e.target.id);
+  }
+
+  // Export Download Click
+  else if (e.target.id === "download") {
+    BDSExport.DownloadTemplate(e.target.id);
   }
 });
 // //////////////////////////////////////////////////////////////////
 
 document.body.addEventListener("submit", async (e) => {
   e.preventDefault();
+  console.log("form submitted");
 
   if (e.target.id === "signon-form") {
     const bdssignon = new BDSSignon();
@@ -77,3 +122,17 @@ document.body.addEventListener("submit", async (e) => {
   }
 });
 //////////////////////////////////////////////////////////////////
+
+document.body.addEventListener("change", async (e) => {
+  // Search Workqueue
+  if (e.target.id === "searchworkqueue") {
+    console.log(`Keyword => ${e.target.value}`);
+    const bdsworkqueue = new BDSWorkqueue();
+    bdsworkqueue.WorkqueueSearch(e.target.value);
+  } else if (e.target.id === "searchtitles") {
+    const bdstitles = new BDSTitles(e.target.dataset.fileid, e.target.value);
+  } else if (e.target.id === "template") {
+    BDSExport.SelectTemplateFields(e.target.value);
+  }
+});
+////////////////////////////////////////////////////////////////////////////

@@ -8,7 +8,8 @@ import {
 
 export class BDSSignup {
   async getPage() {
-    return `
+    document.getElementById("bdsheader").innerHTML = ``;
+    document.getElementById("bdscontent").innerHTML = `
       <div id="signup">
           <h4>Sign Up</h4>
           <form id="signup-form">

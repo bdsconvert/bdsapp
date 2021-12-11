@@ -265,8 +265,8 @@ const GetContents = (fileid, titleid) => {
   return new Promise((resolve) => {
     onSnapshot(query(collection(fbdb, authObj.bdsuser, fileid, "Titles", titleid, "Contents"), limit(2)), (docs) => {
       docs.forEach((doc) => {
-        if (doc.id === "json") contents.json = doc.data().json;
         if (doc.id === "xml") contents.onix = doc.data().xml;
+        if (doc.id === "json") contents.json = doc.data().json;
       });
       resolve();
     });

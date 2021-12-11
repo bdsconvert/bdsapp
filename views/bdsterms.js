@@ -1,8 +1,8 @@
 export class BDSTerms {
   async getPage() {
-    return `
+    document.getElementById("bdsheader").innerHTML = `<h3 style="text-align:center;">Terms</h3>`;
+    document.getElementById("bdscontent").innerHTML = `
       <div>
-      <h3 style="text-align:center;">Terms</h3>
       <h5 style="text-align:center;border:2px solid black;">SOFTWARE AS A SERVICE AGREEMENT (V2.0)</h5>
       <p>
         PLEASE READ THIS AGREEMENT BEFORE USING BOOKDATASOLUTIONS SERVICES.  BY ACCESSING BOOKDATASOLUTIONS’ ONIX CONVERSION WEBSITE AS A SERVICE OFFERING (“SaaS”), YOU (“the Customer”) SIGNIFY ACCEPTANCE OF AND AGREE TO THE TERMS AND CONDITIONS OF THIS AGREEMENT. IF YOU DO NOT AGREE TO THE TERMS AND CONDITIONS OF THIS AGREEMENT THAT EXPRESSLY GOVERNS ORDERS FOR BOOKDATASOLUTIONS’ WEBSITE AS A SERVICE OFFERING, SUCH AGREEMENT SHALL SUPERSEDE THIS AGREEMENT.

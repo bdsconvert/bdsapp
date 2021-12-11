@@ -1,7 +1,7 @@
 export class BDSContact {
   async getPage() {
-    return `
-        <h4>Contact BDS</h4>
+    document.getElementById("bdsheader").innerHTML = `<h4 class="center">Contact BDS</h4>`;
+    document.getElementById("bdscontent").innerHTML = `
         <form id="contact-form">
           <div class="row">
             <div class="input-field col s12">
@@ -27,7 +27,8 @@ export class BDSContact {
               <label for="contact-msg">Message</label>
             </div>
           </div>
-          <button class="btn yellow darken-2 z-depth-0">Submit</button>
+          <div class="center"><button class="btn yellow darken-2">Submit</button></div>
+          <br/>
         </form>  
     `;
   }

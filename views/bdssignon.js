@@ -3,7 +3,8 @@ import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9
 
 export class BDSSignon {
   async getPage() {
-    return `
+    document.getElementById("bdsheader").innerHTML = ``;
+    document.getElementById("bdscontent").innerHTML = `
         <h4>Sign On</h4>
         <form id="signon-form">
           <div class="row">
@@ -50,6 +51,7 @@ export class BDSSignon {
 //     signInWithEmailAndPassword(authObj.auth, email, password)
 //       .then((cred) => {
 //         signonForm.reset();
+//         document.querySelector(".home").click();
 //         console.log(`${email} Logged In Successfully`);
 //       })
 //       .catch((err) => {

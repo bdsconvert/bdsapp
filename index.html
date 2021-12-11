@@ -15,13 +15,7 @@
     header {
       border-bottom:1px solid lightgray;
       height: 12vh;
-    }
-    
-    /* sidenav>div>a.contact, sidenav>div>a.terms, sidenav>div>a.signup, sidenav>div>a.signon,
-    sidenav>div>a#signout, sidenav>div>a#profile, sidenav>div>a#workqueue, sidenav>div>a#uploadfile {
-      display:none;
-    } */
-    
+    }    
 
     header, main, footer {
       padding-left: 300px;
@@ -34,31 +28,25 @@
       header, main, footer {
         padding-left: 0;
       }
-      
-      /* sidenav>div>a.contact, sidenav>div>a.terms {
-        display:block;
-      } */
+
     }
   </style> 
 
-  <body class="container"> 
+  <body> 
     <!-- Header Navigation  -->
     <header class="z-depth-0">      
       <div class="navbar z-depth-0">
         <nav class="white z-depth-0 nav-extended">
-          <div class="nav-wrapper">
+          <div class="nav-wrapper container">
               <a href="/" class="brand-logo home teal-text left" page-link><i class="material-icons teal-text">local_library</i>BDS</a>  
               <ul class="right hide-on-med-and-down">
-                <!-- <li><a href="/" class="teal-text home" page-link><i class="material-icons left">home</i>Home</a></li> -->
-                <!-- <li><a href="/contact" class="teal-text contact" page-link><i class="material-icons left" page-link id="contact">contact_page</i>Contact</a></li> -->
-                <!-- <li><a href="/terms" class="teal-text terms" page-link><i class="material-icons left" page-link id="terms">policy</i>Terms</a></li> -->
                 <li><a href="/signup" class="teal-text logged-out signup" page-link><i class="material-icons left" page-link id="signup">app_registration</i>Signup</a></li>
                 <li><a href="/signon" class="teal-text logged-out signon" page-link><i class="material-icons left" page-link id="signon">login</i>Signon</a></li>               
                 <li><a href="/signout" class="teal-text logged-in signout"><i class="material-icons left signout" page-link id="signout">logout</i>SignOut</a></li>
               </ul>
               <a href="#" data-target="mobile" class="sidenav-trigger right teal-text"><i class="material-icons">menu</i></a>      
           </div>
-          <div class="nav-content">
+          <!-- <div class="nav-content"> -->
           </div>
         </nav>
       </div>
@@ -78,7 +66,12 @@
           <a href="/uploadfile" class="sidenav-close collection-item logged-in uploadfile" page-link><i class="material-icons left" page-link id="fileupload">file_upload</i>Upload File</a>
       </div>
     </sidenav>
-    <main id="main" class="z-depth-0"></main>
+    <main class="container" id="main">
+      <div id="bdsheader"></div>
+      <div id="bdscontent"></div>
+    </bdsmain>
+
+    <div id="bdscontents" class="modal"></div>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script type="module" src="index.js"></script>
