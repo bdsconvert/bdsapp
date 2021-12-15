@@ -1,4 +1,4 @@
-import { formatXml, json2xml, unflatten } from "../modules/bdsutil.js";
+import { formatXml, xml2json, json2xml, flatten, unflatten } from "../utils/bdsutil.js";
 import { SaveUserFile, SaveTitleContents } from "../data/bdsfirebase.js";
 
 export class BDSUploadfile {
@@ -33,44 +33,168 @@ export class BDSUploadfile {
       console.log(file.name);
 
       if (file.type === "text/xml") {
-        //ExtractOnixTitles(file, reader.result);
-        //SaveFile();
-        console.log(`${file.name} uploaded Successfully\n`);
+        this.SaveOnixTitles(file, reader.result).then(() => {
+          console.log(`${file.name} uploaded Successfully\n`);
+        });
       } else {
-        let onix = "";
-        let flat = {};
-        readXlsxFile(file).then(async function (rows) {
-          const hdr = rows[0];
-          //Save Userfile
-          await SaveUserFile({
-            filename: file.name,
-            filetype: "Excel",
-            timestamp: Date.now(),
-            fields: hdr
-          });
-          console.log("User file saved!");
-          rows.slice(1).forEach(async (row) => {
-            for (let i = 0; i < hdr.length; i++) {
-              if (row[i]) flat[hdr[i]] = row[i];
-            }
-            await SaveTitleContents(
-              file.name,
-              {
-                RecordReference: `${flat["Product_0_RecordReference_0"]}`,
-                Title: flat["Product_0_DescriptiveDetail_0_TitleDetail_0_TitleElement_0_TitleText_0"],
-                Author: flat["Product_0_DescriptiveDetail_0_Contributor_0_PersonName_0"]
-              },
-              {
-                xml: json2xml(unflatten(flat)),
-                json: JSON.stringify(flat)
-              }
-            );
-            console.log(`Title/Contents saved for File: ${file.name}, RecordReference: ${flat["Product_0_RecordReference_0"]}`);
-          });
-          // //console.log(json2xml(unflatten(flat)));
-          // document.getElementById("bdscontent").innerHTML = formatXml(json2xml(unflatten(flat)));
+        this.SaveExcelTitles(file).then(() => {
+          console.log(`${file.name} uploaded Successfully\n`);
         });
       }
     });
+  };
+
+  static SaveExcelTitles = async (file) => {
+    const flat = {};
+    readXlsxFile(file).then(async function (rows) {
+      const hdr = rows[0];
+      //Save Userfile
+      await SaveUserFile({
+        filename: file.name,
+        filetype: "Excel",
+        timestamp: Date.now(),
+        fields: hdr
+      });
+      console.log("User file saved!");
+      rows.slice(1).forEach(async (row) => {
+        for (let i = 0; i < hdr.length; i++) {
+          if (row[i]) flat[hdr[i]] = row[i];
+        }
+        await SaveTitleContents(
+          file.name,
+          {
+            RecordReference: `${flat["Product_0_RecordReference_0"]}`,
+            Title: flat["Product_0_DescriptiveDetail_0_TitleDetail_0_TitleElement_0_TitleText_0"],
+            Author: flat["Product_0_DescriptiveDetail_0_Contributor_0_PersonName_0"]
+          },
+          {
+            xml: json2xml(unflatten(flat)),
+            json: JSON.stringify(flat)
+          }
+        );
+        console.log(`Title/Contents saved for File: ${file.name}, RecordReference: ${flat["Product_0_RecordReference_0"]}`);
+      });
+    });
+  };
+
+  static SaveOnixTitles = async (file, onix) => {
+    const parser = new DOMParser();
+    const dom = parser.parseFromString(onix, "application/xml");
+    console.log(dom.documentElement.nodeName === "parsererror" ? "error while parsing" : dom.documentElement.length);
+    const FileType = `Onix${dom.getElementsByTagName("ONIXMessage")[0].getAttribute("release").replace(".", "")}`;
+    console.log(FileType);
+
+    //Save Userfile without fields
+    await SaveUserFile({
+      filename: file.name,
+      filetype: FileType,
+      timestamp: Date.now(),
+      fields: []
+    });
+    console.log("User file saved W/O Fields!");
+
+    let ref = new Set();
+    let ntf = new Set();
+    let pid = new Set();
+    let ddg = new Set();
+    let ddm = new Set();
+    let ddc = new Set();
+    let ddt = new Set();
+    let dda = new Set();
+    let ddl = new Set();
+    let dds = new Set();
+    let ddu = new Set();
+    let cdg = new Set();
+    let pdg = new Set();
+    let rmg = new Set();
+    let psg = new Set();
+    const nodes = dom.querySelectorAll("Product"); //dom.documentElement.childNodes; child.nodeName === "Product"
+    for (const child of nodes) {
+      //console.log(child);
+      const Product = xml2json(child, "\t");
+      //console.log(Product);
+      let ProductFlat = flatten(Product, "Product");
+      // Make all nodes array!
+      const Productarray = JSON.stringify(ProductFlat)
+        .replace(/([a-zA-Z])_([a-zA-Z])/g, "$1_0_$2")
+        .replace(/([a-zA-Z])\":/g, '$1_0":');
+      ProductFlat = JSON.parse(Productarray);
+      const objkeys = Object.keys(ProductFlat);
+      // Extract distinct fields for excel export
+      ref.add("Product_0_RecordReference_0");
+      ntf.add("Product_0_NotificationType_0");
+      for (let elem of new Set(objkeys.filter((key) => key.startsWith("Product_0_ProductIdentifier")))) {
+        pid.add(elem);
+      }
+      for (let elem of new Set(objkeys.filter((key) => key.startsWith("Product_0_DescriptiveDetail_0_Product")))) {
+        ddg.add(elem);
+      }
+      for (let elem of new Set(objkeys.filter((key) => key.startsWith("Product_0_DescriptiveDetail_0_Measure")))) {
+        ddm.add(elem);
+      }
+      for (let elem of new Set(objkeys.filter((key) => key.startsWith("Product_0_DescriptiveDetail_0_Collection")))) {
+        ddc.add(elem);
+      }
+      for (let elem of new Set(objkeys.filter((key) => key.startsWith("Product_0_DescriptiveDetail_0_TitleDetail")))) {
+        ddt.add(elem);
+      }
+      for (let elem of new Set(objkeys.filter((key) => key.startsWith("Product_0_DescriptiveDetail_0_Contributor")))) {
+        dda.add(elem);
+      }
+      for (let elem of new Set(objkeys.filter((key) => key.startsWith("Product_0_DescriptiveDetail_0_Language")))) {
+        ddl.add(elem);
+      }
+      for (let elem of new Set(objkeys.filter((key) => key.startsWith("Product_0_DescriptiveDetail_0_Subject")))) {
+        dds.add(elem);
+      }
+      for (let elem of new Set(objkeys.filter((key) => key.startsWith("Product_0_DescriptiveDetail_0_Audience")))) {
+        ddu.add(elem);
+      }
+      for (let elem of new Set(objkeys.filter((key) => key.startsWith("Product_0_CollateralDetail")))) {
+        cdg.add(elem);
+      }
+      for (let elem of new Set(objkeys.filter((key) => key.startsWith("Product_0_PublishingDetail")))) {
+        pdg.add(elem);
+      }
+      for (let elem of new Set(objkeys.filter((key) => key.startsWith("Product_0_RelatedMaterial")))) {
+        rmg.add(elem);
+      }
+      for (let elem of new Set(objkeys.filter((key) => key.startsWith("Product_0_ProductSupply")))) {
+        psg.add(elem);
+      }
+
+      // Save Titles and Contents
+      const RecordReference = ProductFlat.Product_0_RecordReference_0;
+      const Title = ProductFlat.Product_0_DescriptiveDetail_0_TitleDetail_0_TitleElement_0_TitleText_0;
+      const Author = ProductFlat.Product_0_DescriptiveDetail_0_Contributor_0_PersonName_0;
+
+      console.log(RecordReference, Title, Author, Productarray, child.outerHTML);
+      await SaveTitleContents(
+        file.name,
+        {
+          RecordReference: RecordReference,
+          Title: Title,
+          Author: Author
+        },
+        {
+          xml: child.outerHTML,
+          json: Productarray
+        }
+      );
+      console.log(`Title/Contents saved for File: ${file.name}, RecordReference: ${RecordReference}`);
+    }
+    //console.log(titles);
+    //console.log([...pid, ...ddg, ...ddm, ...ddc, ...ddt, ...dda, ...ddl, ...dds, ...ddu, ...cdg, ...pdg, ...rmg, ...psg]);
+    const fields = [...ref, ...ntf, ...pid, ...ddg, ...ddm, ...ddc, ...ddt, ...dda, ...ddl, ...dds, ...ddu, ...cdg, ...pdg, ...rmg, ...psg];
+    //console.log(fields);
+
+    //Save Userfile without fields
+    await SaveUserFile({
+      filename: file.name,
+      filetype: FileType,
+      timestamp: Date.now(),
+      fields: fields
+    });
+    console.log("User file saved With Fields!");
   };
 }

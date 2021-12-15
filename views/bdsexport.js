@@ -111,7 +111,7 @@ export class BDSExport {
 
     // Get Titles
     const fileid = document.getElementById(id).dataset.fileid;
-    await GetTitles(fileid, "", 0);
+    await GetTitles(fileid, "", 100);
     const titles = JSON.parse(localStorage.getItem(`titles`));
     let recs = [];
     let hdr = "";

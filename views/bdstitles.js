@@ -1,5 +1,5 @@
 import { GetTitles, GetContents } from "../data/bdsfirebase.js";
-import { formatJson, formatXml } from "../modules/bdsutil.js";
+import { formatJson, formatXml } from "../utils/bdsutil.js";
 
 export class BDSTitles {
   fileid = "";
@@ -67,7 +67,7 @@ export class BDSTitles {
     const rec = document.getElementById(`${recid}`);
     const fileid = rec.dataset.fileid;
     const content = document.querySelector(".modal");
-    content.innerHTML = `<h5 class="center">${rec.dataset.filename}</h5>`;
+    content.innerHTML = `<span class="right" style="margin:1em;cursor:pointer;"><i class="material-icons" content-close>close</i></span><h5 class="center">${rec.dataset.filename}</h5>`;
     content.innerHTML += `
         <ul id="contenttab" class="tabs">
           <li class="tab"><a href="#onix${fileid}" class="onix">Onix</a></li>

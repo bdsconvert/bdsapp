@@ -79,6 +79,11 @@ document.body.addEventListener("click", async (e) => {
     BDSTitles.DisplayContents(e.target.parentElement.id);
   }
 
+  // Content modal close click
+  else if (e.target.matches("[content-close]")) {
+    M.Modal.getInstance(document.querySelector(".modal")).close();
+  }
+
   // Export click
   else if (e.target.matches("[export-link]")) {
     const bdsexport = new BDSExport(e.target.id); //, exp.dataset.fields, exp.dataset.templates);
