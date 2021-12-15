@@ -80,7 +80,7 @@ export class BDSWorkqueue {
               <i class="material-icons left" title="Export" id="Export-${item.filename}" export-link>send</i>
             </a>
             <a href="#" class="secondary-content">
-              <i class="material-icons left" title="Titles" id=${item.filename} file-link>list</i>
+              <i class="material-icons left" title="Titles" id="${item.filename}" file-link>list</i>
             </a> 
             <br />
             <span style="font-size:0.8rem;">Loaded: ${new Date(item.timestamp).toISOString()}</span>

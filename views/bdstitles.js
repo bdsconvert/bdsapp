@@ -1,39 +1,32 @@
-import { authObj, fbdb } from "../data/bdsfirebase.js";
-import { xml2json, json2xml, flatten, unflatten, formatJson, formatXml, union } from "../modules/bdsutil.js";
-import {
-  collection,
-  //collectionGroup,
-  query,
-  where,
-  limit,
-  //arrayUnion,
-  //doc,
-  //getDocs,
-  //setDoc,
-  //updateDoc,
-  onSnapshot
-  //serverTimestamp
-} from "https://www.gstatic.com/firebasejs/9.0.2/firebase-firestore.js";
+import { GetTitles, GetContents } from "../data/bdsfirebase.js";
+import { formatJson, formatXml } from "../modules/bdsutil.js";
 
 export class BDSTitles {
   fileid = "";
   titles = [];
   constructor(fileid, keyword) {
     console.log(fileid, keyword);
-    // Check if titles for the file already loaded else reset
-    this.titles = JSON.parse(localStorage.getItem(`titles`));
-    if (this.titles && this.titles.length > 0 && (fileid !== this.titles[0].fileid || keyword !== this.titles[0].keyword)) {
-      localStorage.removeItem(`titles`);
-      this.titles = [];
-    }
-    document.getElementById("bdsheader").innerHTML = `<span class="center"><h5>${fileid} Titles</h5></span>`;
-    if (!this.titles || this.titles.length === 0) {
-      this.GetTitles(fileid, keyword).then(() => {
-        document.getElementById("bdscontent").innerHTML = this.DisplayTitles(fileid, keyword);
-      });
-    } else {
+    GetTitles(fileid, keyword, 10).then(() => {
+      this.titles = JSON.parse(localStorage.getItem(`titles`));
+      document.getElementById("bdsheader").innerHTML = `<span class="center"><h5>${fileid} Titles</h5></span>`;
       document.getElementById("bdscontent").innerHTML = this.DisplayTitles(fileid, keyword);
-    }
+    });
+
+    // // Check if titles for the file already loaded else reset
+    // this.titles = JSON.parse(localStorage.getItem(`titles`));
+    // if (this.titles && this.titles.length > 0 && (fileid !== this.titles[0].fileid || keyword !== this.titles[0].keyword)) {
+    //   localStorage.removeItem(`titles`);
+    //   this.titles = [];
+    // }
+    // document.getElementById("bdsheader").innerHTML = `<span class="center"><h5>${fileid} Titles</h5></span>`;
+    // if (!this.titles || this.titles.length === 0) {
+    //   GetTitles(fileid, keyword, 0).then(() => {
+    //     this.titles = JSON.parse(localStorage.getItem(`titles`));
+    //     document.getElementById("bdscontent").innerHTML = this.DisplayTitles(fileid, keyword);
+    //   });
+    // } else {
+    //   document.getElementById("bdscontent").innerHTML = this.DisplayTitles(fileid, keyword);
+    // }
   }
 
   DisplayTitles = (fileid, keyword) => {
@@ -70,32 +63,6 @@ export class BDSTitles {
     return titlesHtml;
   };
 
-  GetTitles = (fileid, keyword) => {
-    console.log(`Getting titles for ${fileid}`);
-    this.titles = [];
-    keyword = keyword.trim().length > 0 ? keyword : "";
-    return new Promise((resolve) => {
-      onSnapshot(
-        query(
-          collection(fbdb, authObj.bdsuser, fileid, "Titles"),
-          where("Title", ">=", keyword),
-          where("Title", "<=", keyword + "\uf8ff"),
-          limit(10)
-        ),
-        (docs) => {
-          docs.forEach((doc) => {
-            const title = doc.data();
-            title.fileid = fileid;
-            title.keyword = keyword;
-            this.titles.push(title);
-          });
-          localStorage.setItem(`titles`, JSON.stringify(this.titles));
-          resolve();
-        }
-      );
-    });
-  };
-
   static DisplayContents = (recid) => {
     const rec = document.getElementById(`${recid}`);
     const fileid = rec.dataset.fileid;
@@ -111,11 +78,9 @@ export class BDSTitles {
     `;
     M.Tabs.init(document.querySelectorAll(".tabs"));
 
-    onSnapshot(query(collection(fbdb, authObj.bdsuser, fileid, "Titles", recid, "Contents"), limit(2)), (docs) => {
-      docs.forEach((doc) => {
-        if (doc.id === "xml") document.getElementById(`onix${fileid}`).innerHTML = formatXml(doc.data().xml);
-        if (doc.id === "json") document.getElementById(`table${fileid}`).innerHTML = formatJson(doc.data().json);
-      });
+    GetContents(fileid, recid).then(() => {
+      document.getElementById(`onix${fileid}`).innerHTML = formatXml(localStorage.getItem(`xml`));
+      document.getElementById(`table${fileid}`).innerHTML = formatJson(localStorage.getItem(`json`));
     });
   };
 } // Class End

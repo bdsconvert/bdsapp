@@ -133,6 +133,11 @@ document.body.addEventListener("change", async (e) => {
     const bdstitles = new BDSTitles(e.target.dataset.fileid, e.target.value);
   } else if (e.target.id === "template") {
     BDSExport.SelectTemplateFields(e.target.value);
+  } else if (e.target.id === "bdsfile") {
+    const bdsfile = document.getElementById("bdsfile");
+    if (bdsfile.files && bdsfile.files[0]) {
+      BDSUploadfile.ProcessFile(bdsfile.files[0]);
+    }
   }
 });
 ////////////////////////////////////////////////////////////////////////////
