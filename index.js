@@ -68,6 +68,11 @@ document.body.addEventListener("click", async (e) => {
     navigateTo(href);
   }
 
+  // Workqueue link (Export / Titles page)
+  else if (e.target.matches("[wk-link]")) {
+    navigateTo("/workqueue");
+  }
+
   // File Click
   else if (e.target.matches("[file-link]")) {
     const bdstitles = new BDSTitles(e.target.id, "");

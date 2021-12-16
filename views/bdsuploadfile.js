@@ -1,4 +1,4 @@
-import { formatXml, xml2json, json2xml, flatten, unflatten } from "../utils/bdsutil.js";
+import { xml2json, json2xml, flatten, unflatten } from "../utils/bdsutil.js";
 import { SaveUserFile, SaveTitleContents } from "../data/bdsfirebase.js";
 
 export class BDSUploadfile {

@@ -11,30 +11,15 @@ export class BDSTitles {
       document.getElementById("bdsheader").innerHTML = `<span class="center"><h5>${fileid} Titles</h5></span>`;
       document.getElementById("bdscontent").innerHTML = this.DisplayTitles(fileid, keyword);
     });
-
-    // // Check if titles for the file already loaded else reset
-    // this.titles = JSON.parse(localStorage.getItem(`titles`));
-    // if (this.titles && this.titles.length > 0 && (fileid !== this.titles[0].fileid || keyword !== this.titles[0].keyword)) {
-    //   localStorage.removeItem(`titles`);
-    //   this.titles = [];
-    // }
-    // document.getElementById("bdsheader").innerHTML = `<span class="center"><h5>${fileid} Titles</h5></span>`;
-    // if (!this.titles || this.titles.length === 0) {
-    //   GetTitles(fileid, keyword, 0).then(() => {
-    //     this.titles = JSON.parse(localStorage.getItem(`titles`));
-    //     document.getElementById("bdscontent").innerHTML = this.DisplayTitles(fileid, keyword);
-    //   });
-    // } else {
-    //   document.getElementById("bdscontent").innerHTML = this.DisplayTitles(fileid, keyword);
-    // }
   }
 
   DisplayTitles = (fileid, keyword) => {
     let titlesHtml = `<ul class="collection">`;
     titlesHtml += `
       <li class="collection-item row">
+          <span style="color:blue;cursor:pointer"><strong wk-link>Workqueue</strong></span> / ${fileid}
           <span class="secondary-content input-field"><i class="material-icons prefix">search</i><input type="text" id="searchtitles" data-fileid=${fileid}><label for="search">Search Titles</label></span>
-          </br/><br/><br/>
+          <br/><br/><br/>
           <span>Showing results for: "${keyword}"</span>
       </li>
     `;
