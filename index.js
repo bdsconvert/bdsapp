@@ -9,6 +9,7 @@ import { BDSWorkqueue } from "./views/bdsworkqueue.js";
 import { BDSTitles } from "./views/bdstitles.js";
 import { BDSExport } from "./views/bdsexport.js";
 import { BDSUploadfile } from "./views/bdsuploadfile.js";
+import { BDSCreateOnix } from "./views/bdscreateonix.js";
 
 export const router = async () => {
   const routes = [
@@ -20,6 +21,7 @@ export const router = async () => {
     { path: "/signout", view: BDSSignout },
     { path: "/profile", view: BDSProfile },
     { path: "/workqueue", view: BDSWorkqueue },
+    { path: "/createonix", view: BDSCreateOnix },
     { path: "/uploadfile", view: BDSUploadfile }
   ];
 
