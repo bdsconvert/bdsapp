@@ -43,7 +43,7 @@ export const BdsSelect = (typ, cl) => {
 export const BdsCombo = (lbl, typ1, typ2, cl) => {
   let combo = `
     <div id=${lbl}>
-    <h5 class="center">${lbl}</h5>
+    <h6 class="center">${lbl}</h6>
       ${BdsSelect(typ1, cl)}
       ${BdsText(typ2)}
     </div>

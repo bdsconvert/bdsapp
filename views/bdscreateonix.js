@@ -2,11 +2,11 @@ import { BdsOnixCreate } from "../components/bdsonixcreate.js";
 
 export class BDSCreateOnix {
   async getPage() {
-    document.getElementById("bdsheader").innerHTML = `<h4 class="center">Create Onix</h4>`;
+    document.getElementById("bdsheader").innerHTML = `<h5 class="center">Create Onix</h5>`;
     document.getElementById("bdscontent").innerHTML = `
-      <div class="divider"></div>
       <bds-onix-create></bds-onix-create>
-      <p id="bdsoe"></p>
+      <p id="bdsoe" class="row z-depth-1"></p>
+      
     `;
   }
 }
