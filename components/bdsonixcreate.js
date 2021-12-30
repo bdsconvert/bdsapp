@@ -9,16 +9,33 @@ export class BdsOnixCreate extends HTMLElement {
   constructor() {
     super();
     this.innerHTML = `
-      <h4 class="center">Onix Elements</h4>
-      <div class="divider"></div>
-        <bds-root order="0"></bds-root>
+      <ul class="collapsible expandable">
+        <li class="grey lighten-5">
+          <div class="row collapsible-header grey lighten-4">
+            <h5 class="col s11">Root</h5>
+            <i class="col s1 material-icons"><br/>expand_more</i>
+          </div>
+          <div class="collapsible-body"><bds-root order="0"></bds-root></div>
+        </li>
+        <li class="grey lighten-5">
+          <div class="row collapsible-header grey lighten-4">
+            <h5 class="col s11">ProductIdentifiers</h5>
+            <i class="col s1 material-icons"><br/>expand_more</i>
+          </div>
+          <div class="collapsible-body"><bds-pid order="2"></bds-pid></div> 
+        </li>
+        <li class="grey lighten-5">
+          <div class="row collapsible-header grey lighten-4">
+            <h5 class="col s11">DetailDescription</h5>
+            <i class="col s1 material-icons"><br/>expand_more</i>
+          </div>
+          <div class="collapsible-body"><bds-product-composition order="10"></bds-product-composition></div> 
+        </li>
         <br/>
-        <bds-pid order="2"></bds-pid>
-        <br/>
-        <bds-product-composition order="10"></bds-product-composition>
-        <br/>
+      </ul>
       <div class="center">${BdsButton("saveoe", "Show Onix Elements")}</div>
     `;
+    M.Collapsible.init(document.querySelectorAll(".collapsible"), { accordion: false });
   }
 
   connectedCallback() {
