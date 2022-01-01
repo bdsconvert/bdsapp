@@ -15,9 +15,10 @@ export const BdsAddDelButtons = (id, name) => {
 
 export const BdsText = (val) => {
   const value = val.data ? val.data : "";
+  console.log(value);
   return `
     <div class="input-field" id=${val.name}>
-      <input id="${val.id}" type="text" class="validate" value=${value}>
+      <input id="${val.id}" type="text" class="validate" value="${value}">
       <label for="${val.name}" class="active">${val.name}</label>
     </div>
 `;
@@ -36,6 +37,22 @@ export const BdsSelect = (typ, cl) => {
       </select>
       <label>${typ.name}</label>
     </div>
+  `;
+  return sel;
+};
+
+export const BdsSelect2 = (list, item) => {
+  let sel = `
+    <div class="input-field">
+      <select id="onixrecs">
+        <option value="" disabled selected>Choose a Record</option>
+      `;
+  list.forEach((t) => {
+    sel += `<option value=${t} ${t === item ? "selected" : ""}>${t}</option>`;
+  });
+  sel += `
+      </select>
+      <label>Choose Title</label>
   `;
   return sel;
 };

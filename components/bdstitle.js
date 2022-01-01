@@ -10,24 +10,24 @@ export class BdsTitle extends HTMLElement {
     this.titletyp = {
       name: "TitleType",
       id: `D${this.order + 1}-DescriptiveDetail_0_TitleDetail_0_TitleType_0`,
-      data: ""
+      data: bdsoe[`D${this.order + 1}-DescriptiveDetail_0_TitleDetail_0_TitleType_0`]
     };
     this.titleel = {
       name: "TitleElementLevel",
       id: `D${this.order + 2}-DescriptiveDetail_0_TitleDetail_0_TitleElement_0_TitleElementLevel_0`,
-      data: ""
+      data: bdsoe[`D${this.order + 2}-DescriptiveDetail_0_TitleDetail_0_TitleElement_0_TitleElementLevel_0`]
     };
     this.titletxt = {
       name: "TitleText",
       id: `D${this.order + 3}-DescriptiveDetail_0_TitleDetail_0_TitleElement_0_TitleText_0`,
-      data: ""
+      data: bdsoe[`D${this.order + 3}-DescriptiveDetail_0_TitleDetail_0_TitleElement_0_TitleText_0`]
     };
     this.titlest = {
       name: "Subtitle",
       id: `D${this.order + 4}-DescriptiveDetail_0_TitleDetail_0_TitleElement_0_Subtitle_0`,
-      data: ""
+      data: bdsoe[`D${this.order + 4}-DescriptiveDetail_0_TitleDetail_0_TitleElement_0_Subtitle_0`]
     };
-
+    console.log(this.titletxt);
     this.innerHTML = `
       ${BdsSelect(this.titletyp, codelist.cl015)}
       ${BdsSelect(this.titleel, codelist.cl149)}

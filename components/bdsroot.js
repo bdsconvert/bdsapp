@@ -11,12 +11,12 @@ export class BdsRoot extends HTMLElement {
     this.recref = {
       name: "RecordReference",
       id: `A${this.order + 1}-RecordReference_0`,
-      data: ""
+      data: bdsoe[`A${this.order + 1}-RecordReference_0`]
     };
     this.ntftyp = {
       name: "NotificationType",
       id: `A${this.order + 2}-NotificationType_0`,
-      data: ""
+      data: bdsoe[`A${this.order + 2}-NotificationType_0`]
     };
 
     this.innerHTML = `

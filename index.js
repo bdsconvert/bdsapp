@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
   M.Modal.init(document.querySelectorAll(".modal"), {});
   M.Sidenav.init(document.querySelectorAll(".sidenav"), {});
   navigateTo("/"); // Go Home
-  localStorage.clear();
+  //localStorage.clear();
 });
 //////////////////////////////////////////////////////////////////
 
