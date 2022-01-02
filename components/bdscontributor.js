@@ -14,11 +14,15 @@ export class BdsContributor extends HTMLElement {
     this.conpni = { name: "PersonNameInverted", id: "", data: "" };
     this.connbk = { name: "NamesBeforeKey", id: "", data: "" };
     this.conkn = { name: "KeyNames", id: "", data: "" };
-
-    this.addContributor();
   }
 
   connectedCallback() {
+    document.getElementById("cnt").addEventListener("click", (e) => {
+      if (this.innerHTML === "") {
+        this.addContributor();
+      }
+    });
+
     this.addEventListener("change", (e) => {
       bdsoe[e.target.id] = e.target.value;
     });

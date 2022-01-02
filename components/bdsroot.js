@@ -18,17 +18,18 @@ export class BdsRoot extends HTMLElement {
       id: `A${this.order + 2}-NotificationType_0`,
       data: bdsoe[`A${this.order + 2}-NotificationType_0`]
     };
-
-    this.innerHTML = `
-      ${BdsText(this.recref)}
-      ${BdsSelect(this.ntftyp, codelist.cl001)}
-    `;
-    M.FormSelect.init(document.querySelectorAll("select"));
   }
 
   connectedCallback() {
     this.addEventListener("change", (e) => {
       bdsoe[e.target.id] = e.target.value;
+    });
+
+    document.getElementById("rrf").addEventListener("click", (e) => {
+      if (this.innerHTML === "") {
+        this.innerHTML = `${BdsText(this.recref)} ${BdsSelect(this.ntftyp, codelist.cl001)}`;
+        M.FormSelect.init(document.querySelectorAll("select"));
+      }
     });
   }
 }

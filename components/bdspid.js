@@ -18,10 +18,15 @@ export class BdsPid extends HTMLElement {
       id: "",
       data: ""
     };
-    this.addPID();
   }
 
   connectedCallback() {
+    document.getElementById("pid").addEventListener("click", (e) => {
+      if (this.innerHTML === "") {
+        this.addPID();
+      }
+    });
+
     this.addEventListener("change", (e) => {
       bdsoe[e.target.id] = e.target.value;
     });

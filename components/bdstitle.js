@@ -27,17 +27,21 @@ export class BdsTitle extends HTMLElement {
       id: `D${this.order + 4}-DescriptiveDetail_0_TitleDetail_0_TitleElement_0_Subtitle_0`,
       data: bdsoe[`D${this.order + 4}-DescriptiveDetail_0_TitleDetail_0_TitleElement_0_Subtitle_0`]
     };
-    console.log(this.titletxt);
-    this.innerHTML = `
-      ${BdsSelect(this.titletyp, codelist.cl015)}
-      ${BdsSelect(this.titleel, codelist.cl149)}
-      ${BdsText(this.titletxt)}
-      ${BdsText(this.titlest)}      
-    `;
-    M.FormSelect.init(document.querySelectorAll("select"));
   }
 
   connectedCallback() {
+    document.getElementById("ttl").addEventListener("click", (e) => {
+      if (this.innerHTML === "") {
+        this.innerHTML = `
+          ${BdsSelect(this.titletyp, codelist.cl015)}
+          ${BdsSelect(this.titleel, codelist.cl149)}
+          ${BdsText(this.titletxt)}
+          ${BdsText(this.titlest)}      
+        `;
+        M.FormSelect.init(document.querySelectorAll("select"));
+      }
+    });
+
     this.addEventListener("change", (e) => {
       bdsoe[e.target.id] = e.target.value;
     });

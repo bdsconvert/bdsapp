@@ -22,16 +22,20 @@ export class BdsEditionLanguage extends HTMLElement {
       id: `F${this.order + 3}-DescriptiveDetail_0_LanguageCode_0`,
       data: ""
     };
-
-    this.innerHTML = `
-      ${BdsSelect(this.edittyp, codelist.cl021)}
-      ${BdsSelect(this.langrole, codelist.cl022)}
-      ${BdsSelect(this.langcode, codelist.cl074)}
-    `;
-    M.FormSelect.init(document.querySelectorAll("select"));
   }
 
   connectedCallback() {
+    document.getElementById("eln").addEventListener("click", (e) => {
+      if (this.innerHTML === "") {
+        this.innerHTML = `
+        ${BdsSelect(this.edittyp, codelist.cl021)}
+        ${BdsSelect(this.langrole, codelist.cl022)}
+        ${BdsSelect(this.langcode, codelist.cl074)}
+      `;
+        M.FormSelect.init(document.querySelectorAll("select"));
+      }
+    });
+
     this.addEventListener("change", (e) => {
       bdsoe[e.target.id] = e.target.value;
     });

@@ -66,7 +66,7 @@ document.body.addEventListener("click", async (e) => {
       //href = icon.parentElement.href;
       href = e.target.parentElement.href;
     }
-    console.log(href);
+    //console.log(href);
     navigateTo(href);
   }
 
@@ -82,7 +82,7 @@ document.body.addEventListener("click", async (e) => {
 
   // Title Click
   else if (e.target.matches("[rec-link]")) {
-    console.log(e.target.parentElement.id);
+    //console.log(e.target.parentElement.id);
     BDSTitles.DisplayContents(e.target.parentElement.id);
   }
 
@@ -98,13 +98,13 @@ document.body.addEventListener("click", async (e) => {
 
   // Export Select All click
   else if (e.target.id === "selectall") {
-    console.log("Select All Clicked");
+    //console.log("Select All Clicked");
     BDSExport.SelectAllExportFields();
   }
 
   // Export Checkbox click
   else if (e.target.matches("p label input[type=checkbox]")) {
-    console.log("Checkbox Clicked");
+    //console.log("Checkbox Clicked");
     BDSExport.SelectExportFields();
   }
 
@@ -122,7 +122,7 @@ document.body.addEventListener("click", async (e) => {
 
 document.body.addEventListener("submit", async (e) => {
   e.preventDefault();
-  console.log("form submitted");
+  //console.log("form submitted");
 
   if (e.target.id === "signon-form") {
     const bdssignon = new BDSSignon();
@@ -138,7 +138,7 @@ document.body.addEventListener("submit", async (e) => {
 document.body.addEventListener("change", async (e) => {
   // Search Workqueue
   if (e.target.id === "searchworkqueue") {
-    console.log(`Keyword => ${e.target.value}`);
+    //console.log(`Keyword => ${e.target.value}`);
     const bdsworkqueue = new BDSWorkqueue();
     bdsworkqueue.WorkqueueSearch(e.target.value);
   } else if (e.target.id === "searchtitles") {

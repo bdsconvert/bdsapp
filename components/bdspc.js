@@ -22,11 +22,15 @@ export class BdsProductComposition extends HTMLElement {
       id: "",
       data: ""
     };
-
-    this.addPC();
   }
 
   connectedCallback() {
+    document.getElementById("pcf").addEventListener("click", (e) => {
+      if (this.innerHTML === "") {
+        this.addPC();
+      }
+    });
+
     this.addEventListener("change", (e) => {
       bdsoe[e.target.id] = e.target.value;
     });

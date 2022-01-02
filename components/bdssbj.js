@@ -11,11 +11,13 @@ export class BdsSubject extends HTMLElement {
     this.sbjsi = { name: "SubjectSchemeIdentifier", id: "", data: "" };
     this.sbjsv = { name: "sSubjectSchemeVersion", id: "", data: "" };
     this.sbjcd = { name: "SubjectCode", id: "", data: "" };
-
-    this.addSubjects();
   }
 
   connectedCallback() {
+    document.getElementById("sbj").addEventListener("click", (e) => {
+      this.addSubjects();
+    });
+
     this.addEventListener("change", (e) => {
       bdsoe[e.target.id] = e.target.value;
     });
