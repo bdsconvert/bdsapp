@@ -28,6 +28,7 @@ export class BdsOnixCreate extends HTMLElement {
         this.innerHTML = this.addOnixElements(e.target.value);
         M.Collapsible.init(document.querySelectorAll(".collapsible"), { accordion: false });
         M.FormSelect.init(document.querySelectorAll("select"), {});
+        this.viewOnix();
       }
     });
 
@@ -40,13 +41,7 @@ export class BdsOnixCreate extends HTMLElement {
           bdsrecs[`${bdsoe["A1-RecordReference_0"]}`] = { ...bdsoe };
           localStorage.setItem("bdsrecs", JSON.stringify(bdsrecs));
         }
-        const ov = document.getElementById("bdsoe");
-        //ov.innerHTML = `<div class='col s5'><div style="font-weight:500;font-size:1.25rem;text-align:center;">Table<br/></div><div class="divider"></div><br/>` + formatJson(JSON.stringify(Object.fromEntries(Object.entries(bdsoe).sort()), null, "\n")) + "</div>";
-        let pid = Object.fromEntries(Object.entries(bdsoe).sort());
-        pid = Object.entries(pid).map((p) => {
-          return [p[0].slice(p[0].indexOf("-") + 1), p[1]];
-        });
-        ov.innerHTML = `<div class='col s12'><div style="font-weight:500;font-size:1.25rem;text-align:center;">Onix<br/></div><div class="divider"></div><br/>` + formatXml("<Product>" + json2xml(unflatten(Object.fromEntries(pid))) + "</Product>") + "</div>";
+        this.viewOnix();
       }
     });
   }
@@ -86,6 +81,16 @@ export class BdsOnixCreate extends HTMLElement {
       </ul>
       <div class="center">${BdsButton("saveoe", "Preview Onix")}</div>
     `;
+  };
+
+  viewOnix = () => {
+    const ov = document.getElementById("bdsoe");
+    //ov.innerHTML = `<div class='col s5'><div style="font-weight:500;font-size:1.25rem;text-align:center;">Table<br/></div><div class="divider"></div><br/>` + formatJson(JSON.stringify(Object.fromEntries(Object.entries(bdsoe).sort()), null, "\n")) + "</div>";
+    let pid = Object.fromEntries(Object.entries(bdsoe).sort());
+    pid = Object.entries(pid).map((p) => {
+      return [p[0].slice(p[0].indexOf("-") + 1), p[1]];
+    });
+    ov.innerHTML = `<div class='col s12'><div style="font-weight:500;font-size:1.25rem;text-align:center;">Onix<br/></div><div class="divider"></div><br/>` + formatXml("<Product>" + json2xml(unflatten(Object.fromEntries(pid))) + "</Product>") + "</div>";
   };
 }
 
