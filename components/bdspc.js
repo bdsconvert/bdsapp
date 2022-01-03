@@ -7,21 +7,9 @@ export class BdsProductComposition extends HTMLElement {
     super();
     this.order = parseInt(this.getAttribute("order"), 10);
     this.numpid = 1;
-    this.pctyp = {
-      name: "ProductComposition",
-      id: `C${this.order + 1}-DescriptiveDetail_0_ProductComposition_0`,
-      data: ""
-    };
-    this.pftyp = {
-      name: "ProductForm",
-      id: `C${this.order + 2}-DescriptiveDetail_0_ProductForm_0`,
-      data: ""
-    };
-    this.pfdtyp = {
-      name: "ProductFormDetail",
-      id: "",
-      data: ""
-    };
+    this.pctyp = { name: "ProductComposition", id: `C${this.order + 1}-DescriptiveDetail_0_ProductComposition_0`, data: "" };
+    this.pftyp = { name: "ProductForm", id: `C${this.order + 2}-DescriptiveDetail_0_ProductForm_0`, data: "" };
+    this.pfdtyp = { name: "ProductFormDetail", id: "", data: "" };
   }
 
   connectedCallback() {

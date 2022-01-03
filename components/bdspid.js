@@ -8,16 +8,8 @@ export class BdsPid extends HTMLElement {
     this.order = parseInt(this.getAttribute("order"), 10);
     this.numpid = 1;
     this.lbl = `ProductIdentifier${this.numpid}`;
-    this.pidtyp = {
-      name: "ProductIDType",
-      id: "",
-      data: ""
-    };
-    this.pidval = {
-      name: "IDValue",
-      id: "",
-      data: ""
-    };
+    this.pidtyp = { name: "ProductIDType", id: "", data: "" };
+    this.pidval = { name: "IDValue", id: "", data: "" };
   }
 
   connectedCallback() {

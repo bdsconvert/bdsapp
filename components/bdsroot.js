@@ -8,16 +8,8 @@ export class BdsRoot extends HTMLElement {
     this.order = parseInt(this.getAttribute("order"), 10);
     this.numpid = 1;
     this.lbl = `ProductIdentifier${this.numpid}`;
-    this.recref = {
-      name: "RecordReference",
-      id: `A${this.order + 1}-RecordReference_0`,
-      data: bdsoe[`A${this.order + 1}-RecordReference_0`]
-    };
-    this.ntftyp = {
-      name: "NotificationType",
-      id: `A${this.order + 2}-NotificationType_0`,
-      data: bdsoe[`A${this.order + 2}-NotificationType_0`]
-    };
+    this.recref = { name: "RecordReference", id: `A${this.order + 1}-RecordReference_0`, data: bdsoe[`A${this.order + 1}-RecordReference_0`] };
+    this.ntftyp = { name: "NotificationType", id: `A${this.order + 2}-NotificationType_0`, data: bdsoe[`A${this.order + 2}-NotificationType_0`] };
   }
 
   connectedCallback() {
