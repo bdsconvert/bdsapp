@@ -8,8 +8,8 @@ export class BdsEditionLanguage extends HTMLElement {
     this.order = parseInt(this.getAttribute("order"), 10);
     this.numpid = 1;
     this.edittyp = { name: "EditionType", id: `F${this.order + 1}-DescriptiveDetail_0_EditionType_0`, data: "" };
-    this.langrole = { name: "LanguageRole", id: `F${this.order + 2}-DescriptiveDetail_0_LanguageRole_0`, data: "" };
-    this.langcode = { name: "LanguageCode", id: `F${this.order + 3}-DescriptiveDetail_0_LanguageCode_0`, data: "" };
+    this.langrole = { name: "LanguageRole", id: `F${this.order + 2}-DescriptiveDetail_0_Language_0_LanguageRole_0`, data: "" };
+    this.langcode = { name: "LanguageCode", id: `F${this.order + 3}-DescriptiveDetail_0_Language_0_LanguageCode_0`, data: "" };
   }
 
   connectedCallback() {

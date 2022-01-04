@@ -10,13 +10,14 @@ import { BdsTitle } from "./bdstitle.js";
 import { BdsContributor } from "./bdscontributor.js";
 import { BdsEditionLanguage } from "./bdseditionlang.js";
 import { BdsSubject } from "./bdssbj.js";
+import { BdsAudience } from "./bdsaudience.js";
 
 export class BdsOnixCreate extends HTMLElement {
   constructor() {
     super();
     Object.assign(bdsrecs, JSON.parse(localStorage.getItem("bdsrecs")));
     this.innerHTML = this.addOnixElements();
-    M.Collapsible.init(document.querySelectorAll(".collapsible"), { accordion: false });
+    M.Collapsible.init(document.querySelectorAll(".collapsible"), { accordion: true });
     M.FormSelect.init(document.querySelectorAll("select"), {});
   }
 
@@ -26,7 +27,7 @@ export class BdsOnixCreate extends HTMLElement {
         Object.keys(bdsoe).forEach((key) => delete bdsoe[key]);
         Object.assign(bdsoe, bdsrecs[e.target.value]);
         this.innerHTML = this.addOnixElements(e.target.value);
-        M.Collapsible.init(document.querySelectorAll(".collapsible"), { accordion: false });
+        M.Collapsible.init(document.querySelectorAll(".collapsible"), { accordion: true });
         M.FormSelect.init(document.querySelectorAll("select"), {});
         this.viewOnix();
       }
@@ -78,6 +79,10 @@ export class BdsOnixCreate extends HTMLElement {
           <div class="collapsible-header" id="sbj"><span style="width:100%;">Subjects</span><i class="material-icons right">expand_more</i></div>
           <div class="collapsible-body"><bds-subject order="0"></bds-subject></div>
         </li>
+        <li>
+          <div class="collapsible-header" id="aud"><span style="width:100%;">Audience</span><i class="material-icons right">expand_more</i></div>
+          <div class="collapsible-body"><bds-audience order="0"></bds-audience></div>
+        </li>
       </ul>
       <div class="center">${BdsButton("saveoe", "Preview Onix")}</div>
     `;
@@ -87,6 +92,7 @@ export class BdsOnixCreate extends HTMLElement {
     const ov = document.getElementById("bdsoe");
     //ov.innerHTML = `<div class='col s5'><div style="font-weight:500;font-size:1.25rem;text-align:center;">Table<br/></div><div class="divider"></div><br/>` + formatJson(JSON.stringify(Object.fromEntries(Object.entries(bdsoe).sort()), null, "\n")) + "</div>";
     let pid = Object.fromEntries(Object.entries(bdsoe).sort());
+    console.log(pid);
     pid = Object.entries(pid).map((p) => {
       return [p[0].slice(p[0].indexOf("-") + 1), p[1]];
     });
