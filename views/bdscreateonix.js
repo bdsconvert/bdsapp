@@ -5,8 +5,6 @@ export class BDSCreateOnix {
     document.getElementById("bdsheader").innerHTML = `<h5 class="center">Create Onix</h5>`;
     document.getElementById("bdscontent").innerHTML = `
       <bds-onix-create></bds-onix-create>
-      <p id="bdsoe" class="row z-depth-1"></p>
-      
     `;
   }
 }

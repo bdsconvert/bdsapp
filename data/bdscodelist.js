@@ -402,6 +402,18 @@ export const codelist = {
     {code:'03',desc:'From'},
     {code:'04',desc:'To'},
   ],
+  cl032: [
+    {code:'01',desc:'Lexile code'},
+    {code:'02',desc:'Lexile number'},
+    {code:'03',desc:'Fry Readability score'},
+    {code:'04',desc:'IoE Book Band'},
+    {code:'05',desc:'Fountas & Pinnell Text Level Gradient'},
+    {code:'06',desc:'Lexile measure'},
+    {code:'07',desc:'ATOS for Books'},
+    {code:'08',desc:'Flesch - Kincaid Grade Level'},
+    {code:'09',desc:'Guided Reading Level'},
+    {code:'10',desc:'Reading Recovery Level'},
+  ],
   cl074: [
     {code:'aar',desc:'Afar'},
     {code:'abk',desc:'Abkhaz'},
