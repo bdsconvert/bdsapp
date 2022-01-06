@@ -1,14 +1,14 @@
 export const BdsButton = (id, name) => {
   return `
-    <div><button id="${id}" class="btn yellow darken-2">${name}</button></div>
+    <div><button id="${id}" class="btn-small  darken-2">${name}</button></div>
   `;
 };
 
 export const BdsAddDelButtons = (id, name) => {
   return `
     <div class="row">
-      <div class="col s8 push-s4">${BdsButton("add" + id, "Add " + name)}</div>
-      <div class="col s4 pull-s2">${BdsButton("del" + id, "Remove " + name)}</div>
+      <div class="col s6 push-s1">${BdsButton("add" + id, "Add " + name)}</div>
+      <div class="col s6">${BdsButton("del" + id, "Remove " + name)}</div>
     </div>        
   `;
 };

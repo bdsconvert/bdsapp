@@ -50,12 +50,9 @@ export class BdsOnixCreate extends HTMLElement {
 
   addOnixElements = (rec) => {
     return `
-      <div class="row">
-        <div class="col s6">${BdsSelect2(Object.keys(bdsrecs), rec)}</div>
-        <div class="col s6 center">${BdsButton("saveoe", "Save Onix")}</div>
-      </div>
-      <div class="row">
+      <div class="row" style="display:flex;flex-wrap:wrap;">
         <ul class="col s6 collapsible" style="font-weight:400;font-size:1.25rem">
+          <li>${BdsSelect2(Object.keys(bdsrecs), rec)}</li>
           <li>
             <div class="collapsible-header" id="rrf"><span style="width:100%;">Record Reference</span><i class="material-icons right">expand_more</i></div>
             <div class="collapsible-body"><bds-root order="0"></bds-root></div>        
@@ -93,7 +90,11 @@ export class BdsOnixCreate extends HTMLElement {
             <div class="collapsible-body"><bds-complexity order="0"></bds-complexity></div>
           </li>
         </ul>
-        <p class="col s6" id="bdsoe"></p>
+        <ul class="col s6 collapsible">
+          <li class="center" style="padding:1rem">${BdsButton("saveoe", "Save Onix")}</li>
+          <li><div class="divider"></div></li>
+          <li><p id="bdsoe" style="overflow-wrap:break-word"></p></li>
+        </ul>
       </div>
       <!--<div class="center">${BdsButton("saveoe", "Preview Onix")}</div>-->
     `;
