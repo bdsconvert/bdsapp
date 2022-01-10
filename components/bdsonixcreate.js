@@ -12,6 +12,11 @@ import { BdsEditionLanguage } from "./bdseditionlang.js";
 import { BdsSubject } from "./bdssbj.js";
 import { BdsAudience } from "./bdsaudience.js";
 import { BdsComplexity } from "./bdscomplexity.js";
+import { BdsDesc } from "./bdsdesc.js";
+import { BdsImprint } from "./bdsimprint.js";
+import { BdsPublisher } from "./bdspub.js";
+import { BdsPubDetail } from "./bdspubdetail.js";
+import { BdsSalesRight } from "./bdssalesright.js";
 
 export class BdsOnixCreate extends HTMLElement {
   constructor() {
@@ -89,6 +94,26 @@ export class BdsOnixCreate extends HTMLElement {
             <div class="collapsible-header" id="csi"><span style="width:100%;">Complexity</span><i class="material-icons right">expand_more</i></div>
             <div class="collapsible-body"><bds-complexity order="0"></bds-complexity></div>
           </li>
+          <li>
+            <div class="collapsible-header" id="dsc"><span style="width:100%;">Description</span><i class="material-icons right">expand_more</i></div>
+            <div class="collapsible-body"><bds-desc order="0"></bds-desc></div>
+          </li>
+          <li>
+            <div class="collapsible-header" id="imp"><span style="width:100%;">Imprint</span><i class="material-icons right">expand_more</i></div>
+            <div class="collapsible-body"><bds-imprint order="10"></bds-imprint></div>
+          </li>
+          <li>
+            <div class="collapsible-header" id="pub"><span style="width:100%;">Publisher</span><i class="material-icons right">expand_more</i></div>
+            <div class="collapsible-body"><bds-publisher order="10"></bds-publisher></div>
+          </li>
+          <li>
+            <div class="collapsible-header" id="pbd"><span style="width:100%;">PublisherDetail</span><i class="material-icons right">expand_more</i></div>
+            <div class="collapsible-body"><bds-pubdetail order="10"></bds-pubdetail></div>
+          </li>
+          <li>
+            <div class="collapsible-header" id="srt"><span style="width:100%;">SalesRights</span><i class="material-icons right">expand_more</i></div>
+            <div class="collapsible-body"><bds-salesright order="10"></bds-salesright></div>
+          </li>
         </ul>
         <ul class="col s6 collapsible">
           <li class="center" style="padding:1rem">${BdsButton("saveoe", "Save Onix")}</li>
@@ -96,7 +121,7 @@ export class BdsOnixCreate extends HTMLElement {
           <li><p id="bdsoe" style="overflow-wrap:break-word"></p></li>
         </ul>
       </div>
-      <!--<div class="center">${BdsButton("saveoe", "Preview Onix")}</div>-->
+      
     `;
   };
 
