@@ -17,6 +17,7 @@ import { BdsImprint } from "./bdsimprint.js";
 import { BdsPublisher } from "./bdspub.js";
 import { BdsPubDetail } from "./bdspubdetail.js";
 import { BdsSalesRight } from "./bdssalesright.js";
+import { BdsRelated } from "./bdsrelated.js";
 
 export class BdsOnixCreate extends HTMLElement {
   constructor() {
@@ -113,6 +114,10 @@ export class BdsOnixCreate extends HTMLElement {
           <li>
             <div class="collapsible-header" id="srt"><span style="width:100%;">SalesRights</span><i class="material-icons right">expand_more</i></div>
             <div class="collapsible-body"><bds-salesright order="10"></bds-salesright></div>
+          </li>
+          <li>
+            <div class="collapsible-header" id="rel"><span style="width:100%;">RelatedProduct</span><i class="material-icons right">expand_more</i></div>
+            <div class="collapsible-body"><bds-related order="10"></bds-related></div>
           </li>
         </ul>
         <ul class="col s6 collapsible">

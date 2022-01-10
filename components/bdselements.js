@@ -26,7 +26,7 @@ export const BdsText = (val) => {
 
 export const BdsSelect = (typ, cl) => {
   let sel = `
-    <div class="input-field" id="${typ.name}">
+    <div class="input-field small" id="${typ.name}">
       <select id="${typ.id}">
         <option value="" disabled selected>Choose a ${typ.name}</option>
   `;
