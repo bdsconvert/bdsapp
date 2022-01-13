@@ -15,7 +15,6 @@ export const BdsAddDelButtons = (id, name) => {
 
 export const BdsText = (val) => {
   const value = val.data ? val.data : "";
-  console.log(value);
   return `
     <div class="input-field" id=${val.name}>
       <input id="${val.id}" type="text" class="validate" value="${value}">

@@ -1,6 +1,6 @@
 export class BDSContact {
   async getPage() {
-    document.getElementById("bdsheader").innerHTML = `<h4 class="center">Contact BDS</h4>`;
+    // document.getElementById("bdsheader").innerHTML = `<h4 class="center">Contact BDS</h4>`;
     document.getElementById("bdscontent").innerHTML = `
         <form id="contact-form">
           <div class="row">

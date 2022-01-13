@@ -1,6 +1,6 @@
 export class BDSTerms {
   async getPage() {
-    document.getElementById("bdsheader").innerHTML = `<h3 style="text-align:center;">Terms</h3>`;
+    // document.getElementById("bdsheader").innerHTML = `<h3 style="text-align:center;">Terms</h3>`;
     document.getElementById("bdscontent").innerHTML = `
       <div>
       <h5 style="text-align:center;border:2px solid black;">SOFTWARE AS A SERVICE AGREEMENT (V2.0)</h5>

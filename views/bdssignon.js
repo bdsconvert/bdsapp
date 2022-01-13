@@ -1,11 +1,12 @@
 import { authObj } from "../data/bdsfirebase.js";
+import { navigateTo } from "../index.js";
 import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-auth.js";
 
 export class BDSSignon {
   async getPage() {
     document.getElementById("bdsheader").innerHTML = ``;
     document.getElementById("bdscontent").innerHTML = `
-        <h4>Sign On</h4>
+        <!--<h4>Sign On</h4>-->
         <form id="signon-form">
           <div class="row">
             <div class="input-field col s12">
@@ -31,8 +32,8 @@ export class BDSSignon {
 
     signInWithEmailAndPassword(authObj.auth, email, password)
       .then((cred) => {
-        signonForm.reset();
-        document.querySelector(".home").click();
+        navigateTo("/");
+        //signonForm.reset();
       })
       .catch((err) => {
         alert(err.message);

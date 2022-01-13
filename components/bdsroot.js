@@ -14,21 +14,21 @@ export class BdsRoot extends HTMLElement {
     this.ntftyp = { name: "NotificationType", id: `A${this.order + 2}-NotificationType_0`, data: bdsoe[`A${this.order + 2}-NotificationType_0`] };
     this.bdsroot[this.recref.id] = this.recref.data;
     this.bdsroot[this.ntftyp.id] = this.ntftyp.data;
-    console.log(this.bdsroot);
+    //console.log(this.bdsroot);
   }
 
   connectedCallback() {
     this.addEventListener("change", (e) => {
       bdsoe[e.target.id] = e.target.value;
-      this.bdsroot[e.target.id] = e.target.value;
-      this.viewOnixFragment();
+      //this.bdsroot[e.target.id] = e.target.value;
+      //this.viewOnixFragment();
     });
 
     document.getElementById("rrf").addEventListener("click", (e) => {
       if (this.innerHTML === "") {
         this.innerHTML = `${BdsText(this.recref)} ${BdsSelect(this.ntftyp, codelist.cl001)}<p id="bdsroot" style="font-size:0.9rem;"></p>`;
         M.FormSelect.init(document.querySelectorAll("select"));
-        this.viewOnixFragment();
+        //this.viewOnixFragment();
       }
     });
   }

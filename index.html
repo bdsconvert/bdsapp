@@ -8,6 +8,10 @@
     <title>bdsapp</title>
   </head>
   <style>
+    body {
+      /* font: calc(0.25em + 0.9 * (100vw - 120px) / 100) 'Dancing Script', cursive, fantasy; */
+    }
+
     .container {
       width: 95%;
     }
@@ -18,7 +22,7 @@
     }    
 
     header, main, footer {
-      padding-left: 260px;
+      padding-left: 200px;
     }
 
     @media only screen and (max-width : 992px) {
@@ -38,34 +42,38 @@
     <header class="z-depth-0">      
       <div class="navbar z-depth-0">
         <nav class="white z-depth-0 nav-extended">
-          <div class="nav-wrapper container">
-              <a href="/" class="brand-logo home teal-text" page-link><i class="material-icons teal-text">local_library</i>BookDataSolutions</a>  
+          <div class="nav-wrapper z-depth-0">
+            <div class="container">
+              <!-- <a class="brand-logo home teal-text col s6 center" page-link><i class="material-icons teal-text">local_library</i><span id="hdrlbl"></span></a> -->
+              <a href="/" class="brand-logo home teal-text left" page-link><i class="material-icons teal-text" page-link id="home" style="padding-left:1rem;">local_library</i></a>
+              <a href="/"><span id="home" class="brand-logo home teal-text left" style="font-size:0.8rem; padding:1.5rem 0 0 1rem;">BDS</span></a>
+              <span class="brand-logo home teal-text center" id="hdrlbl"></span>
               <ul class="right hide-on-med-and-down">
                 <li><a href="/signup" class="teal-text logged-out signup" page-link><i class="material-icons left" page-link id="signup">app_registration</i>Signup</a></li>
                 <li><a href="/signon" class="teal-text logged-out signon" page-link><i class="material-icons left" page-link id="signon">login</i>Signon</a></li>               
                 <li><a href="/signout" class="teal-text logged-in signout"><i class="material-icons left signout" page-link id="signout">logout</i>SignOut</a></li>
               </ul>
-              <a href="#" data-target="mobile" class="sidenav-trigger left teal-text"><i class="material-icons">menu</i></a>      
-          </div>
-          <!-- <div class="nav-content"> -->
-          </div>
+            </div>
+            <a href="#" data-target="mobile" class="sidenav-trigger right teal-text"><i class="material-icons">menu</i></a>  
+          </div> 
         </nav>
       </div>
+      <!-- <h4 id="hdrlbl"></h4> -->
     </header>
     <!-- Side Navigation -->
     <sidenav>
-      <div class="sidenav sidenav-fixed collection with-header z-depth-0" id="mobile" style="width:260px;">
-          <div class="collection-item center home teal-text" page-link><i class="large material-icons">local_library</i><h5>BDS</h5></div>
-          <a href="/" class="sidenav-close collection-item home" page-link><i class="material-icons left" page-link id="home">home</i>Home</a>
-          <a href="/contact" class="sidenav-close collection-item contact" page-link><i class="material-icons left" page-link id="contact">contact_page</i>Contact</a>
-          <a href="/terms" class="sidenav-close collection-item terms" page-link><i class="material-icons left" page-link id="policy">policy</i>Terms</a>
-          <a href="/signup" class="sidenav-close collection-item logged-out signup" page-link><i class="material-icons left" page-link id="signup">app_registration</i>SignUp</a>
-          <a href="/signon" class="sidenav-close collection-item logged-out signon" page-link><i class="material-icons left" page-link id="signon">login</i>SignOn</a>       
-          <a href="/signout" class="sidenav-close collection-item logged-in signout" page-link><i class="material-icons left signout" page-link id="signout">logout</i>SignOut</a>
-          <a href="/profile" class="sidenav-close collection-item logged-in profile" page-link><i class="material-icons left" page-link id="profile">person_outline</i>Profile</a>
-          <a href="/workqueue" class="sidenav-close collection-item logged-in workqueue" page-link><i class="material-icons left" page-link id="workqueue">list</i>Workqueue</a>
-          <a href="/createonix" class="sidenav-close collection-item logged-in createonix" page-link><i class="material-icons left" page-link id="createonix">create</i>Create Onix</a>
-          <a href="/uploadfile" class="sidenav-close collection-item logged-in uploadfile" page-link><i class="material-icons left" page-link id="fileupload">file_upload</i>Upload File</a>
+      <div class="sidenav sidenav-fixed collection with-header z-depth-0" id="mobile" style="width:200px;">
+          <a class="collection-item center waves-effect home teal-text" page-link><i class="large material-icons">local_library</i><h5>BDS</h5></a>
+          <a href="/" class="sidenav-close collection-item waves-effect home" page-link><i class="material-icons left" page-link id="home">home</i>Home</a>
+          <a href="/contact" class="sidenav-close collection-item waves-effect contact" page-link><i class="material-icons left" page-link id="contact">contact_page</i>Contact</a>
+          <a href="/terms" class="sidenav-close collection-item waves-effect terms" page-link><i class="material-icons left" page-link id="policy">policy</i>Terms</a>
+          <a href="/signup" class="sidenav-close collection-item waves-effect logged-out signup" page-link><i class="material-icons left" page-link id="signup">app_registration</i>SignUp</a>
+          <a href="/signon" class="sidenav-close collection-item waves-effect logged-out signon" page-link><i class="material-icons left" page-link id="signon">login</i>SignOn</a>       
+          <a href="/signout" class="sidenav-close collection-item waves-effect logged-in signout" page-link><i class="material-icons left signout" page-link id="signout">logout</i>SignOut</a>
+          <a href="/profile" class="sidenav-close collection-item waves-effect logged-in profile" page-link><i class="material-icons left" page-link id="profile">person_outline</i>Profile</a>
+          <a href="/workqueue" class="sidenav-close collection-item waves-effect logged-in workqueue" page-link><i class="material-icons left" page-link id="workqueue">list</i>Workqueue</a>
+          <a href="/createonix" class="sidenav-close collection-item waves-effect logged-in createonix" page-link><i class="material-icons left" page-link id="createonix">create</i>Create Onix</a>
+          <a href="/uploadfile" class="sidenav-close collection-item waves-effect logged-in uploadfile" page-link><i class="material-icons left" page-link id="fileupload">file_upload</i>Upload File</a>
       </div>
     </sidenav>
     <main class="container" id="main">

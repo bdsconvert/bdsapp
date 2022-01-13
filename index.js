@@ -13,22 +13,24 @@ import { BDSCreateOnix } from "./views/bdscreateonix.js";
 
 export const router = async () => {
   const routes = [
-    { path: "/", view: BDSHome },
-    { path: "/contact", view: BDSContact },
-    { path: "/terms", view: BDSTerms },
-    { path: "/signup", view: BDSSignup },
-    { path: "/signon", view: BDSSignon },
-    { path: "/signout", view: BDSSignout },
-    { path: "/profile", view: BDSProfile },
-    { path: "/workqueue", view: BDSWorkqueue },
-    { path: "/createonix", view: BDSCreateOnix },
-    { path: "/uploadfile", view: BDSUploadfile }
+    { path: "/", title: "BookDataSolutions", view: BDSHome },
+    { path: "/contact", title: "Contact BDS", view: BDSContact },
+    { path: "/terms", title: "Terms", view: BDSTerms },
+    { path: "/signup", title: "Signup", view: BDSSignup },
+    { path: "/signon", title: "Signin", view: BDSSignon },
+    { path: "/signout", title: "Signout", view: BDSSignout },
+    { path: "/profile", title: "Profile", view: BDSProfile },
+    { path: "/workqueue", title: "Workqueue", view: BDSWorkqueue },
+    { path: "/createonix", title: "Create Onix", view: BDSCreateOnix },
+    { path: "/uploadfile", title: "Upload File", view: BDSUploadfile }
   ];
 
   let match = routes.find((route) => window.location.pathname === route.path);
-  match = match ? match : { path: routes[0].path, view: routes[0].view }; // Go home if no match
+  match = match ? match : { path: routes[0].path, title: "BookDataSolutions", view: routes[0].view }; // Go home if no match
   const view = new match.view();
   await view.getPage();
+  document.getElementById("hdrlbl").innerText = `${match.title}`;
+  //M.getInstance(document.querySelector(".sidenav")).close();
   //document.getElementById("bdsheader").innerHTML = "";
   //document.getElementById("bdscontent").innerHTML = await view.getPage();
   //initialize materialize components
@@ -50,6 +52,7 @@ export const navigateTo = (url) => {
 document.addEventListener("DOMContentLoaded", (e) => {
   M.Modal.init(document.querySelectorAll(".modal"), {});
   M.Sidenav.init(document.querySelectorAll(".sidenav"), {});
+  //M.getInstance(document.querySelector(".sidenav")).open();
   navigateTo("/"); // Go Home
   //localStorage.clear();
 });
