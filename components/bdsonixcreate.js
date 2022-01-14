@@ -19,6 +19,7 @@ import { BdsPubDetail } from "./bdspubdetail.js";
 import { BdsSalesRight } from "./bdssalesright.js";
 import { BdsRelated } from "./bdsrelated.js";
 import { BdsMarket } from "./bdsmarket.js";
+import { BdsProdsupply } from "./bdsprodsupply.js";
 
 const components = [
   { header: "Record Reference", id: "rrf", component: "bds-root" },
@@ -36,7 +37,7 @@ const components = [
   { header: "Publisher Detail", id: "pbd", component: "bds-pubdetail" },
   { header: "Sales Rights", id: "srt", component: "bds-salesright" },
   { header: "Related Product", id: "rel", component: "bds-related" },
-  { header: "Market", id: "mkt", component: "bds-market" }
+  { header: "Product Supply", id: "psd", component: "bds-prodsupply" }
 ];
 
 export class BdsOnixCreate extends HTMLElement {
