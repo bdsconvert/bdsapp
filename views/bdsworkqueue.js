@@ -32,25 +32,22 @@ export class BDSWorkqueue {
     console.log("Refreshing Userfiles...");
     keyword = keyword.trim().length > 0 ? keyword : "";
     return new Promise((resolve) => {
-      onSnapshot(
-        query(collection(fbdb, authObj.bdsuser), where("filename", ">=", keyword), where("filename", "<=", keyword + "\uf8ff"), limit(10)),
-        (docs) => {
-          this.userfiles = [];
-          docs.forEach((doc) => {
-            this.userfiles.push({
-              filename: doc.id,
-              filetype: doc.data().filetype,
-              timestamp: doc.data().timestamp ? doc.data().timestamp : Date.now(),
-              fields: doc.data().fields ? doc.data().fields : [],
-              templates: doc.data().templates ? doc.data().templates : {},
-              keyword: keyword
-            });
+      onSnapshot(query(collection(fbdb, authObj.bdsuser), where("filename", ">=", keyword), where("filename", "<=", keyword + "\uf8ff"), limit(10)), (docs) => {
+        this.userfiles = [];
+        docs.forEach((doc) => {
+          this.userfiles.push({
+            filename: doc.id,
+            filetype: doc.data().filetype,
+            timestamp: doc.data().timestamp ? doc.data().timestamp : Date.now(),
+            fields: doc.data().fields ? doc.data().fields : [],
+            templates: doc.data().templates ? doc.data().templates : {},
+            keyword: keyword
           });
-          localStorage.clear();
-          localStorage.setItem(`userfiles`, JSON.stringify(this.userfiles));
-          resolve();
-        }
-      );
+        });
+        // localStorage.clear();
+        localStorage.setItem(`userfiles`, JSON.stringify(this.userfiles));
+        resolve();
+      });
     });
   };
   /////////////////////////////////////////////////////////////////////////

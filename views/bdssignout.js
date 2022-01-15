@@ -13,7 +13,7 @@ export class BDSSignout {
     console.log(`Signing Out ${user}`);
     signOut(authObj.auth)
       .then(() => {
-        localStorage.clear();
+        // localStorage.clear();
       })
       .catch((err) => alert(err.message));
   }

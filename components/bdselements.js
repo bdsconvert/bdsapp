@@ -30,7 +30,7 @@ export const BdsSelect = (typ, cl) => {
         <option value="" disabled selected>Choose ${typ.name}</option>
   `;
   cl.forEach((l) => {
-    sel += `<option value=${l.code} ${l.code === typ.data ? "selected" : ""}>${l.desc}</option>`;
+    sel += `<option value=${l.code} ${l.code === typ.data ? "selected" : ""}>${l.code} - ${l.desc}</option>`;
   });
   sel += `
       </select>

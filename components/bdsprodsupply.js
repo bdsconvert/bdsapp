@@ -8,7 +8,7 @@ import { BdsPrice } from "./bdsprice.js";
 const psdcomponents = [
   { header: "Market", id: "mkt", component: "bds-market" },
   { header: "Supplier", id: "sup", component: "bds-supply" },
-  { header: "Price", id: "sup", component: "bds-price" }
+  { header: "Price", id: "prc", component: "bds-price" }
 ];
 
 export class BdsProdsupply extends HTMLElement {

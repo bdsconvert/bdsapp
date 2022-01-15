@@ -7,7 +7,7 @@ export class BdsPrice extends HTMLElement {
     super();
     this.order = parseInt(this.getAttribute("order"), 10);
     this.index = parseInt(this.getAttribute("index"), 10);
-    this.numsup = 1;
+    this.numprc = 1;
     this.prcuit = { name: "UnpricedItemType", id: "", data: "" };
     this.prcptc = { name: "PriceType", id: "", data: "" };
     this.prcpqf = { name: "PriceQualifier", id: "", data: "" };
@@ -67,39 +67,39 @@ export class BdsPrice extends HTMLElement {
 
   addPRC = () => {
     this.innerHTML = "";
-    this.prcuit.id = `Q${this.order + 1}-ProductSupply_${this.index - 1}_SupplyDetail_0_UnpricedItemType_0`;
+    this.prcuit.id = `R${(this.order + 1).toString().padStart(2, "0")}-ProductSupply_${this.index - 1}_SupplyDetail_0_UnpricedItemType_0`;
     this.prcuit.data = bdsoe[this.prcuit.id];
     for (let idx = 0; idx < this.numprc; idx++) {
       // this.lbl = `Supply${idx + 1}`;
-      this.prcptc.id = `Q${this.order + idx * 16 + 2}-ProductSupply_${this.index - 1}_SupplyDetail_0_Price_${idx}_PriceType_0`;
+      this.prcptc.id = `R${(this.order + idx * 16 + 2).toString().padStart(2, "0")}-ProductSupply_${this.index - 1}_SupplyDetail_0_Price_${idx}_PriceType_0`;
       this.prcptc.data = bdsoe[this.prcptc.id];
-      this.prcpqf.id = `Q${this.order + idx * 16 + 3}-ProductSupply_${this.index - 1}_SupplyDetail_0_Price_${idx}_PriceQualifier_0`;
+      this.prcpqf.id = `R${(this.order + idx * 16 + 3).toString().padStart(2, "0")}-ProductSupply_${this.index - 1}_SupplyDetail_0_Price_${idx}_PriceQualifier_0`;
       this.prcpqf.data = bdsoe[this.prcpqf.id];
-      this.prcdct.id = `Q${this.order + idx * 16 + 4}-ProductSupply_${this.index - 1}_SupplyDetail_0_Price_${idx}_DiscountCoded_0_DiscountCodeType_0`;
+      this.prcdct.id = `R${(this.order + idx * 16 + 4).toString().padStart(2, "0")}-ProductSupply_${this.index - 1}_SupplyDetail_0_Price_${idx}_DiscountCoded_0_DiscountCodeType_0`;
       this.prcdct.data = bdsoe[this.prcdct.id];
-      this.prcdtn.id = `Q${this.order + idx * 16 + 5}-ProductSupply_${this.index - 1}_SupplyDetail_0_Price_${idx}_DiscountCoded_0_DiscountCodeTypeName_0`;
+      this.prcdtn.id = `R${(this.order + idx * 16 + 5).toString().padStart(2, "0")}-ProductSupply_${this.index - 1}_SupplyDetail_0_Price_${idx}_DiscountCoded_0_DiscountCodeTypeName_0`;
       this.prcdtn.data = bdsoe[this.prcdtn.id];
-      this.prcdis.id = `Q${this.order + idx * 16 + 6}-ProductSupply_${this.index - 1}_SupplyDetail_0_Price_${idx}_DiscountCoded_0_DiscountCode_0`;
+      this.prcdis.id = `R${(this.order + idx * 16 + 6).toString().padStart(2, "0")}-ProductSupply_${this.index - 1}_SupplyDetail_0_Price_${idx}_DiscountCoded_0_DiscountCode_0`;
       this.prcdis.data = bdsoe[this.prcdis.id];
-      this.prcdit.id = `Q${this.order + idx * 16 + 7}-ProductSupply_${this.index - 1}_SupplyDetail_0_Price_${idx}_Discount_0_DiscountType_0`;
+      this.prcdit.id = `R${(this.order + idx * 16 + 7).toString().padStart(2, "0")}-ProductSupply_${this.index - 1}_SupplyDetail_0_Price_${idx}_Discount_0_DiscountType_0`;
       this.prcdit.data = bdsoe[this.prcdit.id];
-      this.prcdip.id = `Q${this.order + idx * 16 + 8}-ProductSupply_${this.index - 1}_SupplyDetail_0_Price_${idx}_Discount_0_DiscountPercent_0`;
+      this.prcdip.id = `R${(this.order + idx * 16 + 8).toString().padStart(2, "0")}-ProductSupply_${this.index - 1}_SupplyDetail_0_Price_${idx}_Discount_0_DiscountPercent_0`;
       this.prcdip.data = bdsoe[this.prcdip.id];
-      this.prcdia.id = `Q${this.order + idx * 16 + 9}-ProductSupply_${this.index - 1}_SupplyDetail_0_Price_${idx}_Discount_0_DiscountAmount_0`;
+      this.prcdia.id = `R${(this.order + idx * 16 + 9).toString().padStart(2, "0")}-ProductSupply_${this.index - 1}_SupplyDetail_0_Price_${idx}_Discount_0_DiscountAmount_0`;
       this.prcdia.data = bdsoe[this.prcdia.id];
-      this.prcsts.id = `Q${this.order + idx * 16 + 10}-ProductSupply_${this.index - 1}_SupplyDetail_0_Price_${idx}_PriceStatus_0`;
+      this.prcsts.id = `R${(this.order + idx * 16 + 10).toString().padStart(2, "0")}-ProductSupply_${this.index - 1}_SupplyDetail_0_Price_${idx}_PriceStatus_0`;
       this.prcsts.data = bdsoe[this.prcsts.id];
-      this.prcamt.id = `Q${this.order + idx * 16 + 11}-ProductSupply_${this.index - 1}_SupplyDetail_0_Price_${idx}_PriceAmount_0`;
+      this.prcamt.id = `R${(this.order + idx * 16 + 11).toString().padStart(2, "0")}-ProductSupply_${this.index - 1}_SupplyDetail_0_Price_${idx}_PriceAmount_0`;
       this.prcamt.data = bdsoe[this.prcamt.id];
-      this.prccuc.id = `Q${this.order + idx * 16 + 12}-ProductSupply_${this.index - 1}_SupplyDetail_0_Price_${idx}_CurrencyCode_0`;
+      this.prccuc.id = `R${(this.order + idx * 16 + 12).toString().padStart(2, "0")}-ProductSupply_${this.index - 1}_SupplyDetail_0_Price_${idx}_CurrencyCode_0`;
       this.prccuc.data = bdsoe[this.prccuc.id];
-      this.prccui.id = `Q${this.order + idx * 16 + 13}-ProductSupply_${this.index - 1}_SupplyDetail_0_Price_${idx}_Territory_0_CountriesIncluded_0`;
+      this.prccui.id = `R${(this.order + idx * 16 + 13).toString().padStart(2, "0")}-ProductSupply_${this.index - 1}_SupplyDetail_0_Price_${idx}_Territory_0_CountriesIncluded_0`;
       this.prccui.data = bdsoe[this.prccui.id];
-      this.prcrei.id = `Q${this.order + idx * 16 + 14}-ProductSupply_${this.index - 1}_SupplyDetail_0_Price_${idx}_Territory_0_RegionsIncluded_0`;
+      this.prcrei.id = `R${(this.order + idx * 16 + 14).toString().padStart(2, "0")}-ProductSupply_${this.index - 1}_SupplyDetail_0_Price_${idx}_Territory_0_RegionsIncluded_0`;
       this.prcrei.data = bdsoe[this.prcrei.id];
-      this.prccue.id = `Q${this.order + idx * 16 + 15}-ProductSupply_${this.index - 1}_SupplyDetail_0_Price_${idx}_Territory_0_CountriesExcluded_0`;
+      this.prccue.id = `R${(this.order + idx * 16 + 15).toString().padStart(2, "0")}-ProductSupply_${this.index - 1}_SupplyDetail_0_Price_${idx}_Territory_0_CountriesExcluded_0`;
       this.prccue.data = bdsoe[this.prccue.id];
-      this.prcree.id = `Q${this.order + idx * 16 + 16}-ProductSupply_${this.index - 1}_SupplyDetail_0_Price_${idx}_Territory_0_RegionsExcluded_0`;
+      this.prcree.id = `R${(this.order + idx * 16 + 16).toString().padStart(2, "0")}-ProductSupply_${this.index - 1}_SupplyDetail_0_Price_${idx}_Territory_0_RegionsExcluded_0`;
       this.prcree.data = bdsoe[this.prcree.id];
       this.innerHTML += `
         ${BdsSelect(this.prcuit, codelist.cl057)}
@@ -115,7 +115,7 @@ export class BdsPrice extends HTMLElement {
         ${BdsText(this.prcamt)}
         ${BdsSelect(this.prccuc, codelist.cl096)}
         ${BdsSelect(this.prccui, codelist.cl091)}
-        ${BdsSelect(this.prcreis, codelist.cl049)}
+        ${BdsSelect(this.prcrei, codelist.cl049)}
         ${BdsSelect(this.prccue, codelist.cl091)}
         ${BdsSelect(this.prcree, codelist.cl049)}
       `;
