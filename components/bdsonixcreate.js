@@ -1,3 +1,4 @@
+import { SaveUserFile, SaveTitleContents } from "../data/bdsfirebase.js";
 import { codelist } from "../data/bdscodelist.js";
 import { BdsText, BdsSelect } from "./bdselements.js";
 import { BdsButton, BdsSelect2 } from "./bdselements.js";
@@ -60,12 +61,12 @@ export class BdsOnixCreate extends HTMLElement {
         M.FormSelect.init(document.querySelectorAll("select"), {});
       }
       this.viewOnix();
-      this.saveOnix();
+      // this.saveOnix();
     });
 
     this.addEventListener("click", (e) => {
       if (e.target.id === "saveoe") {
-        this.saveOnix();
+        this.saveOnix("CreateOnix1.dat");
         //this.viewOnix();
       }
     });
@@ -112,9 +113,8 @@ export class BdsOnixCreate extends HTMLElement {
     });
     //ov.innerHTML = `<div class='col s12'><div style="font-weight:500;font-size:1.25rem;text-align:center;">Onix<br/></div><div class="divider"></div><br/>` + formatXml("<Product>" + json2xml(unflatten(Object.fromEntries(pid))) + "</Product>") + "</div>";
     ov.innerHTML = formatXml("<Product>" + json2xml(unflatten(Object.fromEntries(pid))) + "</Product>");
-  };
 
-  saveOnix = () => {
+    // Save to localStorage
     if (bdsrecs[`${bdsoe["A1-RecordReference_0"]}`]) {
       Object.keys(`${bdsoe["A1-RecordReference_0"]}`).forEach((key) => delete bdsrecs[`${bdsoe["A1-RecordReference_0"]}`][key]);
     }
@@ -123,68 +123,35 @@ export class BdsOnixCreate extends HTMLElement {
       localStorage.setItem("bdsrecs", JSON.stringify(bdsrecs));
     }
   };
+
+  saveOnix = async (file) => {
+    const bdsoeflat = { ...bdsoe };
+    //let pid = Object.fromEntries(Object.entries(bdsoeflat).sort());
+    // pid = Object.entries(pid).map((p) => {
+    //   return [p[0].slice(p[0].indexOf("-") + 1), p[1]];
+    // });
+    //const bdsflat = Object.fromEntries(pid);
+
+    let bdsflat = Object.fromEntries(Object.entries(bdsoeflat).sort());
+    await SaveUserFile({
+      filename: file,
+      filetype: "Dat",
+      timestamp: Date.now()
+    });
+    await SaveTitleContents(
+      file,
+      {
+        RecordReference: bdsflat["A1-RecordReference_0"],
+        Title: bdsflat["D3-DescriptiveDetail_0_TitleDetail_0_TitleElement_0_TitleText_0"],
+        Author: bdsflat["E3-DescriptiveDetail_0_Contributor_0_PersonName_0"]
+      },
+      {
+        json: JSON.stringify(bdsflat),
+        xml: ""
+      }
+    );
+    console.log(`Title/Contents saved for File: ${file}, RecordReference: ${bdsflat["D3-DescriptiveDetail_0_TitleDetail_0_TitleElement_0_TitleText_0"]}`);
+  };
 }
 
 window.customElements.define("bds-onix-create", BdsOnixCreate);
-
-/*<li>
-<div class="collapsible-header grey lighten-4" id="rrf"><span style="width:100%;">Record Reference</span><i class="material-icons right">expand_more</i></div>
-<div class="collapsible-body"><bds-root order="0"></bds-root></div>        
-</li>                             
-<li>
-<div class="collapsible-header grey lighten-4" id="pid"><span style="width:100%;">Identifiers</span><i class="material-icons right">expand_more</i></div>
-<div class="collapsible-body"><bds-pid order="2"></bds-pid></div>
-</li>
-<li>
-<div class="collapsible-header grey lighten-4" id="pcf"><span style="width:100%;">Composition</span><i class="material-icons right">expand_more</i></div>
-<div class="collapsible-body"><bds-product-composition order="10"></bds-product-composition></div>
-</li>
-<li>
-<div class="collapsible-header grey lighten-4" id="ttl"><span style="width:100%;">Title</span><i class="material-icons right">expand_more</i></div>
-<div class="collapsible-body"><bds-title order="0"></bds-title></div>
-</li>
-<li>
-<div class="collapsible-header grey lighten-4" id="cnt"><span style="width:100%;">Contributors</span><i class="material-icons right">expand_more</i></div>
-<div class="collapsible-body"><bds-contributor order="0"></bds-contributor></div>
-</li>
-<li>
-<div class="collapsible-header grey lighten-4" id="eln"><span style="width:100%;">Edition & Language</span><i class="material-icons right">expand_more</i></div>
-<div class="collapsible-body"><bds-edition-language order="0"></bds-edition-language></div>
-</li>
-<li>
-<div class="collapsible-header grey lighten-4" id="sbj"><span style="width:100%;">Subjects</span><i class="material-icons right">expand_more</i></div>
-<div class="collapsible-body"><bds-subject order="0"></bds-subject></div>
-</li>
-<li>
-<div class="collapsible-header grey lighten-4" id="aud"><span style="width:100%;">Audience</span><i class="material-icons right">expand_more</i></div>
-<div class="collapsible-body"><bds-audience order="0"></bds-audience></div>
-</li>
-<li>
-<div class="collapsible-header grey lighten-4" id="csi"><span style="width:100%;">Complexity</span><i class="material-icons right">expand_more</i></div>
-<div class="collapsible-body"><bds-complexity order="0"></bds-complexity></div>
-</li>
-<li>
-<div class="collapsible-header grey lighten-4" id="dsc"><span style="width:100%;">Description</span><i class="material-icons right">expand_more</i></div>
-<div class="collapsible-body"><bds-desc order="0"></bds-desc></div>
-</li>
-<li>
-<div class="collapsible-header grey lighten-4" id="imp"><span style="width:100%;">Imprint</span><i class="material-icons right">expand_more</i></div>
-<div class="collapsible-body"><bds-imprint order="10"></bds-imprint></div>
-</li>
-<li>
-<div class="collapsible-header grey lighten-4" id="pub"><span style="width:100%;">Publisher</span><i class="material-icons right">expand_more</i></div>
-<div class="collapsible-body"><bds-publisher order="10"></bds-publisher></div>
-</li>
-<li>
-<div class="collapsible-header grey lighten-4" id="pbd"><span style="width:100%;">PublisherDetail</span><i class="material-icons right">expand_more</i></div>
-<div class="collapsible-body"><bds-pubdetail order="10"></bds-pubdetail></div>
-</li>
-<li>
-<div class="collapsible-header grey lighten-4" id="srt"><span style="width:100%;">SalesRights</span><i class="material-icons right">expand_more</i></div>
-<div class="collapsible-body"><bds-salesright order="10"></bds-salesright></div>
-</li>
-<li>
-<div class="collapsible-header grey lighten-4" id="rel"><span style="width:100%;">RelatedProduct</span><i class="material-icons right">expand_more</i></div>
-<div class="collapsible-body"><bds-related order="10"></bds-related></div>
-</li> 
-*/
