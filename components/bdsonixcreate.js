@@ -1,4 +1,4 @@
-import { GetOnixFiles, GetTitles, SaveUserFile, SaveTitleContents } from "../data/bdsfirebase.js";
+import { GetOnixFiles, GetTitles, GetContents, SaveUserFile, SaveTitleContents } from "../data/bdsfirebase.js";
 import { codelist } from "../data/bdscodelist.js";
 import { BdsText, BdsSelect } from "./bdselements.js";
 import { BdsButton, BdsSelect2 } from "./bdselements.js";
@@ -46,7 +46,9 @@ export class BdsOnixCreate extends HTMLElement {
   //   .filter((file) => file.filetype === "Dat")
   //   .map((file) => file.filename);
   onixcreatefiles = [];
+  fileid = "";
   titles = [];
+  content = "";
   constructor() {
     super();
 
@@ -67,22 +69,33 @@ export class BdsOnixCreate extends HTMLElement {
     this.addEventListener("change", (e) => {
       if (e.target.id === "ocfile") {
         GetTitles(e.target.value, "", 25).then(() => {
+          this.fileid = e.target.value;
+          console.log(this.fielid);
           this.titles = JSON.parse(localStorage.getItem(`titles`)).map((title) => title.RecordReference);
-          console.log(this.titles);
           this.innerHTML = this.addOnixFiles(e.target.value);
           this.innerHTML += this.addOnixElements();
           M.Collapsible.init(document.querySelectorAll(".collapsible"), { accordion: true });
           M.FormSelect.init(document.querySelectorAll("select"), {});
         });
       } else if (e.target.id === "onixrec") {
-        Object.keys(bdsoe).forEach((key) => delete bdsoe[key]);
-        Object.assign(bdsoe, bdsrecs[e.target.value]);
-        this.innerHTML = this.addOnixFiles() + this.addOnixElements(e.target.value);
-        M.Collapsible.init(document.querySelectorAll(".collapsible"), { accordion: true });
-        M.FormSelect.init(document.querySelectorAll("select"), {});
+        // const fileid = JSON.parse(localStorage.getItem(`titles`))[0].fileid;
+        GetContents(this.fileid, e.target.value).then(() => {
+          // console.log(JSON.parse(localStorage.getItem(`json`)));
+          Object.keys(bdsoe).forEach((key) => delete bdsoe[key]);
+          Object.assign(bdsoe, JSON.parse(localStorage.getItem(`json`)));
+          this.innerHTML = this.addOnixFiles(this.fileid) + this.addOnixElements(e.target.value);
+          M.Collapsible.init(document.querySelectorAll(".collapsible"), { accordion: true });
+          M.FormSelect.init(document.querySelectorAll("select"), {});
+          this.viewOnix();
+        });
+        // Object.keys(bdsoe).forEach((key) => delete bdsoe[key]);
+        // Object.assign(bdsoe, bdsrecs[e.target.value]);
+        // this.innerHTML = this.addOnixFiles() + this.addOnixElements(e.target.value);
+        // M.Collapsible.init(document.querySelectorAll(".collapsible"), { accordion: true });
+        // M.FormSelect.init(document.querySelectorAll("select"), {});
+      } else {
+        this.viewOnix();
       }
-      //this.viewOnix();
-      // this.saveOnix();
     });
 
     this.addEventListener("click", async (e) => {
@@ -97,8 +110,8 @@ export class BdsOnixCreate extends HTMLElement {
         this.innerHTML = this.addOnixFiles();
         M.FormSelect.init(document.querySelectorAll("select"), {});
       } else if (e.target.id === "saveoe") {
-        //this.saveOnix("CreateOnix1.dat");
-        //this.viewOnix();
+        this.saveOnix(this.fileid);
+        this.titles.push(bdsoe["A1-RecordReference_0"]);
       }
     });
   }
@@ -158,23 +171,17 @@ export class BdsOnixCreate extends HTMLElement {
     ov.innerHTML = formatXml("<Product>" + json2xml(unflatten(Object.fromEntries(pid))) + "</Product>");
 
     // Save to localStorage
-    if (bdsrecs[`${bdsoe["A1-RecordReference_0"]}`]) {
-      Object.keys(`${bdsoe["A1-RecordReference_0"]}`).forEach((key) => delete bdsrecs[`${bdsoe["A1-RecordReference_0"]}`][key]);
-    }
-    if (bdsrecs) {
-      bdsrecs[`${bdsoe["A1-RecordReference_0"]}`] = { ...bdsoe };
-      localStorage.setItem("bdsrecs", JSON.stringify(bdsrecs));
-    }
+    // if (bdsrecs[`${bdsoe["A1-RecordReference_0"]}`]) {
+    //   Object.keys(`${bdsoe["A1-RecordReference_0"]}`).forEach((key) => delete bdsrecs[`${bdsoe["A1-RecordReference_0"]}`][key]);
+    // }
+    // if (bdsrecs) {
+    //   bdsrecs[`${bdsoe["A1-RecordReference_0"]}`] = { ...bdsoe };
+    //   localStorage.setItem("bdsrecs", JSON.stringify(bdsrecs));
+    // }
   };
 
   saveOnix = async (file) => {
     const bdsoeflat = { ...bdsoe };
-    //let pid = Object.fromEntries(Object.entries(bdsoeflat).sort());
-    // pid = Object.entries(pid).map((p) => {
-    //   return [p[0].slice(p[0].indexOf("-") + 1), p[1]];
-    // });
-    //const bdsflat = Object.fromEntries(pid);
-
     let bdsflat = Object.fromEntries(Object.entries(bdsoeflat).sort());
     await SaveUserFile({
       filename: file,
@@ -193,7 +200,7 @@ export class BdsOnixCreate extends HTMLElement {
         xml: ""
       }
     );
-    console.log(`Title/Contents saved for File: ${file}, RecordReference: ${bdsflat["D3-DescriptiveDetail_0_TitleDetail_0_TitleElement_0_TitleText_0"]}`);
+    console.log(`Title/Contents saved for File: ${file}, RecordReference: ${bdsflat["A1-RecordReference_0"]}, Title: ${bdsflat["D3-DescriptiveDetail_0_TitleDetail_0_TitleElement_0_TitleText_0"]}`);
   };
 }
 

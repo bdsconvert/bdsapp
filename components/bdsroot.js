@@ -6,14 +6,14 @@ import { xml2json, json2xml, flatten, unflatten, formatJson, formatXml } from ".
 export class BdsRoot extends HTMLElement {
   constructor() {
     super();
-    this.bdsroot = {};
+    //this.bdsroot = {};
     this.order = parseInt(this.getAttribute("order"), 10);
     this.numpid = 1;
     this.lbl = `ProductIdentifier${this.numpid}`;
     this.recref = { name: "RecordReference", id: `A${this.order + 1}-RecordReference_0`, data: bdsoe[`A${this.order + 1}-RecordReference_0`] };
     this.ntftyp = { name: "NotificationType", id: `A${this.order + 2}-NotificationType_0`, data: bdsoe[`A${this.order + 2}-NotificationType_0`] };
-    this.bdsroot[this.recref.id] = this.recref.data;
-    this.bdsroot[this.ntftyp.id] = this.ntftyp.data;
+    //this.bdsroot[this.recref.id] = this.recref.data;
+    //this.bdsroot[this.ntftyp.id] = this.ntftyp.data;
     //console.log(this.bdsroot);
   }
 
@@ -33,13 +33,13 @@ export class BdsRoot extends HTMLElement {
     });
   }
 
-  viewOnixFragment = () => {
-    let r = Object.fromEntries(Object.entries(this.bdsroot).sort());
-    r = Object.entries(r).map((p) => {
-      return [p[0].slice(p[0].indexOf("-") + 1), p[1]];
-    });
-    document.getElementById("bdsroot").innerHTML = formatXml("<Product>" + json2xml(unflatten(Object.fromEntries(r))) + "</Product>");
-  };
+  // viewOnixFragment = () => {
+  //   let r = Object.fromEntries(Object.entries(this.bdsroot).sort());
+  //   r = Object.entries(r).map((p) => {
+  //     return [p[0].slice(p[0].indexOf("-") + 1), p[1]];
+  //   });
+  //   document.getElementById("bdsroot").innerHTML = formatXml("<Product>" + json2xml(unflatten(Object.fromEntries(r))) + "</Product>");
+  // };
 }
 
 window.customElements.define("bds-root", BdsRoot);
