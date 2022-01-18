@@ -1,16 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-auth.js";
-import {
-  getFirestore,
-  collection,
-  onSnapshot,
-  query,
-  where,
-  limit,
-  doc,
-  getDocs,
-  setDoc
-} from "https://www.gstatic.com/firebasejs/9.0.2/firebase-firestore.js";
+import { getFirestore, collection, onSnapshot, query, where, limit, doc, getDocs, setDoc } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAzf-SzZyk_UdU7jwjaccHjeCPQXIdfxtY",
@@ -40,6 +30,45 @@ onAuthStateChanged(authObj.auth, (user) => {
   }
 });
 
+export const GetWorqueueFiles = (keyword) => {
+  console.log("Getting Userfiles...");
+  keyword = keyword.trim().length > 0 ? keyword : "";
+  return new Promise((resolve) => {
+    // onSnapshot(query(collection(fbdb, authObj.bdsuser), where("filename", ">=", keyword), where("filename", "<=", keyword + "\uf8ff"), where("filetype", "==", "Dat"), limit(10)), (docs) => {
+    onSnapshot(query(collection(fbdb, authObj.bdsuser), where("filename", ">=", keyword), where("filename", "<=", keyword + "\uf8ff"), limit(10)), (docs) => {
+      const userfiles = [];
+      docs.forEach((doc) => {
+        userfiles.push({
+          filename: doc.id,
+          filetype: doc.data().filetype,
+          timestamp: doc.data().timestamp ? doc.data().timestamp : Date.now(),
+          fields: doc.data().fields ? doc.data().fields : [],
+          templates: doc.data().templates ? doc.data().templates : {},
+          keyword: keyword
+        });
+      });
+      localStorage.removeItem("userfiles");
+      localStorage.setItem(`userfiles`, JSON.stringify(userfiles));
+      resolve();
+    });
+  });
+};
+
+export const GetOnixFiles = () => {
+  console.log("Getting Onix Files...");
+  return new Promise((resolve) => {
+    onSnapshot(query(collection(fbdb, authObj.bdsuser), where("filetype", "==", "Dat"), limit(25)), (docs) => {
+      const onixfiles = [];
+      docs.forEach((doc) => {
+        onixfiles.push(doc.id);
+      });
+      localStorage.removeItem("onixfiles");
+      localStorage.setItem(`onixfiles`, JSON.stringify(onixfiles));
+      resolve();
+    });
+  });
+};
+
 export const GetTitles = (fileid, keyword, lmt) => {
   console.log(`Getting titles for ${fileid}`);
   const titles = [];
@@ -47,18 +76,9 @@ export const GetTitles = (fileid, keyword, lmt) => {
   return new Promise(async (resolve) => {
     let q = null;
     if (limit === 0) {
-      q = query(
-        collection(fbdb, authObj.bdsuser, fileid, "Titles"),
-        where("Title", ">=", keyword),
-        where("Title", "<=", keyword + "\uf8ff")
-      );
+      q = query(collection(fbdb, authObj.bdsuser, fileid, "Titles"), where("Title", ">=", keyword), where("Title", "<=", keyword + "\uf8ff"));
     } else {
-      q = query(
-        collection(fbdb, authObj.bdsuser, fileid, "Titles"),
-        where("Title", ">=", keyword),
-        where("Title", "<=", keyword + "\uf8ff"),
-        limit(lmt)
-      );
+      q = query(collection(fbdb, authObj.bdsuser, fileid, "Titles"), where("Title", ">=", keyword), where("Title", "<=", keyword + "\uf8ff"), limit(lmt));
     }
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {

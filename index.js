@@ -21,7 +21,7 @@ export const router = async () => {
     { path: "/signout", title: "Signout", view: BDSSignout },
     { path: "/profile", title: "Profile", view: BDSProfile },
     { path: "/workqueue", title: "Workqueue", view: BDSWorkqueue },
-    { path: "/createonix", title: "Create Onix", view: BDSCreateOnix },
+    { path: "/createonix", title: "Create/Edit Onix", view: BDSCreateOnix },
     { path: "/uploadfile", title: "Upload File", view: BDSUploadfile }
   ];
 

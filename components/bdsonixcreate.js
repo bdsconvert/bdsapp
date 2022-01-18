@@ -1,4 +1,4 @@
-import { SaveUserFile, SaveTitleContents } from "../data/bdsfirebase.js";
+import { GetOnixFiles, GetTitles, SaveUserFile, SaveTitleContents } from "../data/bdsfirebase.js";
 import { codelist } from "../data/bdscodelist.js";
 import { BdsText, BdsSelect } from "./bdselements.js";
 import { BdsButton, BdsSelect2 } from "./bdselements.js";
@@ -42,35 +42,77 @@ const components = [
 ];
 
 export class BdsOnixCreate extends HTMLElement {
+  // JSON.parse(localStorage.getItem("userfiles"))
+  //   .filter((file) => file.filetype === "Dat")
+  //   .map((file) => file.filename);
+  onixcreatefiles = [];
+  titles = [];
   constructor() {
     super();
-    Object.keys(bdsoe).forEach((key) => delete bdsoe[key]);
-    Object.assign(bdsrecs, JSON.parse(localStorage.getItem("bdsrecs")));
-    this.innerHTML = this.addOnixElements();
-    M.Collapsible.init(document.querySelectorAll(".collapsible"), { accordion: true });
-    M.FormSelect.init(document.querySelectorAll("select"), {});
+
+    GetOnixFiles().then((onixfiles) => {
+      this.onixcreatefiles = JSON.parse(localStorage.getItem("onixfiles"));
+      this.innerHTML = this.addOnixFiles("");
+      this.innerHTML += this.addOnixElements("");
+
+      // Object.keys(bdsoe).forEach((key) => delete bdsoe[key]);
+      // Object.assign(bdsrecs, JSON.parse(localStorage.getItem("bdsrecs")));
+      // this.innerHTML += this.addOnixElements();
+      M.Collapsible.init(document.querySelectorAll(".collapsible"), { accordion: true });
+      M.FormSelect.init(document.querySelectorAll("select"), {});
+    });
   }
 
   connectedCallback() {
     this.addEventListener("change", (e) => {
-      if (e.target.id === "onixrecs") {
+      if (e.target.id === "ocfile") {
+        GetTitles(e.target.value, "", 25).then(() => {
+          this.titles = JSON.parse(localStorage.getItem(`titles`)).map((title) => title.RecordReference);
+          console.log(this.titles);
+          this.innerHTML = this.addOnixFiles(e.target.value);
+          this.innerHTML += this.addOnixElements();
+          M.Collapsible.init(document.querySelectorAll(".collapsible"), { accordion: true });
+          M.FormSelect.init(document.querySelectorAll("select"), {});
+        });
+      } else if (e.target.id === "onixrec") {
         Object.keys(bdsoe).forEach((key) => delete bdsoe[key]);
         Object.assign(bdsoe, bdsrecs[e.target.value]);
-        this.innerHTML = this.addOnixElements(e.target.value);
+        this.innerHTML = this.addOnixFiles() + this.addOnixElements(e.target.value);
         M.Collapsible.init(document.querySelectorAll(".collapsible"), { accordion: true });
         M.FormSelect.init(document.querySelectorAll("select"), {});
       }
-      this.viewOnix();
+      //this.viewOnix();
       // this.saveOnix();
     });
 
-    this.addEventListener("click", (e) => {
-      if (e.target.id === "saveoe") {
-        this.saveOnix("CreateOnix1.dat");
+    this.addEventListener("click", async (e) => {
+      if (e.target.id === "createfile") {
+        const newfile = document.getElementById("newfile").value;
+        await SaveUserFile({
+          filename: newfile,
+          filetype: "Dat",
+          timestamp: Date.now()
+        });
+        this.onixcreatefiles.push(newfile);
+        this.innerHTML = this.addOnixFiles();
+        M.FormSelect.init(document.querySelectorAll("select"), {});
+      } else if (e.target.id === "saveoe") {
+        //this.saveOnix("CreateOnix1.dat");
         //this.viewOnix();
       }
     });
   }
+
+  addOnixFiles = (file) => {
+    return `
+    <br/>
+    <div class="container row">
+      <div class="col s6 push-s2">${BdsText({ id: "newfile", name: "Create a File", data: "" })}</div>
+      <div class="col s6"><br/>${BdsButton("createfile", "Create")}</div>
+    </div>
+      <div class="container${BdsSelect2("ocfile", this.onixcreatefiles, file)}</div>
+    `;
+  };
 
   addOnixElements = (rec) => {
     let comps = "";
@@ -78,7 +120,7 @@ export class BdsOnixCreate extends HTMLElement {
       comps += `
         <li>
           <div class="collapsible-header grey lighten-5" id=${comp.id}><span style="width:100%;">${comp.header}</span><i class="material-icons right">expand_more</i></div>
-          <div class="collapsible-body"><${comp.component} order="0"></${comp.component}></div>        
+          <div class="collapsible-body z-depth-4"><${comp.component} order="0"></${comp.component}></div>        
         </li>                             
       `;
     });
@@ -86,12 +128,13 @@ export class BdsOnixCreate extends HTMLElement {
 
     return `
       <style>
-      .collapsible-header{margin-bottom:0.5rem !important;}
+      .collapsible-header{margin-top:0.5rem !important;}
       .collapsible-body{border:1px solid lightgrey !important;}
       </style>
       <div class="row" style="display:flex;flex-wrap:wrap;">
         <ul class="col s6 collapsible" style="font-weight:400;font-size:1.25rem">
-          <li>${BdsSelect2(Object.keys(bdsrecs), rec)}</li>
+          <!--<li>${BdsSelect2("onixrec", Object.keys(bdsrecs), rec)}</li>-->
+          <li>${BdsSelect2("onixrec", this.titles, rec)}</li>
           ${comps}
         </ul>
         <ul class="col s6 collapsible">

@@ -1,6 +1,6 @@
 export const BdsButton = (id, name) => {
   return `
-    <div><button id="${id}" class="btn-small  darken-2">${name}</button></div>
+    <div class="center vertical-align"><button id="${id}" class="btn-small waves-effect darken-2">${name}</button></div>
   `;
 };
 
@@ -25,7 +25,7 @@ export const BdsText = (val) => {
 
 export const BdsSelect = (typ, cl) => {
   let sel = `
-    <div class="input-field small" id="${typ.name}">
+    <div class="input-field small">
       <select id="${typ.id}">
         <option value="" disabled selected>Choose ${typ.name}</option>
   `;
@@ -40,18 +40,18 @@ export const BdsSelect = (typ, cl) => {
   return sel;
 };
 
-export const BdsSelect2 = (list, item) => {
+export const BdsSelect2 = (id, list, item) => {
   let sel = `
     <div class="input-field">
-      <select id="onixrecs">
-        <option value="" disabled selected>Choose a Record</option>
+      <select id=${id}>
+        <option value="" disabled selected>Choose a ${id}</option>
       `;
   list.forEach((t) => {
     sel += `<option value=${t} ${t === item ? "selected" : ""}>${t}</option>`;
   });
   sel += `
       </select>
-      <label>Choose Title</label>
+      <label>${id}</label>
     </div>
   `;
   return sel;

@@ -27,7 +27,6 @@ export class BdsPrice extends HTMLElement {
   }
 
   connectedCallback() {
-    console.log("ConnectedCallback called!");
     document.getElementById(`prc${this.index}`).addEventListener("click", (e) => {
       if (this.innerHTML === "") {
         this.addPRC();
@@ -35,7 +34,12 @@ export class BdsPrice extends HTMLElement {
     });
 
     this.addEventListener("change", (e) => {
-      bdsoe[e.target.id] = e.target.value;
+      const val = e.target.value.trim();
+      if (val !== "") {
+        bdsoe[e.target.id] = val;
+      } else {
+        delete bdsoe[e.target.id];
+      }
     });
 
     this.addEventListener("click", (e) => {
@@ -66,11 +70,11 @@ export class BdsPrice extends HTMLElement {
   }
 
   addPRC = () => {
-    this.innerHTML = "";
+    this.innerHTML = `${BdsSelect(this.prcuit, codelist.cl057)}`;
     this.prcuit.id = `R${(this.order + 1).toString().padStart(2, "0")}-ProductSupply_${this.index - 1}_SupplyDetail_0_UnpricedItemType_0`;
     this.prcuit.data = bdsoe[this.prcuit.id];
     for (let idx = 0; idx < this.numprc; idx++) {
-      // this.lbl = `Supply${idx + 1}`;
+      this.lbl = `Price${idx + 1}`;
       this.prcptc.id = `R${(this.order + idx * 16 + 2).toString().padStart(2, "0")}-ProductSupply_${this.index - 1}_SupplyDetail_0_Price_${idx}_PriceType_0`;
       this.prcptc.data = bdsoe[this.prcptc.id];
       this.prcpqf.id = `R${(this.order + idx * 16 + 3).toString().padStart(2, "0")}-ProductSupply_${this.index - 1}_SupplyDetail_0_Price_${idx}_PriceQualifier_0`;
@@ -102,7 +106,7 @@ export class BdsPrice extends HTMLElement {
       this.prcree.id = `R${(this.order + idx * 16 + 16).toString().padStart(2, "0")}-ProductSupply_${this.index - 1}_SupplyDetail_0_Price_${idx}_Territory_0_RegionsExcluded_0`;
       this.prcree.data = bdsoe[this.prcree.id];
       this.innerHTML += `
-        ${BdsSelect(this.prcuit, codelist.cl057)}
+        <h6 class="center"><strong>${this.lbl}</strong></h6>
         ${BdsSelect(this.prcptc, codelist.cl058)}
         ${BdsSelect(this.prcpqf, codelist.cl059)}
         ${BdsSelect(this.prcdct, codelist.cl100)}
