@@ -1,7 +1,7 @@
 import { GetOnixFiles, GetTitles, GetContents, SaveUserFile, SaveTitleContents } from "../data/bdsfirebase.js";
 import { codelist } from "../data/bdscodelist.js";
 import { BdsText, BdsSelect } from "./bdselements.js";
-import { BdsButton, BdsSelect2 } from "./bdselements.js";
+import { BdsButton, BdsModalButton, BdsSelect2 } from "./bdselements.js";
 import { bdsoe, bdsrecs } from "../data/bdsmodel.js";
 import { xml2json, json2xml, flatten, unflatten, formatJson, formatXml } from "../utils/bdsutil.js";
 import { BdsRoot } from "./bdsroot.js";
@@ -21,6 +21,7 @@ import { BdsSalesRight } from "./bdssalesright.js";
 import { BdsRelated } from "./bdsrelated.js";
 import { BdsMarket } from "./bdsmarket.js";
 import { BdsProdsupply } from "./bdsprodsupply.js";
+import { BdsFileCreate } from "./bdsfilecreate.js";
 
 const components = [
   { header: "Record Reference", id: "rrf", component: "bds-root" },
@@ -42,9 +43,6 @@ const components = [
 ];
 
 export class BdsOnixCreate extends HTMLElement {
-  // JSON.parse(localStorage.getItem("userfiles"))
-  //   .filter((file) => file.filetype === "Dat")
-  //   .map((file) => file.filename);
   onixcreatefiles = [];
   fileid = "";
   titles = [];
@@ -54,14 +52,14 @@ export class BdsOnixCreate extends HTMLElement {
 
     GetOnixFiles().then((onixfiles) => {
       this.onixcreatefiles = JSON.parse(localStorage.getItem("onixfiles"));
-      this.innerHTML = this.addOnixFiles("");
-      this.innerHTML += this.addOnixElements("");
+      this.innerHTML = this.addOnixElements("");
 
       // Object.keys(bdsoe).forEach((key) => delete bdsoe[key]);
       // Object.assign(bdsrecs, JSON.parse(localStorage.getItem("bdsrecs")));
       // this.innerHTML += this.addOnixElements();
       M.Collapsible.init(document.querySelectorAll(".collapsible"), { accordion: true });
       M.FormSelect.init(document.querySelectorAll("select"), {});
+      M.Modal.init(document.querySelectorAll(".modal"), {});
     });
   }
 
@@ -72,18 +70,16 @@ export class BdsOnixCreate extends HTMLElement {
           this.fileid = e.target.value;
           console.log(this.fielid);
           this.titles = JSON.parse(localStorage.getItem(`titles`)).map((title) => title.RecordReference);
-          this.innerHTML = this.addOnixFiles(e.target.value);
-          this.innerHTML += this.addOnixElements();
+          this.innerHTML = this.addOnixElements(e.target.value, "");
           M.Collapsible.init(document.querySelectorAll(".collapsible"), { accordion: true });
           M.FormSelect.init(document.querySelectorAll("select"), {});
+          // M.Modal.init(document.querySelectorAll(".modal"), {});
         });
       } else if (e.target.id === "onixrec") {
-        // const fileid = JSON.parse(localStorage.getItem(`titles`))[0].fileid;
         GetContents(this.fileid, e.target.value).then(() => {
-          // console.log(JSON.parse(localStorage.getItem(`json`)));
           Object.keys(bdsoe).forEach((key) => delete bdsoe[key]);
           Object.assign(bdsoe, JSON.parse(localStorage.getItem(`json`)));
-          this.innerHTML = this.addOnixFiles(this.fileid) + this.addOnixElements(e.target.value);
+          this.innerHTML = this.addOnixElements(this.fileid, e.target.value);
           M.Collapsible.init(document.querySelectorAll(".collapsible"), { accordion: true });
           M.FormSelect.init(document.querySelectorAll("select"), {});
           this.viewOnix();
@@ -99,35 +95,14 @@ export class BdsOnixCreate extends HTMLElement {
     });
 
     this.addEventListener("click", async (e) => {
-      if (e.target.id === "createfile") {
-        const newfile = document.getElementById("newfile").value;
-        await SaveUserFile({
-          filename: newfile,
-          filetype: "Dat",
-          timestamp: Date.now()
-        });
-        this.onixcreatefiles.push(newfile);
-        this.innerHTML = this.addOnixFiles();
-        M.FormSelect.init(document.querySelectorAll("select"), {});
-      } else if (e.target.id === "saveoe") {
+      if (e.target.id === "saveoe") {
         this.saveOnix(this.fileid);
         this.titles.push(bdsoe["A1-RecordReference_0"]);
       }
     });
   }
 
-  addOnixFiles = (file) => {
-    return `
-    <br/>
-    <div class="container row">
-      <div class="col s6 push-s2">${BdsText({ id: "newfile", name: "Create a File", data: "" })}</div>
-      <div class="col s6"><br/>${BdsButton("createfile", "Create")}</div>
-    </div>
-      <div class="container${BdsSelect2("ocfile", this.onixcreatefiles, file)}</div>
-    `;
-  };
-
-  addOnixElements = (rec) => {
+  addOnixElements = (file, rec) => {
     let comps = "";
     components.forEach((comp) => {
       comps += `
@@ -137,7 +112,6 @@ export class BdsOnixCreate extends HTMLElement {
         </li>                             
       `;
     });
-    //console.log(comps);
 
     return `
       <style>
@@ -145,13 +119,15 @@ export class BdsOnixCreate extends HTMLElement {
       .collapsible-body{border:1px solid lightgrey !important;}
       </style>
       <div class="row" style="display:flex;flex-wrap:wrap;">
-        <ul class="col s6 collapsible" style="font-weight:400;font-size:1.25rem">
+        <ul class="col s6 collapsible" style="font-weight:400;font-size:1.25rem;overflow-y:scroll;height:70vh;">
           <!--<li>${BdsSelect2("onixrec", Object.keys(bdsrecs), rec)}</li>-->
-          <li>${BdsSelect2("onixrec", this.titles, rec)}</li>
+          <li class="col s6">${BdsSelect2("ocfile", this.onixcreatefiles, file)}</li>
+          <li class="col s6">${BdsSelect2("onixrec", this.titles, rec)}</li>
           ${comps}
         </ul>
-        <ul class="col s6 collapsible">
-          <li class="center" style="padding:1rem">${BdsButton("saveoe", "Save Onix")}</li>
+        <ul class="col s6 collapsible" style="overflow-y:scroll;height:70vh;">
+          <!--<li class="right" style="padding:1rem">${BdsModalButton("bdscontents", "Create a New Onix File")}</li>-->
+          <li style="padding:1rem">${BdsButton("saveoe", "Save Onix Elements")}</li>
           <li><div class="divider"></div></li>
           <li><p id="bdsoe" style="overflow-wrap:break-word"></p></li>
         </ul>
@@ -168,7 +144,7 @@ export class BdsOnixCreate extends HTMLElement {
       return [p[0].slice(p[0].indexOf("-") + 1), p[1]];
     });
     //ov.innerHTML = `<div class='col s12'><div style="font-weight:500;font-size:1.25rem;text-align:center;">Onix<br/></div><div class="divider"></div><br/>` + formatXml("<Product>" + json2xml(unflatten(Object.fromEntries(pid))) + "</Product>") + "</div>";
-    ov.innerHTML = formatXml("<Product>" + json2xml(unflatten(Object.fromEntries(pid))) + "</Product>");
+    ov.innerHTML = `${formatXml("<Product>" + json2xml(unflatten(Object.fromEntries(pid))) + "</Product>")}`;
 
     // Save to localStorage
     // if (bdsrecs[`${bdsoe["A1-RecordReference_0"]}`]) {

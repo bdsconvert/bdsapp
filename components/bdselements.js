@@ -4,6 +4,12 @@ export const BdsButton = (id, name) => {
   `;
 };
 
+export const BdsModalButton = (id, name) => {
+  return `
+    <div class="center vertical-align"><button data-target="${id}" class="btn-small waves-effect darken-2 modal-trigger">${name}</button></div>
+  `;
+};
+
 export const BdsAddDelButtons = (id, name) => {
   return `
     <div class="row">

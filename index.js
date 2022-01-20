@@ -120,6 +120,11 @@ document.body.addEventListener("click", async (e) => {
   else if (e.target.id === "download") {
     BDSExport.DownloadTemplate(e.target.id);
   }
+
+  // Create Onix File Click - refresh WOrkqueue
+  else if (e.target.id === "createonixfile") {
+    navigateTo("/workqueue");
+  }
 });
 // //////////////////////////////////////////////////////////////////
 

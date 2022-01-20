@@ -38,14 +38,17 @@ export const GetWorqueueFiles = (keyword) => {
     onSnapshot(query(collection(fbdb, authObj.bdsuser), where("filename", ">=", keyword), where("filename", "<=", keyword + "\uf8ff"), limit(10)), (docs) => {
       const userfiles = [];
       docs.forEach((doc) => {
-        userfiles.push({
-          filename: doc.id,
-          filetype: doc.data().filetype,
-          timestamp: doc.data().timestamp ? doc.data().timestamp : Date.now(),
-          fields: doc.data().fields ? doc.data().fields : [],
-          templates: doc.data().templates ? doc.data().templates : {},
-          keyword: keyword
-        });
+        console.log(doc.data().filetype);
+        if (doc.data().filetype !== "Dat") {
+          userfiles.push({
+            filename: doc.id,
+            filetype: doc.data().filetype,
+            timestamp: doc.data().timestamp ? doc.data().timestamp : Date.now(),
+            fields: doc.data().fields ? doc.data().fields : [],
+            templates: doc.data().templates ? doc.data().templates : {},
+            keyword: keyword
+          });
+        }
       });
       localStorage.removeItem("userfiles");
       localStorage.setItem(`userfiles`, JSON.stringify(userfiles));

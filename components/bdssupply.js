@@ -19,7 +19,6 @@ export class BdsSupply extends HTMLElement {
   }
 
   connectedCallback() {
-    console.log("ConnectedCallback called!");
     document.getElementById(`sup${this.index}`).addEventListener("click", (e) => {
       if (this.innerHTML === "") {
         this.addSUP();

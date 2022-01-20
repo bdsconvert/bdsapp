@@ -1,7 +1,7 @@
 import { codelist } from "../data/bdscodelist.js";
 import { BdsText, BdsSelect } from "./bdselements.js";
 import { bdsoe } from "../data/bdsmodel.js";
-import { xml2json, json2xml, flatten, unflatten, formatJson, formatXml } from "../utils/bdsutil.js";
+// import { xml2json, json2xml, flatten, unflatten, formatJson, formatXml } from "../utils/bdsutil.js";
 
 export class BdsRoot extends HTMLElement {
   constructor() {
