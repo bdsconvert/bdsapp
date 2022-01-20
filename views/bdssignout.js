@@ -4,7 +4,6 @@ import { signOut } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-auth.
 export class BDSSignout {
   async getPage() {
     this.signOut();
-    document.getElementById("bdsheader").innerHTML = ``;
     document.getElementById("bdscontent").innerHTML = `<h4>${authObj.bdsuser} Logged Out!</h4>`;
   }
 

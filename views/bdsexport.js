@@ -6,7 +6,6 @@ export class BDSExport {
   templates = {};
   constructor(fileid, fields, templates) {
     this.fileid = fileid.slice(7);
-    document.getElementById("bdsheader").innerHTML = ``;
     document.getElementById("bdscontent").innerHTML = this.DisplayExportFields();
   }
 

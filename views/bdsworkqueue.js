@@ -20,10 +20,10 @@ export class BDSWorkqueue {
         <li class="tab"><a href="#cofiles" class="table">Created Onix Files</a></li>
         <li class="tab"><a href="#bufiles" class="onix">Uploaded Onix/Excel Files</a></li>          
       </ul>
-      <a href="#" class="col s6 modal-trigger" data-target="bdscontents"><span class="right" style="padding-top:1rem;"><i class="material-icons left">save</i> Create a New Onix File</span></a>
+      <a href="#bdsfilecreate" class="col s6 modal-trigger"><span class="right" style="padding-top:1rem;"><i class="material-icons left">create</i> Create a New Onix File</span></a>
     </div>
     `; //this.DisplayWorqueueHeader(keyword);
-    document.getElementById("bdscontents").innerHTML = `<bds-file-create></bds-file-create>`;
+    document.getElementById("bdsfilecreate").innerHTML = `<bds-file-create></bds-file-create>`;
     document.getElementById("bdscontent").innerHTML = `
       <div id="bufiles" style="overflow:scroll;height:75vh;margin:0rem 0.25rem 0.25rem 0.25rem;">${this.DisplayWorkqueueList(keyword)}</div>
       <div id="cofiles" style="overflow:scroll;height:75vh;margin:0rem 0.25rem 0.25rem 0.25rem;"><bds-onix-create></bds-onix-create></div>    

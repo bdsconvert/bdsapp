@@ -1,8 +1,7 @@
 export class BDSContact {
   async getPage() {
-    document.getElementById("bdsheader").innerHTML = ``;
     document.getElementById("bdscontent").innerHTML = `
-        <form id="contact-form">
+        <form id="contact-form" class="container">
           <div class="row">
             <div class="input-field col s12">
               <input id="contact-name" type="text" class="validate" />

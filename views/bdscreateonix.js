@@ -3,7 +3,6 @@ import { BdsText, BdsSelect, BdsButton, BdsModalButton, BdsSelect2 } from "../co
 
 export class BDSCreateOnix {
   async getPage() {
-    document.getElementById("bdsheader").innerHTML = ``;
     document.getElementById("bdscontent").innerHTML = `<bds-onix-create></bds-onix-create>`;
   }
 }

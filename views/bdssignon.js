@@ -4,7 +4,6 @@ import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9
 
 export class BDSSignon {
   async getPage() {
-    document.getElementById("bdsheader").innerHTML = ``;
     document.getElementById("bdscontent").innerHTML = `
         <!--<h4>Sign On</h4>-->
         <form id="signon-form">
