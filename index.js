@@ -131,15 +131,16 @@ document.body.addEventListener("click", async (e) => {
 
 document.body.addEventListener("submit", async (e) => {
   e.preventDefault();
-
   if (e.target.id === "signon-form") {
     const bdssignon = new BDSSignon();
     await bdssignon.signOn(e.target.id);
     localStorage.clear();
-  }
-  if (e.target.id === "signup-form") {
+  } else if (e.target.id === "signup-form") {
     const bdssignup = new BDSSignup();
     await bdssignup.signUp(e.target.id);
+  } else if (e.target.id === "contact-form") {
+    const bdscontact = new BDSContact();
+    await bdscontact.processContact(e.target.id);
   }
 });
 //////////////////////////////////////////////////////////////////

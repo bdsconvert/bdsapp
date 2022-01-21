@@ -9,13 +9,13 @@ export class BDSSignon {
         <form id="signon-form">
           <div class="row">
             <div class="input-field col s12">
-              <input id="signon-email" type="email" class="validate" />
+              <input id="signon-email" type="email" class="validate" required/>
               <label for="signon-email">Email</label>
             </div>
           </div>
           <div class="row">
             <div class="input-field col s12">
-              <input id="signon-password" type="password" class="validate" />
+              <input id="signon-password" type="password" class="validate" required/>
               <label for="signon-password">Password</label>
             </div>
           </div>

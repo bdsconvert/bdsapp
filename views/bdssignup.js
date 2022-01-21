@@ -9,13 +9,13 @@ export class BDSSignup {
           <form id="signup-form">
             <div class="row">
               <div class="input-field col s12">
-                <input id="signup-email" type="email" class="validate" />
+                <input id="signup-email" type="email" class="validate" required/>
                 <label for="signup-email">Email</label>
               </div>
             </div>
             <div class="row">
               <div class="input-field col s12">
-                <input id="signup-password" type="password" class="validate" />
+                <input id="signup-password" type="password" class="validate" required/>
                 <label for="signup-password">Password</label>
               </div>
             </div>
