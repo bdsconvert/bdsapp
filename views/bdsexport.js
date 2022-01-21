@@ -6,6 +6,7 @@ export class BDSExport {
   templates = {};
   constructor(fileid, fields, templates) {
     this.fileid = fileid.slice(7);
+    document.getElementById("bdsheader").innerHTML = ``;
     document.getElementById("bdscontent").innerHTML = this.DisplayExportFields();
   }
 
@@ -29,7 +30,11 @@ export class BDSExport {
 
     const exp = `
     <div style="margin:2em;">
-      <div><h5>Export ${this.fileid}</h5></div>
+      <div class="row">
+        <a href="#" class="col s2"><strong><i class="material-icons left" wk-link>arrow_back</i>Go Back</strong></a>
+        <span class="col s8 pull-2 center" style="font-size:1.2rem;font-weight:500">${this.fileid}</span>
+      </div>
+      <!--<div><h5>Export ${this.fileid}</h5></div>-->
       <div class="divider"></div>
       <br/>
         <div class="row">

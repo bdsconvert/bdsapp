@@ -121,6 +121,11 @@ document.body.addEventListener("click", async (e) => {
   else if (e.target.id === "createonixfile") {
     navigateTo("/workqueue");
   }
+
+  // File Upload Link
+  else if (e.target.matches("[upload-link]")) {
+    console.log("File Upload!");
+  }
 });
 // //////////////////////////////////////////////////////////////////
 

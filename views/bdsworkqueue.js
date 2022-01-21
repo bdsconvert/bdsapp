@@ -17,8 +17,8 @@ export class BDSWorkqueue {
     <br/>
     <div class="row z-depth-0" style="padding:1rem;border:1px solid lightgrey;margin:0rem;">
       <ul id="wktabs" class="tabs col s6">
-        <li class="tab"><a href="#cofiles" class="table">Created Onix Files</a></li>
-        <li class="tab"><a href="#bufiles" class="onix">Uploaded Onix/Excel Files</a></li>          
+        <li class="tab"><a href="#cofiles">Created Onix Files</a></li>
+        <li class="tab"><a href="#bufiles" class="active">Uploaded Onix/Excel Files</a></li>          
       </ul>
       <a href="#bdsfilecreate" class="col s6 modal-trigger"><span class="right" style="padding-top:1rem;"><i class="material-icons left">create</i> Create a New Onix File</span></a>
     </div>
@@ -44,7 +44,7 @@ export class BDSWorkqueue {
       <li class="collection-item row">
           <span class="secondary-content input-field"><i class="material-icons prefix">search</i><input type="text" id="searchworkqueue"><label for="search">Search Workqueue</label></span>
           </br/>
-          <a href="/uploadfile" class="waves-effect uploadfile" page-link><i class="material-icons left" page-link id="fileupload">file_upload</i>Upload Onix/Excel File</a>
+          <a href="/uploadfile" class="waves-effect uploadfile" upload-link><i class="material-icons left" page-link id="fileupload">file_upload</i>Upload Onix/Excel File</a>
           <br/><br/>
           <span>Showing results for: "${keyword}"</span>
       </li>
