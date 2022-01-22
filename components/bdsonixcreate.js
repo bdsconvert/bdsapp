@@ -53,6 +53,7 @@ export class BdsOnixCreate extends HTMLElement {
     GetOnixFiles().then((onixfiles) => {
       this.onixcreatefiles = JSON.parse(localStorage.getItem("onixfiles"));
       this.innerHTML = this.addOnixElements("");
+      document.getElementById("rrf").click();
 
       // Object.keys(bdsoe).forEach((key) => delete bdsoe[key]);
       // Object.assign(bdsrecs, JSON.parse(localStorage.getItem("bdsrecs")));
@@ -80,6 +81,7 @@ export class BdsOnixCreate extends HTMLElement {
           Object.keys(bdsoe).forEach((key) => delete bdsoe[key]);
           Object.assign(bdsoe, JSON.parse(localStorage.getItem(`json`)));
           this.innerHTML = this.addOnixElements(this.fileid, e.target.value);
+          document.getElementById("rrf").click();
           M.Collapsible.init(document.querySelectorAll(".collapsible"), { accordion: true });
           M.FormSelect.init(document.querySelectorAll("select"), {});
           this.viewOnix();
@@ -107,7 +109,7 @@ export class BdsOnixCreate extends HTMLElement {
     components.forEach((comp) => {
       comps += `
         <li>
-          <div class="collapsible-header grey lighten-5" id=${comp.id}><span style="width:100%;">${comp.header}</span><i class="material-icons right">expand_more</i></div>
+          <div class="collapsible-header grey lighten-5" id=${comp.id}><span style="width:100%;font-size:0.9em;">${comp.header}</span><i class="material-icons right">expand_more</i></div>
           <div class="collapsible-body z-depth-4"><${comp.component} order="0"></${comp.component}></div>        
         </li>                             
       `;
