@@ -39,23 +39,3 @@ export class BDSSignon {
       });
   }
 }
-
-// document.body.addEventListener("submit", (e) => {
-//   console.log("form submitted");
-//   e.preventDefault();
-//   if (e.target.id === "signon-form") {
-//     const signonForm = document.getElementById(e.target.id);
-//     const email = signonForm["signon-email"].value;
-//     const password = signonForm["signon-password"].value;
-
-//     signInWithEmailAndPassword(authObj.auth, email, password)
-//       .then((cred) => {
-//         signonForm.reset();
-//         document.querySelector(".home").click();
-//         console.log(`${email} Logged In Successfully`);
-//       })
-//       .catch((err) => {
-//         alert(err.message);
-//       });
-//   }
-// });

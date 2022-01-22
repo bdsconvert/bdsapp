@@ -8,24 +8,19 @@ export class BDSTitles {
     console.log(fileid, keyword);
     GetTitles(fileid, keyword, 10).then(() => {
       this.titles = JSON.parse(localStorage.getItem(`titles`));
-      // document.getElementById("bdsheader").innerHTML = `<span class="center"><h5>${fileid} Titles</h5></span>`;
       document.getElementById("bdsheader").innerHTML = ``;
       document.getElementById("bdscontent").innerHTML = this.DisplayTitles(fileid, keyword);
     });
   }
 
   DisplayTitles = (fileid, keyword) => {
-    let titlesHtml = `<ul class="collection">`;
+    let titlesHtml = `<ul class="collection container">`;
     titlesHtml += `
       <li class="collection-item row">
-          <!--<span style="color:blue;cursor:pointer"><strong wk-link>Workqueue</strong></span> / ${fileid}-->
-          <!--<span class="secondary-content input-field"><i class="material-icons prefix">search</i><input type="text" id="searchtitles" data-fileid=${fileid}><label for="search">Search Titles</label></span>-->
-          <!--<br/><br/><br/>-->
-          <!--<span>Showing results for: "${keyword}"</span>-->
-          <a href="#" class="col s2"><strong><i class="material-icons left" wk-link>arrow_back</i>Go Back</strong></a>
-          <span class="col s8 pull-2 center" style="font-size:1.2rem;font-weight:500">${fileid}</span>
-          <span class="secondary-content input-field" style="margin:0;"><i class="material-icons prefix">search</i><input type="text" id="searchtitles" data-fileid=${fileid}><label for="search">Search Titles</label></span>          
-          <br/><br/>Showing results for: "${keyword}"  
+        <a href="#" class="col s2"><strong><i class="material-icons left" wk-link>arrow_back</i>Go Back</strong></a>
+        <span class="col s8 pull-2 center" style="font-size:1.2rem;font-weight:500">${fileid}</span>
+        <span class="secondary-content input-field" style="margin:0;"><i class="material-icons prefix">search</i><input type="text" id="searchtitles" data-fileid=${fileid}><label for="search">Search Titles</label></span>
+        <br/><br/>Showing results for: "${keyword}"
       </li>
     `;
     this.titles.forEach((title) => {

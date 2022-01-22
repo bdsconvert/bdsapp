@@ -20,11 +20,13 @@ export const fbdb = getFirestore(fbapp);
 onAuthStateChanged(authObj.auth, (user) => {
   if (user) {
     authObj.bdsuser = user.email;
+    document.getElementById("loggedinuser").innerHTML = `<i class="material-icons left" page-link id="profile">person_outline</i>${user.email}`;
     console.log(`Current User => ${authObj.bdsuser}`);
     document.querySelectorAll(".logged-in").forEach((item) => (item.style.display = "block"));
     document.querySelectorAll(".logged-out").forEach((item) => (item.style.display = "none"));
   } else {
     authObj.bdsuser = "";
+    document.getElementById("loggedinuser").innerHTML = "";
     document.querySelectorAll(".logged-in").forEach((item) => (item.style.display = "none"));
     document.querySelectorAll(".logged-out").forEach((item) => (item.style.display = "block"));
   }

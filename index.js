@@ -9,7 +9,6 @@ import { BDSWorkqueue } from "./views/bdsworkqueue.js";
 import { BDSTitles } from "./views/bdstitles.js";
 import { BDSExport } from "./views/bdsexport.js";
 import { BDSUploadfile } from "./views/bdsuploadfile.js";
-import { BDSCreateOnix } from "./views/bdscreateonix.js";
 
 export const router = async () => {
   const routes = [
@@ -20,23 +19,14 @@ export const router = async () => {
     { path: "/signon", title: "Signin", view: BDSSignon },
     { path: "/signout", title: "Signout", view: BDSSignout },
     { path: "/profile", title: "Profile", view: BDSProfile },
-    { path: "/workqueue", title: "Workqueue", view: BDSWorkqueue },
-    { path: "/createonix", title: "Create/Edit Onix", view: BDSCreateOnix },
-    { path: "/uploadfile", title: "Upload File", view: BDSUploadfile }
+    { path: "/workqueue", title: "Workqueue", view: BDSWorkqueue }
   ];
   let match = routes.find((route) => window.location.pathname === route.path);
   match = match ? match : { path: routes[0].path, title: "BookDataSolutions", view: routes[0].view }; // Go home if no match
   const view = new match.view();
   document.getElementById("bdsheader").innerHTML = ``;
   await view.getPage();
-  document.getElementById("hdrlbl").innerText = `${match.title}`;
-  //M.getInstance(document.querySelector(".sidenav")).close();
-  //document.getElementById("bdsheader").innerHTML = "";
-  //document.getElementById("bdscontent").innerHTML = await view.getPage();
-  //initialize materialize components
-  // if (match.path === "/workqueue") {
-  //   M.Collapsible.init(document.querySelectorAll(".collapsible"));
-  // }
+  document.getElementById("hdrlbl").innerHTML = `${match.title}`;
 };
 
 export const navigateTo = (url) => {
@@ -52,8 +42,7 @@ export const navigateTo = (url) => {
 document.addEventListener("DOMContentLoaded", (e) => {
   M.Modal.init(document.querySelectorAll(".modal"), {});
   M.Sidenav.init(document.querySelectorAll(".sidenav"), {});
-  //M.getInstance(document.querySelector(".sidenav")).open();
-  navigateTo("/"); // Go Home
+  navigateTo("/");
 });
 //////////////////////////////////////////////////////////////////
 
@@ -64,11 +53,8 @@ document.body.addEventListener("click", async (e) => {
     e.preventDefault();
     let href = e.target.href;
     if (!href) {
-      //const icon = document.getElementById(e.target.id);
-      //href = icon.parentElement.href;
       href = e.target.parentElement.href;
     }
-    //console.log(href);
     navigateTo(href);
   }
 

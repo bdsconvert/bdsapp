@@ -1,11 +1,10 @@
 import { authObj } from "../data/bdsfirebase.js";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-auth.js";
+import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-auth.js";
 
 export class BDSSignup {
   async getPage() {
     document.getElementById("bdscontent").innerHTML = `
       <div id="signup">
-          <h4>Sign Up</h4>
           <form id="signup-form">
             <div class="row">
               <div class="input-field col s12">
