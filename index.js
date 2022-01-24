@@ -6,9 +6,10 @@ import { BDSTerms } from "./views/bdsterms.js";
 import { BDSContact } from "./views/bdscontact.js";
 import { BDSProfile } from "./views/bdsprofile.js";
 import { BDSWorkqueue } from "./views/bdsworkqueue.js";
-import { BDSTitles } from "./views/bdstitles.js";
+// import { BDSTitles } from "./views/bdstitles.js";
 import { BDSExport } from "./views/bdsexport.js";
 import { BDSUploadfile } from "./views/bdsuploadfile.js";
+// import { BdsUploaded } from "../components/bdsuploaded.js";
 
 export const router = async () => {
   const routes = [
@@ -64,14 +65,14 @@ document.body.addEventListener("click", async (e) => {
   }
 
   // File Click
-  else if (e.target.matches("[file-link]")) {
-    const bdstitles = new BDSTitles(e.target.id, "");
-  }
+  // else if (e.target.matches("[file-link]")) {
+  //   const bdstitles = new BDSTitles(e.target.id, "");
+  // }
 
   // Title Click
-  else if (e.target.matches("[rec-link]")) {
-    BDSTitles.DisplayContents(e.target.parentElement.id);
-  }
+  // else if (e.target.matches("[rec-link]")) {
+  //   BDSTitles.DisplayContents(e.target.parentElement.id);
+  // }
 
   // Content modal close click
   else if (e.target.matches("[content-close]")) {
@@ -132,13 +133,20 @@ document.body.addEventListener("submit", async (e) => {
 //////////////////////////////////////////////////////////////////
 
 document.body.addEventListener("change", async (e) => {
+  e.preventDefault();
   // Search Workqueue
-  if (e.target.id === "searchworkqueue") {
-    const bdsworkqueue = new BDSWorkqueue();
-    bdsworkqueue.WorkqueueSearch(e.target.value);
-  } else if (e.target.id === "searchtitles") {
-    const bdstitles = new BDSTitles(e.target.dataset.fileid, e.target.value);
-  } else if (e.target.id === "template") {
+  // if (e.target.id === "searchworkqueue") {
+  //   const bdsworkqueue = new BDSWorkqueue();
+  //   bdsworkqueue.WorkqueueSearch(e.target.value);
+  // }
+  // else if (e.target.id === "searchuploaded") {
+  //   const bdsuploaded = new BdsUploaded();
+  //   bdsuploaded.UploadedFilesSearch(e.target.value);
+  // }
+  // if (e.target.id === "searchtitles") {
+  //   const bdstitles = new BDSTitles(e.target.dataset.fileid, e.target.value);
+  // }
+  if (e.target.id === "template") {
     BDSExport.SelectTemplateFields(e.target.value);
   } else if (e.target.id === "bdsfile") {
     const bdsfile = document.getElementById("bdsfile");

@@ -14,14 +14,16 @@ const firebaseConfig = {
 };
 
 export const fbapp = initializeApp(firebaseConfig);
-export const authObj = { auth: getAuth(fbapp), bdsuser: null };
+export const authObj = { auth: getAuth(fbapp), bdsuser: null, displayname: null, user: null };
 export const fbdb = getFirestore(fbapp);
 
 onAuthStateChanged(authObj.auth, (user) => {
   if (user) {
+    authObj.user = user;
     authObj.bdsuser = user.email;
+    authObj.displayname = user.email.split("@")[0].toLowerCase();
     document.getElementById("loggedinuser").innerHTML = `<i class="material-icons left" page-link id="profile">person_outline</i>${user.email}`;
-    console.log(`Current User => ${authObj.bdsuser}`);
+    console.log(authObj.user);
     document.querySelectorAll(".logged-in").forEach((item) => (item.style.display = "block"));
     document.querySelectorAll(".logged-out").forEach((item) => (item.style.display = "none"));
   } else {
@@ -40,7 +42,7 @@ export const GetWorqueueFiles = (keyword) => {
     onSnapshot(query(collection(fbdb, authObj.bdsuser), where("filename", ">=", keyword), where("filename", "<=", keyword + "\uf8ff"), limit(10)), (docs) => {
       const userfiles = [];
       docs.forEach((doc) => {
-        console.log(doc.data().filetype);
+        // console.log(doc.data().filetype);
         if (doc.data().filetype !== "Dat") {
           userfiles.push({
             filename: doc.id,

@@ -1,4 +1,5 @@
 import { authObj } from "../data/bdsfirebase.js";
+import { navigateTo } from "../index.js";
 import { signOut } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-auth.js";
 
 export class BDSSignout {
@@ -12,7 +13,7 @@ export class BDSSignout {
     console.log(`Signing Out ${user}`);
     signOut(authObj.auth)
       .then(() => {
-        // localStorage.clear();
+        navigateTo("/");
       })
       .catch((err) => alert(err.message));
   }
