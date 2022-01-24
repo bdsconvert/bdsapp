@@ -7,7 +7,7 @@ import { BDSContact } from "./views/bdscontact.js";
 import { BDSProfile } from "./views/bdsprofile.js";
 import { BDSWorkqueue } from "./views/bdsworkqueue.js";
 // import { BDSTitles } from "./views/bdstitles.js";
-import { BDSExport } from "./views/bdsexport.js";
+// import { BDSExport } from "./views/bdsexport.js";
 import { BDSUploadfile } from "./views/bdsuploadfile.js";
 // import { BdsUploaded } from "../components/bdsuploaded.js";
 
@@ -80,29 +80,29 @@ document.body.addEventListener("click", async (e) => {
   }
 
   // Export click
-  else if (e.target.matches("[export-link]")) {
-    const bdsexport = new BDSExport(e.target.id); //, exp.dataset.fields, exp.dataset.templates);
-  }
+  // else if (e.target.matches("[export-link]")) {
+  //   const bdsexport = new BDSExport(e.target.id); //, exp.dataset.fields, exp.dataset.templates);
+  // }
 
   // Export Select All click
-  else if (e.target.id === "selectall") {
-    BDSExport.SelectAllExportFields();
-  }
+  // else if (e.target.id === "selectall") {
+  //   BDSExport.SelectAllExportFields();
+  // }
 
-  // Export Checkbox click
-  else if (e.target.matches("p label input[type=checkbox]")) {
-    BDSExport.SelectExportFields();
-  }
+  // // Export Checkbox click
+  // else if (e.target.matches("p label input[type=checkbox]")) {
+  //   BDSExport.SelectExportFields();
+  // }
 
   // Save Template Click
-  else if (e.target.id === "createsavetemplate") {
-    BDSExport.SaveTemplate(e.target.id);
-  }
+  // else if (e.target.id === "createsavetemplate") {
+  //   BDSExport.SaveTemplate(e.target.id);
+  // }
 
-  // Export Download Click
-  else if (e.target.id === "download") {
-    BDSExport.DownloadTemplate(e.target.id);
-  }
+  // // Export Download Click
+  // else if (e.target.id === "download") {
+  //   BDSExport.DownloadTemplate(e.target.id);
+  // }
 
   // Create Onix File Click - refresh WOrkqueue
   else if (e.target.id === "createonixfile") {
@@ -132,27 +132,30 @@ document.body.addEventListener("submit", async (e) => {
 });
 //////////////////////////////////////////////////////////////////
 
-document.body.addEventListener("change", async (e) => {
-  e.preventDefault();
-  // Search Workqueue
-  // if (e.target.id === "searchworkqueue") {
-  //   const bdsworkqueue = new BDSWorkqueue();
-  //   bdsworkqueue.WorkqueueSearch(e.target.value);
-  // }
-  // else if (e.target.id === "searchuploaded") {
-  //   const bdsuploaded = new BdsUploaded();
-  //   bdsuploaded.UploadedFilesSearch(e.target.value);
-  // }
-  // if (e.target.id === "searchtitles") {
-  //   const bdstitles = new BDSTitles(e.target.dataset.fileid, e.target.value);
-  // }
-  if (e.target.id === "template") {
-    BDSExport.SelectTemplateFields(e.target.value);
-  } else if (e.target.id === "bdsfile") {
-    const bdsfile = document.getElementById("bdsfile");
-    if (bdsfile.files && bdsfile.files[0]) {
-      BDSUploadfile.ProcessFile(bdsfile.files[0]);
-    }
-  }
-});
+// document.body.addEventListener("change", async (e) => {
+// e.preventDefault();
+// Search Workqueue
+// if (e.target.id === "searchworkqueue") {
+//   const bdsworkqueue = new BDSWorkqueue();
+//   bdsworkqueue.WorkqueueSearch(e.target.value);
+// }
+// else if (e.target.id === "searchuploaded") {
+//   const bdsuploaded = new BdsUploaded();
+//   bdsuploaded.UploadedFilesSearch(e.target.value);
+// }
+// if (e.target.id === "searchtitles") {
+//   const bdstitles = new BDSTitles(e.target.dataset.fileid, e.target.value);
+// }
+// if (e.target.id === "template") {
+//   BDSExport.SelectTemplateFields(e.target.value);
+// }
+// console.log(e.target.value);
+
+// if (e.target.id === "bdsfile") {
+//   const bdsfile = document.getElementById("bdsfile");
+//   if (bdsfile.files && bdsfile.files[0]) {
+//     BDSUploadfile.ProcessFile(bdsfile.files[0]);
+//   }
+// }
+// });
 ////////////////////////////////////////////////////////////////////////////
