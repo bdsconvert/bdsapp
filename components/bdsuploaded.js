@@ -1,6 +1,7 @@
-import { authObj, fbdb, GetWorqueueFiles, GetTitles, GetContents, SaveExportTemplate } from "../data/bdsfirebase.js";
+import { GetWorqueueFiles, GetTitles, GetContents, SaveExportTemplate } from "../data/bdsfirebase.js";
 import { formatJson, formatXml } from "../utils/bdsutil.js";
-import { BDSExport } from "../views/bdsexport.js";
+import { BdsFileUpload } from "./bdsfileupload.js";
+// import { BDSExport } from "../views/bdsexport.js";
 
 export class BdsUploaded extends HTMLElement {
   userfiles = [];
@@ -21,22 +22,19 @@ export class BdsUploaded extends HTMLElement {
         console.log(`Seaching ${e.target.value}`);
         this.UploadedTitlesSearch(this.fileid, e.target.value);
       } else if (e.target.id === "template") {
-        console.log(e.target.value);
         this.SelectTemplateFields(e.target.value);
-      } else if (e.target.id === "createsavetemplate") {
-        BDSExport.SaveTemplate(e.target.id);
-      } else if (e.target.id === "download") {
-        BDSExport.DownloadTemplate(e.target.id);
       }
     });
 
     this.addEventListener("click", (e) => {
       e.preventDefault();
-
+      // File Click
       if (e.target.matches("[file-link]")) {
         this.fileid = e.target.id;
         this.UploadedTitlesSearch(this.fileid, "");
-      } else if (e.target.matches("[rec-link]")) {
+      }
+      // Title Click
+      else if (e.target.matches("[rec-link]")) {
         this.DisplayContents(e.target.parentElement.id);
       }
       // Export click
@@ -47,7 +45,6 @@ export class BdsUploaded extends HTMLElement {
       else if (e.target.matches("[select-all]")) {
         const selallid = document.getElementById("selectall");
         const selall = selallid.checked || selallid.indeterminate;
-        // const indeterminate = selallid.indeterminate;
         if (selall) {
           selallid.indeterminate = false;
           selallid.checked = false;
@@ -57,22 +54,21 @@ export class BdsUploaded extends HTMLElement {
           this.SelectAllExportFields();
         }
       }
-
       // Export Checkbox click
       else if (e.target.matches("[select-field]")) {
         const selid = e.target.parentElement.firstChild;
         selid.checked = selid.checked ? false : true;
         this.SelectExportFields();
       }
-
       // Save Template Click
       else if (e.target.id === "createsavetemplate") {
-        this.SaveTemplate(e.target.id);
+        this.SaveTemplate(e.target.id).then(() => {
+          M.toast({ html: `Template ${document.getElementById("template").value} Saved!` });
+        });
       }
-
       // Export Download Click
       else if (e.target.id === "download") {
-        BDSExport.DownloadTemplate(e.target.id);
+        this.DownloadTemplate(e.target.id);
       }
     });
   }
@@ -81,6 +77,8 @@ export class BdsUploaded extends HTMLElement {
     GetWorqueueFiles(keyword).then((uploadedfiles) => {
       this.userfiles = JSON.parse(localStorage.getItem(`userfiles`));
       this.innerHTML = this.DisplayUploadedFiles(keyword);
+      // File upload modal
+      document.getElementById("bdsfileupload").innerHTML = `<bds-file-upload></bds-file-upload>`;
     });
   };
 
@@ -90,7 +88,7 @@ export class BdsUploaded extends HTMLElement {
       <li class="collection-item row grey lighten-5">
           <span class="secondary-content input-field"><i class="material-icons prefix">search</i><input type="text" id="searchuploaded"><label for="search">Search Uploaded</label></span>
           </br/>
-          <a href="/uploadfile" class="waves-effect uploadfile" upload-link><i class="material-icons left" page-link id="fileupload">file_upload</i>Upload Onix/Excel File</a>
+          <a href="#bdsfileupload" class="modal-trigger waves-effect uploadfile" upload-link><i class="material-icons left" page-link id="fileupload">file_upload</i>Upload Onix/Excel File</a>
           <br/><br/>
           <span>Showing results for: "${keyword}"</span>
       </li>
@@ -124,7 +122,7 @@ export class BdsUploaded extends HTMLElement {
   };
 
   DisplayUploadedTitles = (fileid, keyword) => {
-    let titlesHtml = `<ul class="collection container">`;
+    let titlesHtml = `<ul class="collection z-depth-1">`;
     titlesHtml += `
       <li class="collection-item row">
         <a href="#" class="col s2"><strong><i class="material-icons left" wk-link>arrow_back</i>Go Back</strong></a>

@@ -110,9 +110,9 @@ document.body.addEventListener("click", async (e) => {
   }
 
   // File Upload Link
-  else if (e.target.matches("[upload-link]")) {
-    console.log("File Upload!");
-  }
+  // else if (e.target.matches("[upload-link]")) {
+  //   console.log("File Upload!");
+  // }
 });
 // //////////////////////////////////////////////////////////////////
 
