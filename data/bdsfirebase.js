@@ -39,7 +39,7 @@ export const GetWorqueueFiles = (keyword) => {
   keyword = keyword.trim().length > 0 ? keyword : "";
   return new Promise((resolve) => {
     // onSnapshot(query(collection(fbdb, authObj.bdsuser), where("filename", ">=", keyword), where("filename", "<=", keyword + "\uf8ff"), where("filetype", "==", "Dat"), limit(10)), (docs) => {
-    onSnapshot(query(collection(fbdb, authObj.bdsuser), where("filename", ">=", keyword), where("filename", "<=", keyword + "\uf8ff"), limit(10)), (docs) => {
+    onSnapshot(query(collection(fbdb, authObj.bdsuser), where("filename", ">=", keyword), where("filename", "<=", keyword + "\uf8ff"), limit(100)), (docs) => {
       const userfiles = [];
       docs.forEach((doc) => {
         // console.log(doc.data().filetype);

@@ -8,7 +8,7 @@ import { BDSProfile } from "./views/bdsprofile.js";
 import { BDSWorkqueue } from "./views/bdsworkqueue.js";
 // import { BDSTitles } from "./views/bdstitles.js";
 // import { BDSExport } from "./views/bdsexport.js";
-import { BDSUploadfile } from "./views/bdsuploadfile.js";
+// import { BDSUploadfile } from "./views/bdsuploadfile.js";
 // import { BdsUploaded } from "../components/bdsuploaded.js";
 
 export const router = async () => {
@@ -76,6 +76,8 @@ document.body.addEventListener("click", async (e) => {
 
   // Content modal close click
   else if (e.target.matches("[content-close]")) {
+    // console.log("From Index.js");
+    // console.log(e.target);
     M.Modal.getInstance(document.querySelector(".modal")).close();
   }
 

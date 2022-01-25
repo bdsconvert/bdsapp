@@ -37,6 +37,12 @@ export class BdsUploaded extends HTMLElement {
       else if (e.target.matches("[rec-link]")) {
         this.DisplayContents(e.target.parentElement.id);
       }
+      // Close content view
+      else if (e.target.matches("[content-close]")) {
+        // console.log("Content Close Click");
+        // M.Modal.getInstance(document.querySelector("#bdscontents")).close();
+        // M.Modal.getInstance(document.querySelector(".modal")).close();
+      }
       // Export click
       else if (e.target.matches("[export-link]")) {
         this.DisplayExportFields(e.target.id.slice(7));
@@ -159,7 +165,7 @@ export class BdsUploaded extends HTMLElement {
   DisplayContents = (recid) => {
     const rec = document.getElementById(`${recid}`);
     const fileid = rec.dataset.fileid;
-    const content = document.querySelector(".modal");
+    const content = document.querySelector("#bdscontents");
     content.innerHTML = `<span class="right" style="margin:1em;cursor:pointer;"><i class="material-icons" content-close>close</i></span><h5 class="center">${rec.dataset.filename}</h5>`;
     content.innerHTML += `
         <ul id="contenttab" class="tabs">

@@ -12,8 +12,8 @@ export class BDSWorkqueue {
     <br/>
     <div class="row grey lighten-5" style="padding:1rem;border:1px solid lightgrey;margin:0rem;">
       <ul id="wktabs" class="tabs col s8 grey lighten-5">
-        <li class="tab"><a href="#cofiles">Created Files</a></li>
         <li class="tab"><a href="#ufiles" class="active">Uploaded Files</a></li>          
+        <li class="tab"><a href="#cofiles">Created Files</a></li>
       </ul>
       <a href="#bdsfilecreate" class="col s4 modal-trigger"><span class="right" style="padding-top:1rem;"><i class="material-icons left">create</i> Create a New Onix File</span></a>
     </div>
