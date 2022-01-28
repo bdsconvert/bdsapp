@@ -60,9 +60,9 @@ document.body.addEventListener("click", async (e) => {
   }
 
   // Workqueue link (Export / Titles page)
-  else if (e.target.matches("[wk-link]")) {
-    navigateTo("/workqueue");
-  }
+  // else if (e.target.matches("[wk-link]")) {
+  //   navigateTo("/workqueue");
+  // }
 
   // File Click
   // else if (e.target.matches("[file-link]")) {

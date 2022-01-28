@@ -47,53 +47,57 @@ export class BdsOnixCreate extends HTMLElement {
   fileid = "";
   titles = [];
   content = "";
+  recid = "";
   constructor() {
     super();
+    this.fileid = this.getAttribute("fileid");
+    this.recid = this.getAttribute("recid");
+    this.DisplayOnixElements(this.fileid, this.recid);
 
-    GetOnixFiles().then((onixfiles) => {
-      this.onixcreatefiles = JSON.parse(localStorage.getItem("onixfiles"));
-      this.innerHTML = this.addOnixElements("");
-      document.getElementById("rrf").click();
+    // GetOnixFiles().then((onixfiles) => {
+    //   this.onixcreatefiles = JSON.parse(localStorage.getItem("onixfiles"));
+    //   this.innerHTML = this.addOnixElements("");
+    //   document.getElementById("rrf").click();
 
-      // Object.keys(bdsoe).forEach((key) => delete bdsoe[key]);
-      // Object.assign(bdsrecs, JSON.parse(localStorage.getItem("bdsrecs")));
-      // this.innerHTML += this.addOnixElements();
-      M.Collapsible.init(document.querySelectorAll(".collapsible"), { accordion: true });
-      M.FormSelect.init(document.querySelectorAll("select"), {});
-      M.Modal.init(document.querySelectorAll(".modal"), {});
-    });
+    //   // Object.keys(bdsoe).forEach((key) => delete bdsoe[key]);
+    //   // Object.assign(bdsrecs, JSON.parse(localStorage.getItem("bdsrecs")));
+    //   // this.innerHTML += this.addOnixElements();
+    //   M.Collapsible.init(document.querySelectorAll(".collapsible"), { accordion: true });
+    //   M.FormSelect.init(document.querySelectorAll("select"), {});
+    //   M.Modal.init(document.querySelectorAll(".modal"), {});
+    // });
   }
 
   connectedCallback() {
     this.addEventListener("change", (e) => {
-      if (e.target.id === "ocfile") {
-        GetTitles(e.target.value, "", 25).then(() => {
-          this.fileid = e.target.value;
-          console.log(this.fielid);
-          this.titles = JSON.parse(localStorage.getItem(`titles`)).map((title) => title.RecordReference);
-          this.innerHTML = this.addOnixElements(e.target.value, "");
-          M.Collapsible.init(document.querySelectorAll(".collapsible"), { accordion: true });
-          M.FormSelect.init(document.querySelectorAll("select"), {});
-          // M.Modal.init(document.querySelectorAll(".modal"), {});
-        });
-      } else if (e.target.id === "onixrec") {
-        GetContents(this.fileid, e.target.value).then(() => {
-          Object.keys(bdsoe).forEach((key) => delete bdsoe[key]);
-          Object.assign(bdsoe, JSON.parse(localStorage.getItem(`json`)));
-          this.innerHTML = this.addOnixElements(this.fileid, e.target.value);
-          document.getElementById("rrf").click();
-          M.Collapsible.init(document.querySelectorAll(".collapsible"), { accordion: true });
-          M.FormSelect.init(document.querySelectorAll("select"), {});
-          this.viewOnix();
-        });
-        // Object.keys(bdsoe).forEach((key) => delete bdsoe[key]);
-        // Object.assign(bdsoe, bdsrecs[e.target.value]);
-        // this.innerHTML = this.addOnixFiles() + this.addOnixElements(e.target.value);
-        // M.Collapsible.init(document.querySelectorAll(".collapsible"), { accordion: true });
-        // M.FormSelect.init(document.querySelectorAll("select"), {});
-      } else {
-        this.viewOnix();
-      }
+      // if (e.target.id === "ocfile") {
+      //   GetTitles(e.target.value, "", 25).then(() => {
+      //     this.fileid = e.target.value;
+      //     console.log(this.fielid);
+      //     this.titles = JSON.parse(localStorage.getItem(`titles`)).map((title) => title.RecordReference);
+      //     this.innerHTML = this.addOnixElements(e.target.value, "");
+      //     M.Collapsible.init(document.querySelectorAll(".collapsible"), { accordion: true });
+      //     M.FormSelect.init(document.querySelectorAll("select"), {});
+      //     // M.Modal.init(document.querySelectorAll(".modal"), {});
+      //   });
+      // } else if (e.target.id === "onixrec") {
+      //   GetContents(this.fileid, e.target.value).then(() => {
+      //     Object.keys(bdsoe).forEach((key) => delete bdsoe[key]);
+      //     Object.assign(bdsoe, JSON.parse(localStorage.getItem(`json`)));
+      //     this.innerHTML = this.addOnixElements(this.fileid, e.target.value);
+      //     document.getElementById("rrf").click();
+      //     M.Collapsible.init(document.querySelectorAll(".collapsible"), { accordion: true });
+      //     M.FormSelect.init(document.querySelectorAll("select"), {});
+      //     this.viewOnix();
+      //   });
+      // Object.keys(bdsoe).forEach((key) => delete bdsoe[key]);
+      // Object.assign(bdsoe, bdsrecs[e.target.value]);
+      // this.innerHTML = this.addOnixFiles() + this.addOnixElements(e.target.value);
+      // M.Collapsible.init(document.querySelectorAll(".collapsible"), { accordion: true });
+      // M.FormSelect.init(document.querySelectorAll("select"), {});
+      // } else {
+      //   this.viewOnix();
+      // }
     });
 
     this.addEventListener("click", async (e) => {
@@ -101,6 +105,23 @@ export class BdsOnixCreate extends HTMLElement {
         this.saveOnix(this.fileid);
         this.titles.push(bdsoe["A1-RecordReference_0"]);
       }
+    });
+  }
+
+  DisplayOnixElements() {
+    this.innerHTML = `
+      <div class="row collection grey lighten-5" style="padding:1em 0 1em 0;margin:0 0 -0.5em 0">
+        <a href="#" class="col s4"><strong><i class="material-icons left" ctitles-link>arrow_back</i>Back to Created Titles</strong></a>
+        <span class="col s4 center">${this.recid}</span>
+      </div>`;
+    GetContents(this.fileid, this.recid).then(() => {
+      Object.keys(bdsoe).forEach((key) => delete bdsoe[key]);
+      Object.assign(bdsoe, JSON.parse(localStorage.getItem(`json`)));
+      this.innerHTML += this.addOnixElements(this.fileid, this.recid);
+      document.getElementById("rrf").click();
+      M.Collapsible.init(document.querySelectorAll(".collapsible"), { accordion: true });
+      M.FormSelect.init(document.querySelectorAll("select"), {});
+      this.viewOnix();
     });
   }
 
@@ -123,8 +144,8 @@ export class BdsOnixCreate extends HTMLElement {
       <div class="row" style="display:flex;flex-wrap:wrap;">
         <ul class="col s6 collapsible" style="font-weight:400;font-size:1.25rem;overflow-y:scroll;height:70vh;">
           <!--<li>${BdsSelect2("onixrec", Object.keys(bdsrecs), rec)}</li>-->
-          <li class="col s6">${BdsSelect2("ocfile", this.onixcreatefiles, file)}</li>
-          <li class="col s6">${BdsSelect2("onixrec", this.titles, rec)}</li>
+          <!--<li class="col s6">${BdsSelect2("ocfile", this.onixcreatefiles, file)}</li>-->
+          <!--<li class="col s6">${BdsSelect2("onixrec", this.titles, rec)}</li>-->
           ${comps}
         </ul>
         <ul class="col s6 collapsible" style="overflow-y:scroll;height:70vh;">

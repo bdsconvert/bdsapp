@@ -61,16 +61,27 @@ export const GetWorqueueFiles = (keyword) => {
   });
 };
 
-export const GetOnixFiles = () => {
+export const GetOnixFiles = (keyword) => {
   console.log("Getting Onix Files...");
+  keyword = keyword.trim().length > 0 ? keyword : "";
   return new Promise((resolve) => {
-    onSnapshot(query(collection(fbdb, authObj.bdsuser), where("filetype", "==", "Dat"), limit(25)), (docs) => {
+    onSnapshot(query(collection(fbdb, authObj.bdsuser), where("filetype", "==", "Dat"), limit(100)), (docs) => {
       const onixfiles = [];
+      const createdfiles = [];
       docs.forEach((doc) => {
         onixfiles.push(doc.id);
+        if (keyword.trim().length === 0 || doc.id.indexOf(keyword) !== -1) {
+          createdfiles.push({
+            filename: doc.id,
+            filetype: doc.data().filetype,
+            timestamp: doc.data().timestamp ? doc.data().timestamp : Date.now()
+          });
+        }
       });
       localStorage.removeItem("onixfiles");
       localStorage.setItem(`onixfiles`, JSON.stringify(onixfiles));
+      localStorage.removeItem("createdfiles");
+      localStorage.setItem(`createdfiles`, JSON.stringify(createdfiles));
       resolve();
     });
   });
@@ -82,17 +93,21 @@ export const GetTitles = (fileid, keyword, lmt) => {
   keyword = keyword.trim().length > 0 ? keyword : "";
   return new Promise(async (resolve) => {
     let q = null;
-    if (limit === 0) {
-      q = query(collection(fbdb, authObj.bdsuser, fileid, "Titles"), where("Title", ">=", keyword), where("Title", "<=", keyword + "\uf8ff"));
+    if (lmt === 0) {
+      // q = query(collection(fbdb, authObj.bdsuser, fileid, "Titles"), where("Title", ">=", keyword), where("Title", "<=", keyword + "\uf8ff"));
+      q = query(collection(fbdb, authObj.bdsuser, fileid, "Titles"));
     } else {
-      q = query(collection(fbdb, authObj.bdsuser, fileid, "Titles"), where("Title", ">=", keyword), where("Title", "<=", keyword + "\uf8ff"), limit(lmt));
+      // q = query(collection(fbdb, authObj.bdsuser, fileid, "Titles"), where("Title", ">=", keyword), where("Title", "<=", keyword + "\uf8ff"), limit(lmt));
+      q = query(collection(fbdb, authObj.bdsuser, fileid, "Titles"), limit(lmt));
     }
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
-      const title = doc.data();
-      title.fileid = fileid;
-      title.keyword = keyword;
-      titles.push(title);
+      if (keyword.trim().length === 0 || doc.data().Title.indexOf(keyword) !== -1) {
+        const title = doc.data();
+        title.fileid = fileid;
+        title.keyword = keyword;
+        titles.push(title);
+      }
     });
     localStorage.setItem(`titles`, JSON.stringify(titles));
     resolve();

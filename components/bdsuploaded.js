@@ -28,8 +28,13 @@ export class BdsUploaded extends HTMLElement {
 
     this.addEventListener("click", (e) => {
       e.preventDefault();
+      // Back click
+      console.log(e.target);
+      if (e.target.matches("[uploaded-link]")) {
+        this.UploadedFilesSearch("");
+      }
       // File Click
-      if (e.target.matches("[file-link]")) {
+      else if (e.target.matches("[file-link]")) {
         this.fileid = e.target.id;
         this.UploadedTitlesSearch(this.fileid, "");
       }
@@ -106,7 +111,7 @@ export class BdsUploaded extends HTMLElement {
             <br />
             <span style="font-size:0.8rem;">File Type: (${item.filetype})</span>
             <a href="#" class="secondary-content">
-              <i class="material-icons left" title="Export" id="Export-${item.filename}" export-link>send</i>
+              <i class="material-icons left" title="Export" id="Export-${item.filename}" export-link>output</i>
             </a>
             <a href="#" class="secondary-content">
               <i class="material-icons left" title="Titles" id="${item.filename}" file-link>list</i>
@@ -128,11 +133,11 @@ export class BdsUploaded extends HTMLElement {
   };
 
   DisplayUploadedTitles = (fileid, keyword) => {
-    let titlesHtml = `<ul class="collection z-depth-1">`;
-    titlesHtml += `
+    let titlesHtml = ``;
+    titlesHtml += `<ul class="collection z-depth-1">
       <li class="collection-item row">
-        <a href="#" class="col s2"><strong><i class="material-icons left" wk-link>arrow_back</i>Go Back</strong></a>
-        <span class="col s8 pull-2 center" style="font-size:1.2rem;font-weight:500">${fileid}</span>
+        <a href="#" class="col s4"><strong><i class="material-icons left" uploaded-link>arrow_back</i>Back to Uploaded Files</strong></a>
+        <span class="col s4 center" style="font-size:1.2rem;font-weight:500">${fileid}</span>
         <span class="secondary-content input-field" style="margin:0;"><i class="material-icons prefix">search</i><input type="text" id="searchtitles" data-fileid=${fileid}><label for="search">Search Titles</label></span>
         <br/><br/>Showing results for: "${keyword}"
       </li>
