@@ -5,7 +5,7 @@ export class BdsFileUpload extends HTMLElement {
   constructor() {
     super();
     this.innerHTML = `
-      <span class="right" style="margin:1em;cursor:pointer;"><i class="material-icons" content-close>close</i></span>
+      <span class="right" style="margin:1em;cursor:pointer;"><i class="material-icons" fileupload-close>close</i></span>
       <form action="#" class="container">
         <h5>Upload Onix/Excel files</h5>
         <div class="file-field input-field center">
@@ -26,7 +26,7 @@ export class BdsFileUpload extends HTMLElement {
     document.getElementById("fustatus").innerHTML = ``;
     this.addEventListener("click", (e) => {
       // e.preventDefault();
-      if (e.target.matches("[content-close]")) {
+      if (e.target.matches("[fileupload-close]")) {
         M.Modal.getInstance(document.querySelector("#bdsfileupload")).close();
       }
     });

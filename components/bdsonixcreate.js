@@ -70,6 +70,7 @@ export class BdsOnixCreate extends HTMLElement {
 
   connectedCallback() {
     this.addEventListener("change", (e) => {
+      this.viewOnix();
       // if (e.target.id === "ocfile") {
       //   GetTitles(e.target.value, "", 25).then(() => {
       //     this.fileid = e.target.value;
@@ -111,18 +112,25 @@ export class BdsOnixCreate extends HTMLElement {
   DisplayOnixElements() {
     this.innerHTML = `
       <div class="row collection grey lighten-5" style="padding:1em 0 1em 0;margin:0 0 -0.5em 0">
-        <a href="#" class="col s4"><strong><i class="material-icons left" ctitles-link>arrow_back</i>Back to Created Titles</strong></a>
+        <a href="#" class="col s4"><strong><i class="material-icons left" titlesback-link>arrow_back</i>Back to Created Titles</strong></a>
         <span class="col s4 center">${this.recid}</span>
       </div>`;
-    GetContents(this.fileid, this.recid).then(() => {
-      Object.keys(bdsoe).forEach((key) => delete bdsoe[key]);
-      Object.assign(bdsoe, JSON.parse(localStorage.getItem(`json`)));
+    Object.keys(bdsoe).forEach((key) => delete bdsoe[key]);
+    if (this.recid !== "") {
+      GetContents(this.fileid, this.recid).then(() => {
+        Object.assign(bdsoe, JSON.parse(localStorage.getItem(`json`)));
+        this.innerHTML += this.addOnixElements(this.fileid, this.recid);
+        document.getElementById("rrf").click();
+        M.Collapsible.init(document.querySelectorAll(".collapsible"), { accordion: true });
+        M.FormSelect.init(document.querySelectorAll("select"), {});
+        this.viewOnix();
+      });
+    } else {
       this.innerHTML += this.addOnixElements(this.fileid, this.recid);
       document.getElementById("rrf").click();
       M.Collapsible.init(document.querySelectorAll(".collapsible"), { accordion: true });
       M.FormSelect.init(document.querySelectorAll("select"), {});
-      this.viewOnix();
-    });
+    }
   }
 
   addOnixElements = (file, rec) => {

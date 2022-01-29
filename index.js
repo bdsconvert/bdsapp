@@ -75,11 +75,11 @@ document.body.addEventListener("click", async (e) => {
   // }
 
   // Content modal close click
-  else if (e.target.matches("[content-close]")) {
-    // console.log("From Index.js");
-    // console.log(e.target);
-    M.Modal.getInstance(document.querySelector(".modal")).close();
-  }
+  // else if (e.target.matches("[content-close]")) {
+  //   // console.log("From Index.js");
+  //   // console.log(e.target);
+  //   M.Modal.getInstance(document.querySelector(".modal")).close();
+  // }
 
   // Export click
   // else if (e.target.matches("[export-link]")) {

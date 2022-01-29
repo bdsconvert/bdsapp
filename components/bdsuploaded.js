@@ -1,6 +1,7 @@
 import { GetWorqueueFiles, GetTitles, GetContents, SaveExportTemplate } from "../data/bdsfirebase.js";
 import { formatJson, formatXml } from "../utils/bdsutil.js";
 import { BdsFileUpload } from "./bdsfileupload.js";
+import { BdsContent } from "./bdscontent.js";
 // import { BDSExport } from "../views/bdsexport.js";
 
 export class BdsUploaded extends HTMLElement {
@@ -28,29 +29,32 @@ export class BdsUploaded extends HTMLElement {
 
     this.addEventListener("click", (e) => {
       e.preventDefault();
-      // Back click
-      console.log(e.target);
-      if (e.target.matches("[uploaded-link]")) {
+
+      // Titles Back to uploaded file click
+      if (e.target.matches("[uploadedback-link]")) {
         this.UploadedFilesSearch("");
       }
+
       // File Click
       else if (e.target.matches("[file-link]")) {
         this.fileid = e.target.id;
         this.UploadedTitlesSearch(this.fileid, "");
       }
+
       // Title Click
       else if (e.target.matches("[rec-link]")) {
-        this.DisplayContents(e.target.parentElement.id);
+        const rec = document.getElementById(e.target.parentElement.id);
+        document.getElementById("bdscontents").innerHTML = `<bds-content fileid="${this.fileid}" recid="${e.target.parentElement.id}" ttl="${rec.dataset.filename}" ></bds-content>`;
+        // this.DisplayContents(e.target.parentElement.id);
       }
-      // Close content view
-      else if (e.target.matches("[content-close]")) {
-        // console.log("Content Close Click");
-        // M.Modal.getInstance(document.querySelector("#bdscontents")).close();
-        // M.Modal.getInstance(document.querySelector(".modal")).close();
-      }
+
       // Export click
       else if (e.target.matches("[export-link]")) {
         this.DisplayExportFields(e.target.id.slice(7));
+      }
+      // Export back to uploaded click
+      else if (e.target.matches("[exportback-link]")) {
+        this.UploadedFilesSearch("");
       }
       // Export Select All click
       else if (e.target.matches("[select-all]")) {
@@ -136,7 +140,7 @@ export class BdsUploaded extends HTMLElement {
     let titlesHtml = ``;
     titlesHtml += `<ul class="collection z-depth-1">
       <li class="collection-item row">
-        <a href="#" class="col s4"><strong><i class="material-icons left" uploaded-link>arrow_back</i>Back to Uploaded Files</strong></a>
+        <a href="#" class="col s4"><strong><i class="material-icons left" uploadedback-link>arrow_back</i>Back to Uploaded Files</strong></a>
         <span class="col s4 center" style="font-size:1.2rem;font-weight:500">${fileid}</span>
         <span class="secondary-content input-field" style="margin:0;"><i class="material-icons prefix">search</i><input type="text" id="searchtitles" data-fileid=${fileid}><label for="search">Search Titles</label></span>
         <br/><br/>Showing results for: "${keyword}"
@@ -167,26 +171,26 @@ export class BdsUploaded extends HTMLElement {
     return titlesHtml;
   };
 
-  DisplayContents = (recid) => {
-    const rec = document.getElementById(`${recid}`);
-    const fileid = rec.dataset.fileid;
-    const content = document.querySelector("#bdscontents");
-    content.innerHTML = `<span class="right" style="margin:1em;cursor:pointer;"><i class="material-icons" content-close>close</i></span><h5 class="center">${rec.dataset.filename}</h5>`;
-    content.innerHTML += `
-        <ul id="contenttab" class="tabs">
-          <li class="tab"><a href="#onix${fileid}" class="onix">Onix</a></li>
-          <li class="tab"><a href="#table${fileid}" class="table">Table</a></li>
-        </ul>
-      <div id="onix${fileid}" style="overflow:scroll;height:50vh;margin:1em;"></div>
-      <div id="table${fileid}" style="overflow:scroll;height:50vh;margin:1em;"></div>    
-    `;
-    M.Tabs.init(document.querySelectorAll(".tabs"));
+  // DisplayContents = (recid) => {
+  //   const rec = document.getElementById(`${recid}`);
+  //   const fileid = rec.dataset.fileid;
+  //   const content = document.querySelector("#bdscontents");
+  //   content.innerHTML = `<span class="right" style="margin:1em;cursor:pointer;"><i class="material-icons" content-close>close</i></span><h5 class="center">${rec.dataset.filename}</h5>`;
+  //   content.innerHTML += `
+  //       <ul id="contenttab" class="tabs">
+  //         <li class="tab"><a href="#onix${fileid}" class="onix">Onix</a></li>
+  //         <li class="tab"><a href="#table${fileid}" class="table">Table</a></li>
+  //       </ul>
+  //     <div id="onix${fileid}" style="overflow:scroll;height:50vh;margin:1em;"></div>
+  //     <div id="table${fileid}" style="overflow:scroll;height:50vh;margin:1em;"></div>
+  //   `;
+  //   M.Tabs.init(document.querySelectorAll(".tabs"));
 
-    GetContents(fileid, recid).then(() => {
-      document.getElementById(`onix${fileid}`).innerHTML = formatXml(localStorage.getItem(`xml`));
-      document.getElementById(`table${fileid}`).innerHTML = formatJson(localStorage.getItem(`json`));
-    });
-  };
+  //   GetContents(fileid, recid).then(() => {
+  //     document.getElementById(`onix${fileid}`).innerHTML = formatXml(localStorage.getItem(`xml`));
+  //     document.getElementById(`table${fileid}`).innerHTML = formatJson(localStorage.getItem(`json`));
+  //   });
+  // };
 
   DisplayExportFields = (fileid) => {
     const file = JSON.parse(localStorage.getItem("userfiles")).find((file) => file.filename === fileid);
@@ -209,8 +213,8 @@ export class BdsUploaded extends HTMLElement {
     const exp = `
     <div style="margin:2em;">
       <div class="row">
-        <a href="#" class="col s2"><strong><i class="material-icons left" wk-link>arrow_back</i>Go Back</strong></a>
-        <span class="col s8 pull-2 center" style="font-size:1.2rem;font-weight:500">${fileid}</span>
+        <a href="#" class="col s4"><strong><i class="material-icons left" exportback-link>arrow_back</i>Back to Uploaded Files</strong></a>
+        <span class="col s4 center" style="font-size:1.2rem;font-weight:500">${fileid}</span>
       </div>
       <!--<div><h5>Export ${fileid}</h5></div>-->
       <div class="divider"></div>

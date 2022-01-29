@@ -27,9 +27,11 @@ export class BdsCreated extends HTMLElement {
         this.CreatedTitlesSearch(this.fileid, "");
       } else if (e.target.matches("[oedit-link]")) {
         this.innerHTML = `<bds-onix-create fileid="${this.fileid}" recid="${e.target.id}"></bds-onix-create>`;
+      } else if (e.target.matches("[onew-link]")) {
+        this.innerHTML = `<bds-onix-create fileid="${this.fileid}" recid=""></bds-onix-create>`;
       } else if (e.target.matches("[created-link]")) {
         this.CreatedFilesSearch("");
-      } else if (e.target.matches("[ctitles-link]")) {
+      } else if (e.target.matches("[titlesback-link]")) {
         // back from onix edit
         this.CreatedTitlesSearch(this.fileid, "");
       }
