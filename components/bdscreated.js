@@ -25,6 +25,8 @@ export class BdsCreated extends HTMLElement {
       if (e.target.matches("[otitles-link]")) {
         this.fileid = e.target.id;
         this.CreatedTitlesSearch(this.fileid, "");
+      } else if (e.target.matches("[download-link]")) {
+        console.log(e.target.id);
       } else if (e.target.matches("[oedit-link]")) {
         this.innerHTML = `<bds-onix-create fileid="${this.fileid}" recid="${e.target.id}"></bds-onix-create>`;
       } else if (e.target.matches("[onew-link]")) {
@@ -48,14 +50,16 @@ export class BdsCreated extends HTMLElement {
   }
 
   DisplayCreatedFiles(keyword) {
-    let created = `<ul class="collection z-depth-1">`;
+    let created = ``;
     created += `
-      <li class="collection-item row grey lighten-5">
-      <span class="input-field right"><i class="material-icons prefix">search</i><input type="text" id="searchcreated"><label for="search">Search Created</label></span>
-      <div class="grey lighten-5"><br/><a href="#bdsfilecreate" class="modal-trigger"><span style="padding-top:1rem;"><i class="material-icons left">add</i> Create a New Onix File</span></a>
-        <br/><br/>
-            <span>Showing results for: "${keyword}"</span>
-      </li>
+      
+      <span class="secondary-content input-field right"><i class="material-icons prefix">search</i><input type="text" id="searchcreated"><label for="search">Search Created</label></span>
+      <br/>
+      <a href="#bdsfilecreate" class="modal-trigger"><span style="padding-top:1rem;"><i class="material-icons left">add</i> Create a New Onix File</span></a>
+      <br/><br/>
+      <span>Showing results for: "${keyword}"</span>
+      
+      <ul class="collection z-depth-1">
     `;
     this.createdfiles.forEach((item) => {
       created += `
@@ -64,7 +68,7 @@ export class BdsCreated extends HTMLElement {
             <br />
             <span style="font-size:0.8rem;">File Type: (${item.filetype})</span>
             <a href="#" class="secondary-content">
-              <i class="material-icons left" title="Download" id="Export-${item.filename}" download-link>download</i>
+              <i class="material-icons left" title="Download" id="download-${item.filename}" download-link>download</i>
             </a>
             <a href="#" class="secondary-content">
               <i class="material-icons left" title="Titles" id="${item.filename}" otitles-link>list</i>
@@ -87,15 +91,18 @@ export class BdsCreated extends HTMLElement {
   };
 
   DisplayCreatedTitles = (fileid, keyword) => {
-    let titlesHtml = `<ul class="collection z-depth-1">`;
+    let titlesHtml = ``;
     titlesHtml += `
-      <li class="collection-item row">
-        <a href="#" class="col s5"><strong><i class="material-icons left" created-link>arrow_back</i>Back to Created Files</strong></a>
+      <div style="margin-top:1.5rem;">
+        <a href="#" class="col s5"><i class="material-icons left" created-link>arrow_back</i>Back to Created Files</a>
         <span class="col s4" style="font-size:1.2rem;font-weight:500">${fileid}</span>
-        <a href="#" class="col s3"><strong><i class="material-icons left" onew-link>add</i>Create New Title</strong></a>
-        <span class="secondary-content input-field" style="margin:1em 2em 0 0;"><i class="material-icons prefix">search</i><input type="text" id="searchcreatedtitles" data-fileid=${fileid}><label for="search">Search Titles</label></span>
-        <br/><br/><br/>Showing results for: "${keyword}"
-      </li>
+        <a href="#" class="col s3"><i class="material-icons left" onew-link>add</i>Create New Title</a>
+      </div>
+      <div>        
+        <span class="col s9" style="margin-top:2rem;">Showing results for: "${keyword}"</span>
+        <span class="col s3 input-field" style="margin-top:0.5rem;"><i class="material-icons prefix">search</i><input type="text" id="searchcreatedtitles" data-fileid=${fileid}><label for="search">Search Titles</label></span>
+      </div>
+      <ul class="collection z-depth-1">
     `;
     this.titles.forEach((title) => {
       titlesHtml += `

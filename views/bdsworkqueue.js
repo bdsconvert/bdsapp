@@ -9,22 +9,22 @@ export class BDSWorkqueue {
   userfiles = [];
 
   async getPage() {
-    document.getElementById("bdsheader").innerHTML = `
-    <br/>
-    <div class="row grey lighten-5" style="padding:1rem;border:1px solid lightgrey;margin:0rem;">
-      <ul id="wktabs" class="tabs col s8 grey lighten-5" style="margin:-0.5rem;">
-        <li class="tab"><a href="#ufiles" class="active">Uploaded Files</a></li>          
-        <li class="tab"><a href="#cofiles">Created Files</a></li>
+    document.getElementById("bdscontent").innerHTML = ` 
+    <div class="row">
+      <div class="col s12">
+      <ul id="wktabs" class="tabs">
+        <li class="tab col s3"><a href="#ufiles" class="active">Uploaded Files</a></li>          
+        <li class="tab col s3"><a href="#cofiles">Created Files</a></li>
       </ul>
-      <!--<a href="#bdsfilecreate" class="col s4 modal-trigger"><span class="right" style="padding-top:1rem;"><i class="material-icons left">create</i> Create a New Onix File</span></a>-->
+     </div>
+      <div id="cofiles" class="col s12" style="overflow:scroll;height:75vh;margin:0rem 0.25rem 0.25rem 0.25rem;"><bds-created></bds-created></div>    
+      <div id="ufiles" class="col s12" style="overflow:scroll;height:75vh;margin:0rem 0.25rem 0.25rem 0.25rem;"><bds-uploaded></bds-uploaded></div>    
     </div>
     `;
-    // document.getElementById("bdsfilecreate").innerHTML = `<bds-file-create></bds-file-create>`;
-    document.getElementById("bdscontent").innerHTML = `
-      <div id="cofiles" style="overflow:scroll;height:75vh;margin:0rem 0.25rem 0.25rem 0.25rem;"><bds-created></bds-created></div>    
-      <!--<div id="cofiles" style="overflow:scroll;height:75vh;margin:0rem 0.25rem 0.25rem 0.25rem;"><bds-onix-create></bds-onix-create></div>-->    
-      <div id="ufiles" style="overflow:scroll;height:75vh;margin:0rem 0.25rem 0.25rem 0.25rem;"><bds-uploaded></bds-uploaded></div>    
-    `;
+    // document.getElementById("bdscontent").innerHTML = `
+    //   <div id="cofiles" style="overflow:scroll;height:75vh;margin:0rem 0.25rem 0.25rem 0.25rem;"><bds-created></bds-created></div>
+    //   <div id="ufiles" style="overflow:scroll;height:75vh;margin:0rem 0.25rem 0.25rem 0.25rem;"><bds-uploaded></bds-uploaded></div>
+    // `;
     M.Tabs.init(document.querySelectorAll(".tabs", { swipeable: true }));
   }
 } // Class End

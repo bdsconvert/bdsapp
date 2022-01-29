@@ -1,7 +1,8 @@
 export class BDSHome {
   async getPage() {
-    document.getElementById("bdsheader").innerHTML = `<h4>Welcome to BookDataSolutions</h4>`;
+    // document.getElementById("bdsheader").innerHTML = `<h4>Welcome to BookDataSolutions</h4>`;
     document.getElementById("bdscontent").innerHTML = `
+      <h4>Welcome to BookDataSolutions</h4>
       <div>
         <h5>Book Solutions Made Easy </h5>
         <p>

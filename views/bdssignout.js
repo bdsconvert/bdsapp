@@ -5,7 +5,6 @@ import { signOut } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-auth.
 export class BDSSignout {
   async getPage() {
     this.signOut();
-    document.getElementById("bdscontent").innerHTML = `<h4>${authObj.bdsuser} Logged Out!</h4>`;
   }
 
   signOut() {
@@ -14,6 +13,7 @@ export class BDSSignout {
     signOut(authObj.auth)
       .then(() => {
         navigateTo("/");
+        M.toast({ html: `${user} Logged Out!` });
       })
       .catch((err) => alert(err.message));
   }

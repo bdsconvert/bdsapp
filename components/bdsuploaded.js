@@ -98,15 +98,15 @@ export class BdsUploaded extends HTMLElement {
   };
 
   DisplayUploadedFiles(keyword) {
-    let uploaded = `<ul class="collection z-depth-1">`;
+    let uploaded = ``;
     uploaded += `
-      <li class="collection-item row grey lighten-5">
-          <span class="secondary-content input-field"><i class="material-icons prefix">search</i><input type="text" id="searchuploaded"><label for="search">Search Uploaded</label></span>
-          </br/>
-          <a href="#bdsfileupload" class="modal-trigger waves-effect uploadfile" upload-link><i class="material-icons left" page-link id="fileupload">file_upload</i>Upload Onix/Excel File</a>
-          <br/><br/>
-          <span>Showing results for: "${keyword}"</span>
-      </li>
+      <span class="secondary-content input-field"><i class="material-icons prefix">search</i><input type="text" id="searchuploaded"><label for="search">Search Uploaded</label></span>
+      </br/>
+      <a href="#bdsfileupload" class="modal-trigger waves-effect uploadfile" upload-link><i class="material-icons left" page-link id="fileupload">file_upload</i>Upload Onix/Excel File</a>
+      <br/><br/>
+      <span>Showing results for: "${keyword}"</span>
+
+      <ul class="collection z-depth-1">
     `;
     this.userfiles.forEach((item) => {
       uploaded += `
@@ -125,7 +125,7 @@ export class BdsUploaded extends HTMLElement {
         </li>
       `;
     });
-    uploaded += "</ul>";
+    uploaded += `</ul>`;
     return uploaded;
   }
 
@@ -138,13 +138,14 @@ export class BdsUploaded extends HTMLElement {
 
   DisplayUploadedTitles = (fileid, keyword) => {
     let titlesHtml = ``;
-    titlesHtml += `<ul class="collection z-depth-1">
-      <li class="collection-item row">
-        <a href="#" class="col s4"><strong><i class="material-icons left" uploadedback-link>arrow_back</i>Back to Uploaded Files</strong></a>
+    titlesHtml += `
+        <span class="secondary-content input-field"><i class="material-icons prefix">search</i><input type="text" id="searchtitles" data-fileid=${fileid}><label for="search">Search Titles</label></span>
+        <br/>
+        <a href="#" class="col s4"><i class="material-icons left" uploadedback-link>arrow_back</i>Back to Uploaded Files</a>
         <span class="col s4 center" style="font-size:1.2rem;font-weight:500">${fileid}</span>
-        <span class="secondary-content input-field" style="margin:0;"><i class="material-icons prefix">search</i><input type="text" id="searchtitles" data-fileid=${fileid}><label for="search">Search Titles</label></span>
         <br/><br/>Showing results for: "${keyword}"
-      </li>
+    
+      <ul class="collection z-depth-1">
     `;
     this.titles.forEach((title) => {
       titlesHtml += `
@@ -213,7 +214,7 @@ export class BdsUploaded extends HTMLElement {
     const exp = `
     <div style="margin:2em;">
       <div class="row">
-        <a href="#" class="col s4"><strong><i class="material-icons left" exportback-link>arrow_back</i>Back to Uploaded Files</strong></a>
+        <a href="#" class="col s4"><i class="material-icons left" exportback-link>arrow_back</i>Back to Uploaded Files</a>
         <span class="col s4 center" style="font-size:1.2rem;font-weight:500">${fileid}</span>
       </div>
       <!--<div><h5>Export ${fileid}</h5></div>-->

@@ -25,7 +25,7 @@ export const router = async () => {
   let match = routes.find((route) => window.location.pathname === route.path);
   match = match ? match : { path: routes[0].path, title: "BookDataSolutions", view: routes[0].view }; // Go home if no match
   const view = new match.view();
-  document.getElementById("bdsheader").innerHTML = ``;
+  // document.getElementById("bdsheader").innerHTML = ``;
   await view.getPage();
   document.getElementById("hdrlbl").innerHTML = `${match.title}`;
 };
