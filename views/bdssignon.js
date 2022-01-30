@@ -32,7 +32,7 @@ export class BDSSignon {
     signInWithEmailAndPassword(authObj.auth, email, password)
       .then((cred) => {
         navigateTo("/");
-        //signonForm.reset();
+        M.toast({ html: `${email} Signed In!` });
       })
       .catch((err) => {
         alert(err.message);

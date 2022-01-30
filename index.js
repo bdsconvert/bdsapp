@@ -107,9 +107,9 @@ document.body.addEventListener("click", async (e) => {
   // }
 
   // Create Onix File Click - refresh WOrkqueue
-  else if (e.target.id === "createonixfile") {
-    navigateTo("/workqueue");
-  }
+  // else if (e.target.id === "createonixfile") {
+  //   navigateTo("/workqueue");
+  // }
 
   // File Upload Link
   // else if (e.target.matches("[upload-link]")) {

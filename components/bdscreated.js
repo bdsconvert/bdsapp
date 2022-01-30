@@ -52,7 +52,6 @@ export class BdsCreated extends HTMLElement {
   DisplayCreatedFiles(keyword) {
     let created = ``;
     created += `
-      
       <span class="secondary-content input-field right"><i class="material-icons prefix">search</i><input type="text" id="searchcreated"><label for="search">Search Created</label></span>
       <br/>
       <a href="#bdsfilecreate" class="modal-trigger"><span style="padding-top:1rem;"><i class="material-icons left">add</i> Create a New Onix File</span></a>
