@@ -1,5 +1,5 @@
 import { GetOnixFiles, GetTitles, GetContents } from "../data/bdsfirebase.js";
-
+import { BdsDownload } from "./bdsdownload.js";
 export class BdsCreated extends HTMLElement {
   fileid = "";
   constructor() {
@@ -26,7 +26,8 @@ export class BdsCreated extends HTMLElement {
         this.fileid = e.target.id;
         this.CreatedTitlesSearch(this.fileid, "");
       } else if (e.target.matches("[download-link]")) {
-        console.log(e.target.id);
+        console.log(e.target.id.slice(9));
+        document.getElementById("bdsdownload").innerHTML = `<bds-download fileid="${e.target.id.slice(9)}" recid=""></bds-download>`;
       } else if (e.target.matches("[oedit-link]")) {
         this.innerHTML = `<bds-onix-create fileid="${this.fileid}" recid="${e.target.id}"></bds-onix-create>`;
       } else if (e.target.matches("[onew-link]")) {
@@ -66,14 +67,14 @@ export class BdsCreated extends HTMLElement {
             <span style="font-size:1.25rem;font-weight:500">${item.filename}</span>
             <br />
             <span style="font-size:0.8rem;">File Type: (${item.filetype})</span>
-            <a href="#" class="secondary-content">
+            <a class="secondary-content modal-trigger" href="#bdsdownload">
               <i class="material-icons left" title="Download" id="download-${item.filename}" download-link>download</i>
             </a>
             <a href="#" class="secondary-content">
               <i class="material-icons left" title="Titles" id="${item.filename}" otitles-link>list</i>
             </a> 
             <br />
-            <span style="font-size:0.8rem;">Loaded: ${new Date(item.timestamp).toISOString()}</span>
+            <span style="font-size:0.8rem;">Created: ${new Date(item.timestamp).toISOString()}</span>
         </li>
       `;
     });
@@ -84,7 +85,6 @@ export class BdsCreated extends HTMLElement {
   CreatedTitlesSearch = (fileid, keyword) => {
     GetTitles(fileid, keyword, 10).then(() => {
       this.titles = JSON.parse(localStorage.getItem(`titles`));
-      console.log(this.titles);
       this.innerHTML = this.DisplayCreatedTitles(fileid, keyword);
     });
   };

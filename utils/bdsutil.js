@@ -45,8 +45,7 @@ export function xml2json(xml, tab) {
         // element node ..
         if (xml.attributes.length)
           // element with attributes  ..
-          for (let i = 0; i < xml.attributes.length; i++)
-            o["@" + xml.attributes[i].nodeName] = (xml.attributes[i].nodeValue || "").toString();
+          for (let i = 0; i < xml.attributes.length; i++) o["@" + xml.attributes[i].nodeName] = (xml.attributes[i].nodeValue || "").toString();
         if (xml.firstChild) {
           // element has child nodes ..
           let textChild = 0,
@@ -121,8 +120,7 @@ export function xml2json(xml, tab) {
           let s = "";
           if (n.nodeType === 1) {
             s += "<" + n.nodeName;
-            for (let i = 0; i < n.attributes.length; i++)
-              s += " " + n.attributes[i].nodeName + '="' + (n.attributes[i].nodeValue || "").toString() + '"';
+            for (let i = 0; i < n.attributes.length; i++) s += " " + n.attributes[i].nodeName + '="' + (n.attributes[i].nodeValue || "").toString() + '"';
             if (n.firstChild) {
               s += ">";
               for (let c = n.firstChild; c; c = c.nextSibling) s += asXml(c);
@@ -315,3 +313,17 @@ export function union(setA, setB) {
   return _union;
 }
 ////////////////////////////////////////////////////////////////////////////
+
+export function downloadfile(fileid, content, contenttype) {
+  const blob = new Blob([content], { type: contenttype });
+  const link = document.createElement("a");
+  if (link !== undefined) {
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.style = "visibility:hidden";
+    link.download = fileid;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+}

@@ -1,5 +1,5 @@
 import { GetWorqueueFiles, GetTitles, GetContents, SaveExportTemplate } from "../data/bdsfirebase.js";
-import { formatJson, formatXml } from "../utils/bdsutil.js";
+import { downloadfile } from "../utils/bdsutil.js";
 import { BdsFileUpload } from "./bdsfileupload.js";
 import { BdsContent } from "./bdscontent.js";
 // import { BDSExport } from "../views/bdsexport.js";
@@ -317,17 +317,7 @@ export class BdsUploaded extends HTMLElement {
       csv = recs.join("\r\n");
       hdr = flds.join(",") + "\r\n";
       //Download
-      const blob = new Blob([hdr + csv], { type: "data:text/csv;charset=utf-8;" });
-      const link = document.createElement("a");
-      if (link !== undefined) {
-        const url = URL.createObjectURL(blob);
-        link.setAttribute("href", url);
-        link.style = "visibility:hidden";
-        link.download = fileid + ".csv";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      }
+      downloadfile(fileid + ".csv", hdr + csv, "data:text/csv;charset=utf-8;");
     });
   };
 } // Class End
