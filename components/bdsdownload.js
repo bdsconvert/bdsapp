@@ -5,9 +5,10 @@ export class BdsDownload extends HTMLElement {
   constructor() {
     super();
     this.recs = [];
+    this.uploaded = this.getAttribute("from");
     this.fileid = this.getAttribute("fileid");
     this.recid = this.getAttribute("recid");
-    this.DownloadOnixFile(this.fileid);
+    this.DownloadOnixFile(this.uploaded, this.fileid);
     this.innerHTML = `
       <span class="right" style="margin:1rem;cursor:pointer;"><i class="material-icons modal-close">close</i></span>
       <br/>
@@ -15,7 +16,7 @@ export class BdsDownload extends HTMLElement {
     `;
   }
 
-  DownloadOnixFile(fileid) {
+  DownloadOnixFile(uploaded, fileid) {
     let titles = [];
     this.innerHTML += `<br/> Download Started`;
 
@@ -25,15 +26,20 @@ export class BdsDownload extends HTMLElement {
         this.recs.push(
           new Promise(async (resolve) => {
             GetContents(fileid, title.RecordReference).then(() => {
-              const ttl = JSON.parse(localStorage.getItem(`json`));
-              let json = Object.fromEntries(Object.entries(ttl).sort());
-              // arrays of key values
-              json = Object.entries(json).map((p) => {
-                return [p[0].slice(p[0].indexOf("-") + 1), p[1]];
-              });
-              // this.innerHTML += `${formatXml("<Product>" + json2xml(unflatten(Object.fromEntries(json))) + "</Product>")}`;
+              if (uploaded === "uploaded") {
+                const xml = localStorage.getItem(`xml`);
+                resolve(xml);
+              } else {
+                const ttl = JSON.parse(localStorage.getItem(`json`));
+                let json = Object.fromEntries(Object.entries(ttl).sort());
+                // arrays of key values
+                json = Object.entries(json).map((p) => {
+                  return [p[0].slice(p[0].indexOf("-") + 1), p[1]];
+                });
+                // this.innerHTML += `${formatXml("<Product>" + json2xml(unflatten(Object.fromEntries(json))) + "</Product>")}`;
+                resolve("<Product>" + json2xml(unflatten(Object.fromEntries(json))) + "</Product>");
+              }
               this.innerHTML += `<br/> Generating Onix for ${title.RecordReference}...`;
-              resolve("<Product>" + json2xml(unflatten(Object.fromEntries(json))) + "</Product>");
             });
           })
         );

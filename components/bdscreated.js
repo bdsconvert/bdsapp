@@ -26,7 +26,6 @@ export class BdsCreated extends HTMLElement {
         this.fileid = e.target.id;
         this.CreatedTitlesSearch(this.fileid, "");
       } else if (e.target.matches("[download-link]")) {
-        console.log(e.target.id.slice(9));
         document.getElementById("bdsdownload").innerHTML = `<bds-download fileid="${e.target.id.slice(9)}" recid=""></bds-download>`;
       } else if (e.target.matches("[oedit-link]")) {
         this.innerHTML = `<bds-onix-create fileid="${this.fileid}" recid="${e.target.id}"></bds-onix-create>`;

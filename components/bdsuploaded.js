@@ -2,7 +2,7 @@ import { GetWorqueueFiles, GetTitles, GetContents, SaveExportTemplate } from "..
 import { downloadfile } from "../utils/bdsutil.js";
 import { BdsFileUpload } from "./bdsfileupload.js";
 import { BdsContent } from "./bdscontent.js";
-// import { BDSExport } from "../views/bdsexport.js";
+import { BdsDownload } from "./bdsdownload.js";
 
 export class BdsUploaded extends HTMLElement {
   userfiles = [];
@@ -48,7 +48,12 @@ export class BdsUploaded extends HTMLElement {
         // this.DisplayContents(e.target.parentElement.id);
       }
 
-      // Export click
+      // Download Click for Excel input -> Onix output
+      else if (e.target.matches("[download-link]")) {
+        document.getElementById("bdsdownload").innerHTML = `<bds-download from="uploaded" fileid="${e.target.id.slice(9)}" recid=""></bds-download>`;
+      }
+
+      // Export click for Onix input -> csv output
       else if (e.target.matches("[export-link]")) {
         this.DisplayExportFields(e.target.id.slice(7));
       }
@@ -103,19 +108,24 @@ export class BdsUploaded extends HTMLElement {
       <span class="secondary-content input-field"><i class="material-icons prefix">search</i><input type="text" id="searchuploaded"><label for="search">Search Uploaded</label></span>
       </br/>
       <a href="#bdsfileupload" class="modal-trigger waves-effect uploadfile" upload-link><i class="material-icons left" page-link id="fileupload">file_upload</i>Upload Onix/Excel File</a>
-      <br/><br/>
+      <br/>        
+      <br/>
       <span>Showing results for: "${keyword}"</span>
 
       <ul class="collection z-depth-1">
     `;
     this.userfiles.forEach((item) => {
+      const ed = item.filetype === "Excel" ? "download" : "export";
+      const ft = item.filetype === "Excel" ? "download-link" : "export-link";
+      const it = item.filetype === "Excel" ? "download" : "output";
+      const md = item.filetype === "Excel" ? "modal-trigger" : "";
       uploaded += `
         <li class="collection-item">
             <span style="font-size:1.25rem;font-weight:500">${item.filename}</span>
             <br />
             <span style="font-size:0.8rem;">File Type: (${item.filetype})</span>
-            <a href="#" class="secondary-content">
-              <i class="material-icons left" title="Export" id="Export-${item.filename}" export-link>output</i>
+            <a href="#bdsdownload" class="secondary-content ${md}">
+              <i class="material-icons left" title="${ed}" id="${ed}-${item.filename}" ${ft}>${it}</i>
             </a>
             <a href="#" class="secondary-content">
               <i class="material-icons left" title="Titles" id="${item.filename}" file-link>list</i>

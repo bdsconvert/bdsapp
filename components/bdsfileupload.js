@@ -1,4 +1,4 @@
-import { xml2json, json2xml, flatten, unflatten } from "../utils/bdsutil.js";
+import { xml2json, json2xml, flatten, unflatten, formatXml } from "../utils/bdsutil.js";
 import { SaveUserFile, SaveTitleContents } from "../data/bdsfirebase.js";
 
 export class BdsFileUpload extends HTMLElement {
@@ -18,6 +18,7 @@ export class BdsFileUpload extends HTMLElement {
           </div>
         </div>
         <p id="fustatus"></p>
+        <p id="foview"></p>
       </form> 
     `;
   }
@@ -39,12 +40,16 @@ export class BdsFileUpload extends HTMLElement {
         }
       }
     });
+
+    this.updevent = new Event("upd");
+    document.getElementById("fustatus").addEventListener("upd", (e) => {
+      console.log("upd Event Triggered");
+    });
   }
 
   ProcessFile = (file) => {
-    document.getElementById("fustatus").innerHTML = ` Loading...
-        <div class="progress"><div class="indeterminate"></div></div>
-    `;
+    document.getElementById("fustatus").innerHTML = ` Loading...`;
+    //<div class="progress"><div class="indeterminate"></div></div>`;
     const reader = new FileReader();
     reader.readAsBinaryString(file);
 
@@ -55,9 +60,8 @@ export class BdsFileUpload extends HTMLElement {
 
     reader.addEventListener("load", (e) => {
       e.preventDefault();
-      console.log(file.name);
-      document.getElementById("fustatus").innerHTML = ``;
-      M.Modal.getInstance(document.querySelector("#bdsfileupload")).close();
+      // document.getElementById("fustatus").innerHTML = `Processing... <div class="progress"><div class="determinate"></div></div>`;
+      // document.getElementById("fustatus").dispatchEvent(this.updevent);
 
       if (file.type === "text/xml") {
         this.SaveOnixTitles(file, reader.result).then(() => {
@@ -65,12 +69,69 @@ export class BdsFileUpload extends HTMLElement {
           M.toast({ html: `${file.name} (${file.type}) uploaded Successfully\n` });
         });
       } else {
-        this.SaveExcelTitles(file).then(() => {
-          console.log(`${file.name} uploaded Successfully\n`);
+        console.log("Started Processing...");
+        document.getElementById("fustatus").innerHTML = `Loading...`;
+        this.ReadExcelFile(file, reader.result).then(() => {
+          document.getElementById("fustatus").innerHTML = `Done...`;
+          console.log("Done Processing...");
           M.toast({ html: `${file.name} (${file.type}) uploaded Successfully\n` });
         });
+
+        // this.SaveExcelTitles(file);
+        //this.SaveExcelTitles(file).then(() => {
+        //document.getElementById("fustatus").innerHTML = `${file.name} uploaded Successfully`;
+        // M.toast({ html: `${file.name} (${file.type}) uploaded Successfully\n` });
+        //});
       }
     });
+  };
+
+  ReadExcelFile = async (file, xlsx) => {
+    // return new Promise((resolve, reject) => {
+    //Save Userfile
+    await SaveUserFile({
+      filename: file.name,
+      filetype: "Excel",
+      timestamp: Date.now(),
+      fields: []
+    });
+    console.log("User file saved!");
+
+    const wb = XLSX.read(xlsx, { type: "binary" });
+    const rows = XLSX.utils.sheet_to_row_object_array(wb.Sheets["Onix30"]);
+    rows.forEach(async (row) => {
+      for (const elem in row) {
+        const idx = row[elem].indexOf(" - ");
+        if (idx !== -1 && idx < 5) {
+          row[elem] = row[elem].slice(0, idx).trim();
+        }
+      }
+
+      const onix = `
+          <ONIXMessage release="3.0" xmlns="http://ns.editeur.org/onix/3.0/reference">
+            <Product>
+            ${json2xml(unflatten(row))}
+            </Product>
+          </ONIXMessage>
+        `;
+      document.getElementById("foview").innerHTML = `${formatXml(onix)}`;
+
+      await SaveTitleContents(
+        file.name,
+        {
+          RecordReference: `${row["RecordReference_0"]}`,
+          Title: row["DescriptiveDetail_0_TitleDetail_0_TitleElement_0_TitleText_0"],
+          Author: row["DescriptiveDetail_0_Contributor_0_PersonName_0"]
+        },
+        {
+          xml: `<Product>${json2xml(unflatten(row))}</Product>`,
+          json: JSON.stringify(row)
+        }
+      );
+    });
+    console.log(rows);
+    // resolve();
+    // });
   };
 
   SaveOnixTitles = async (file, onix) => {
@@ -193,37 +254,52 @@ export class BdsFileUpload extends HTMLElement {
     });
     console.log("User file saved With Fields!");
   };
+  ////////////////////////////////////////////////////////////////////////////////////
 
   SaveExcelTitles = async (file) => {
     const flat = {};
-    readXlsxFile(file).then(async function (rows) {
+    readXlsxFile(file).then(function (rows) {
       const hdr = rows[0];
       //Save Userfile
-      await SaveUserFile({
-        filename: file.name,
-        filetype: "Excel",
-        timestamp: Date.now(),
-        fields: hdr
-      });
-      console.log("User file saved!");
-      rows.slice(1).forEach(async (row) => {
+      // await SaveUserFile({
+      //   filename: file.name,
+      //   filetype: "Excel",
+      //   timestamp: Date.now(),
+      //   fields: hdr
+      // });
+      // console.log("User file saved!");
+      rows.slice(1).forEach((row) => {
         for (let i = 0; i < hdr.length; i++) {
-          if (row[i]) flat[hdr[i]] = row[i];
-        }
-        await SaveTitleContents(
-          file.name,
-          {
-            RecordReference: `${flat["Product_0_RecordReference_0"]}`,
-            Title: flat["Product_0_DescriptiveDetail_0_TitleDetail_0_TitleElement_0_TitleText_0"],
-            Author: flat["Product_0_DescriptiveDetail_0_Contributor_0_PersonName_0"]
-          },
-          {
-            xml: json2xml(unflatten(flat)),
-            json: JSON.stringify(flat)
+          if (row[i]) {
+            const idx = row[i].indexOf(" - ");
+            flat[hdr[i]] = idx !== -1 && idx < 5 ? row[i].slice(0, idx).trim() : row[i];
           }
-        );
-        console.log(`Title/Contents saved for File: ${file.name}, RecordReference: ${flat["Product_0_RecordReference_0"]}`);
+        }
+        console.log(`Processing ${flat["RecordReference_0"]}...`);
+        // document.getElementById("fustatus").innerHTML = `Processing ${flat["RecordReference_0"]}...`;
+        // const onix = `
+        //   <ONIXMessage release="3.0" xmlns="http://ns.editeur.org/onix/3.0/reference">
+        //     <Product>
+        //     ${json2xml(unflatten(flat))}
+        //     </Product>
+        //   </ONIXMessage>
+        // `;
+        // document.getElementById("foview").innerHTML = `${formatXml(onix)}`;
+        // await SaveTitleContents(
+        //   file.name,
+        //   {
+        //     RecordReference: `${flat["Product_0_RecordReference_0"]}`,
+        //     Title: flat["Product_0_DescriptiveDetail_0_TitleDetail_0_TitleElement_0_TitleText_0"],
+        //     Author: flat["Product_0_DescriptiveDetail_0_Contributor_0_PersonName_0"]
+        //   },
+        //   {
+        //     xml: json2xml(unflatten(flat)),
+        //     json: JSON.stringify(flat)
+        //   }
+        // );
+        // console.log(`Title/Contents saved for File: ${file.name}, RecordReference: ${flat["RecordReference_0"]}`);
       });
+      M.toast({ html: `${file.name} (${file.type}) uploaded Successfully\n` });
     });
   };
 } // Class End
