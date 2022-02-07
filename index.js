@@ -6,19 +6,26 @@ import { BDSTerms } from "./views/bdsterms.js";
 import { BDSContact } from "./views/bdscontact.js";
 import { BDSProfile } from "./views/bdsprofile.js";
 import { BDSWorkqueue } from "./views/bdsworkqueue.js";
-// import { BDSTitles } from "./views/bdstitles.js";
-// import { BDSExport } from "./views/bdsexport.js";
-// import { BDSUploadfile } from "./views/bdsuploadfile.js";
-// import { BdsUploaded } from "../components/bdsuploaded.js";
+
+const sidemenu = [
+  { id: "home", lbl: "Home" },
+  { id: "contact", lbl: "Contact" },
+  { id: "policy", lbl: "Terms" },
+  { id: "signup", lbl: "SignUp" },
+  { id: "signon", lbl: "SignOn" },
+  { id: "signout", lbl: "SignOut" },
+  { id: "profile", lbl: "Profile" },
+  { id: "workqueue", txt: "Workqueue" }
+];
 
 export const router = async () => {
   const routes = [
     { path: "/", title: "BookDataSolutions", view: BDSHome },
     { path: "/contact", title: "Contact BDS", view: BDSContact },
     { path: "/terms", title: "Terms", view: BDSTerms },
-    { path: "/signup", title: "Signup", view: BDSSignup },
-    { path: "/signon", title: "Signin", view: BDSSignon },
-    { path: "/signout", title: "Signout", view: BDSSignout },
+    { path: "/signup", title: "SignUp", view: BDSSignup },
+    { path: "/signon", title: "SignOn", view: BDSSignon },
+    { path: "/signout", title: "SignOut", view: BDSSignout },
     { path: "/profile", title: "Profile", view: BDSProfile },
     { path: "/workqueue", title: "Workqueue", view: BDSWorkqueue }
   ];
@@ -59,6 +66,16 @@ document.body.addEventListener("click", async (e) => {
     navigateTo(href);
   }
 
+  if (e.target.matches("[sidenav_toggle]")) {
+    console.log("Open/Close Sidenav clicked");
+    // document.getElementById("sidemenu").style.width = "200px";
+    // document.querySelector("header").style.paddingLeft = "200px";
+    // document.querySelector("main").style.paddingLeft = "200px";
+    // const sm = document.querySelectorAll("#sidemenu > a");
+    // sm.forEach((a) => {
+    //   console.log(a.innerHTML);
+    // });
+  }
   // Workqueue link (Export / Titles page)
   // else if (e.target.matches("[wk-link]")) {
   //   navigateTo("/workqueue");

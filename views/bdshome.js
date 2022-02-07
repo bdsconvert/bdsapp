@@ -2,8 +2,9 @@ export class BDSHome {
   async getPage() {
     // document.getElementById("bdsheader").innerHTML = `<h4>Welcome to BookDataSolutions</h4>`;
     document.getElementById("bdscontent").innerHTML = `
-      <h4>Welcome to BookDataSolutions</h4>
-      <div>
+    <div class="card">
+      <div class="card-content container">
+        <h4>Welcome to BookDataSolutions</h4>
         <h5>Book Solutions Made Easy </h5>
         <p>
           Book data is widely exchanged between publishers, libraries, and book retailers in ONIX formatted files.
@@ -17,6 +18,7 @@ export class BDSHome {
           Download Excel template file along with sample titles to create book records for uploading and converting to ONIX records.                    
         </p>
       </div>    
+    </div>
     `;
   }
 }

@@ -105,14 +105,13 @@ export class BdsUploaded extends HTMLElement {
   DisplayUploadedFiles(keyword) {
     let uploaded = ``;
     uploaded += `
-      <span class="secondary-content input-field"><i class="material-icons prefix">search</i><input type="text" id="searchuploaded"><label for="search">Search Uploaded</label></span>
-      </br/>
-      <a href="#bdsfileupload" class="modal-trigger waves-effect uploadfile" upload-link><i class="material-icons left" page-link id="fileupload">file_upload</i>Upload Onix/Excel File</a>
-      <br/>        
-      <br/>
-      <span>Showing results for: "${keyword}"</span>
-
-      <ul class="collection z-depth-1">
+      <div class="card"><div class="card-content">
+        <div class="row">
+          <a href="#bdsfileupload" class="col s9 modal-trigger waves-effect uploadfile" upload-link><i class="material-icons left" page-link id="fileupload">file_upload</i>Upload Onix/Excel File</a>
+          <span class="col s3 input-field"><i class="material-icons prefix">search</i><input type="text" id="searchuploaded"><label for="search">Search Uploaded</label></span>
+          <span class="col s12">Showing results for: "${keyword}"</span>
+        </div>
+        <ul class="collection z-depth-1" style="overflow:scroll;height:70vh;">
     `;
     this.userfiles.forEach((item) => {
       const ed = item.filetype === "Excel" ? "download" : "export";
@@ -120,22 +119,22 @@ export class BdsUploaded extends HTMLElement {
       const it = item.filetype === "Excel" ? "download" : "output";
       const md = item.filetype === "Excel" ? "modal-trigger" : "";
       uploaded += `
-        <li class="collection-item">
-            <span style="font-size:1.25rem;font-weight:500">${item.filename}</span>
-            <br />
-            <span style="font-size:0.8rem;">File Type: (${item.filetype})</span>
-            <a href="#bdsdownload" class="secondary-content ${md}">
-              <i class="material-icons left" title="${ed}" id="${ed}-${item.filename}" ${ft}>${it}</i>
-            </a>
-            <a href="#" class="secondary-content">
-              <i class="material-icons left" title="Titles" id="${item.filename}" file-link>list</i>
-            </a> 
-            <br />
-            <span style="font-size:0.8rem;">Loaded: ${new Date(item.timestamp).toISOString()}</span>
-        </li>
+            <li class="collection-item">
+                <span style="font-size:1.25rem;font-weight:500">${item.filename}</span>
+                <br />
+                <span style="font-size:0.8rem;">File Type: (${item.filetype})</span>
+                <a href="#bdsdownload" class="secondary-content ${md}">
+                  <i class="material-icons left" title="${ed}" id="${ed}-${item.filename}" ${ft}>${it}</i>
+                </a>
+                <a href="#" class="secondary-content">
+                  <i class="material-icons left" title="Titles" id="${item.filename}" file-link>list</i>
+                </a> 
+                <br />
+                <span style="font-size:0.8rem;">Loaded: ${new Date(item.timestamp).toISOString()}</span>
+            </li>
       `;
     });
-    uploaded += `</ul>`;
+    uploaded += `</ul></div></div>`;
     return uploaded;
   }
 
@@ -149,36 +148,37 @@ export class BdsUploaded extends HTMLElement {
   DisplayUploadedTitles = (fileid, keyword) => {
     let titlesHtml = ``;
     titlesHtml += `
-        <span class="secondary-content input-field"><i class="material-icons prefix">search</i><input type="text" id="searchtitles" data-fileid=${fileid}><label for="search">Search Titles</label></span>
-        <br/>
+      <div class="card"><div class="card-content">
+      <div class="row">
         <a href="#" class="col s4"><i class="material-icons left" uploadedback-link>arrow_back</i>Back to Uploaded Files</a>
         <span class="col s4 center" style="font-size:1.2rem;font-weight:500">${fileid}</span>
-        <br/><br/>Showing results for: "${keyword}"
-    
+        <span class="col s3 offset-s1 input-field"><i class="material-icons prefix">search</i><input type="text" id="searchtitles" data-fileid=${fileid}><label for="search">Search Titles</label></span>
+        <span class="col s12">Showing results for: "${keyword}"</span>
+      </div>
       <ul class="collection z-depth-1">
     `;
     this.titles.forEach((title) => {
       titlesHtml += `
-        <li class="collection-item row">
-            <div class="col s9">
-              <span style="font-size:1.25rem;font-weight:500">${title.Title}</span>
-              <br/>
-              <span style="font-size:0.8rem;">By ${title.Author}</span>          
-              <br/>
-              <span style="font-size:0.8rem;">${title.RecordReference}</span>
-            </div>
-            <div class="col s3 right-align">
-              <br/>
-              <a href="#bdscontents" class="modal-trigger" title="View Content" id=${title.RecordReference} data-filename="${title.Title}" data-fileid=${fileid}>
-                <i class="material-icons left-align" style="font-size:2rem;font-weight:500" rec-link>code</i>
-                <i class="material-icons left-align" rec-link>arrow_right</i>
-                <i class="material-icons left-align" style="font-size:2rem;font-weight:500" rec-link>toc</i>
-              </a>
-            </div>
-        </li>      
+          <li class="collection-item row">
+              <div class="col s9">
+                <span style="font-size:1.25rem;font-weight:500">${title.Title}</span>
+                <br/>
+                <span style="font-size:0.8rem;">By ${title.Author}</span>          
+                <br/>
+                <span style="font-size:0.8rem;">${title.RecordReference}</span>
+              </div>
+              <div class="col s3 right-align">
+                <br/>
+                <a href="#bdscontents" class="modal-trigger" title="View Content" id=${title.RecordReference} data-filename="${title.Title}" data-fileid=${fileid}>
+                  <i class="material-icons left-align" style="font-size:2rem;font-weight:500" rec-link>code</i>
+                  <i class="material-icons left-align" rec-link>arrow_right</i>
+                  <i class="material-icons left-align" style="font-size:2rem;font-weight:500" rec-link>toc</i>
+                </a>
+              </div>
+          </li>      
       `;
     });
-    titlesHtml += `</ul>`;
+    titlesHtml += `</ul></div></div>`;
     return titlesHtml;
   };
 
@@ -222,6 +222,7 @@ export class BdsUploaded extends HTMLElement {
     }
 
     const exp = `
+    <div class="card"><div class="card-content">
     <div style="margin:2em;">
       <div class="row">
         <a href="#" class="col s4"><i class="material-icons left" exportback-link>arrow_back</i>Back to Uploaded Files</a>
@@ -250,6 +251,7 @@ export class BdsUploaded extends HTMLElement {
           </form>
         </div>
     </div>
+    </div></div>
   `;
     this.innerHTML = exp;
   };

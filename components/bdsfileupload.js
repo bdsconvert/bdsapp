@@ -40,11 +40,6 @@ export class BdsFileUpload extends HTMLElement {
         }
       }
     });
-
-    this.updevent = new Event("upd");
-    document.getElementById("fustatus").addEventListener("upd", (e) => {
-      console.log("upd Event Triggered");
-    });
   }
 
   ProcessFile = (file) => {
@@ -60,8 +55,6 @@ export class BdsFileUpload extends HTMLElement {
 
     reader.addEventListener("load", (e) => {
       e.preventDefault();
-      // document.getElementById("fustatus").innerHTML = `Processing... <div class="progress"><div class="determinate"></div></div>`;
-      // document.getElementById("fustatus").dispatchEvent(this.updevent);
 
       if (file.type === "text/xml") {
         this.SaveOnixTitles(file, reader.result).then(() => {
@@ -71,22 +64,16 @@ export class BdsFileUpload extends HTMLElement {
       } else {
         console.log("Started Processing...");
         document.getElementById("fustatus").innerHTML = `Loading...`;
-        this.ReadExcelFile(file, reader.result).then(() => {
+        this.SaveExcelTitles(file, reader.result).then(() => {
           document.getElementById("fustatus").innerHTML = `Done...`;
           console.log("Done Processing...");
           M.toast({ html: `${file.name} (${file.type}) uploaded Successfully\n` });
         });
-
-        // this.SaveExcelTitles(file);
-        //this.SaveExcelTitles(file).then(() => {
-        //document.getElementById("fustatus").innerHTML = `${file.name} uploaded Successfully`;
-        // M.toast({ html: `${file.name} (${file.type}) uploaded Successfully\n` });
-        //});
       }
     });
   };
 
-  ReadExcelFile = async (file, xlsx) => {
+  SaveExcelTitles = async (file, xlsx) => {
     // return new Promise((resolve, reject) => {
     //Save Userfile
     await SaveUserFile({
@@ -167,7 +154,6 @@ export class BdsFileUpload extends HTMLElement {
     let psg = new Set();
     const nodes = dom.querySelectorAll("Product"); //dom.documentElement.childNodes; child.nodeName === "Product"
     for (const child of nodes) {
-      //console.log(child);
       const Product = xml2json(child, "\t");
       //console.log(Product);
       let ProductFlat = flatten(Product, "Product");
@@ -240,10 +226,7 @@ export class BdsFileUpload extends HTMLElement {
       );
       console.log(`Title/Contents saved for File: ${file.name}, RecordReference: ${RecordReference}`);
     }
-    //console.log(titles);
-    //console.log([...pid, ...ddg, ...ddm, ...ddc, ...ddt, ...dda, ...ddl, ...dds, ...ddu, ...cdg, ...pdg, ...rmg, ...psg]);
     const fields = [...ref, ...ntf, ...pid, ...ddg, ...ddm, ...ddc, ...ddt, ...dda, ...ddl, ...dds, ...ddu, ...cdg, ...pdg, ...rmg, ...psg];
-    //console.log(fields);
 
     //Save Userfile without fields
     await SaveUserFile({
@@ -256,51 +239,51 @@ export class BdsFileUpload extends HTMLElement {
   };
   ////////////////////////////////////////////////////////////////////////////////////
 
-  SaveExcelTitles = async (file) => {
-    const flat = {};
-    readXlsxFile(file).then(function (rows) {
-      const hdr = rows[0];
-      //Save Userfile
-      // await SaveUserFile({
-      //   filename: file.name,
-      //   filetype: "Excel",
-      //   timestamp: Date.now(),
-      //   fields: hdr
-      // });
-      // console.log("User file saved!");
-      rows.slice(1).forEach((row) => {
-        for (let i = 0; i < hdr.length; i++) {
-          if (row[i]) {
-            const idx = row[i].indexOf(" - ");
-            flat[hdr[i]] = idx !== -1 && idx < 5 ? row[i].slice(0, idx).trim() : row[i];
-          }
-        }
-        console.log(`Processing ${flat["RecordReference_0"]}...`);
-        // document.getElementById("fustatus").innerHTML = `Processing ${flat["RecordReference_0"]}...`;
-        // const onix = `
-        //   <ONIXMessage release="3.0" xmlns="http://ns.editeur.org/onix/3.0/reference">
-        //     <Product>
-        //     ${json2xml(unflatten(flat))}
-        //     </Product>
-        //   </ONIXMessage>
-        // `;
-        // document.getElementById("foview").innerHTML = `${formatXml(onix)}`;
-        // await SaveTitleContents(
-        //   file.name,
-        //   {
-        //     RecordReference: `${flat["Product_0_RecordReference_0"]}`,
-        //     Title: flat["Product_0_DescriptiveDetail_0_TitleDetail_0_TitleElement_0_TitleText_0"],
-        //     Author: flat["Product_0_DescriptiveDetail_0_Contributor_0_PersonName_0"]
-        //   },
-        //   {
-        //     xml: json2xml(unflatten(flat)),
-        //     json: JSON.stringify(flat)
-        //   }
-        // );
-        // console.log(`Title/Contents saved for File: ${file.name}, RecordReference: ${flat["RecordReference_0"]}`);
-      });
-      M.toast({ html: `${file.name} (${file.type}) uploaded Successfully\n` });
-    });
-  };
+  // SaveExcelTitles = async (file) => {
+  //   const flat = {};
+  //   readXlsxFile(file).then(function (rows) {
+  //     const hdr = rows[0];
+  //     //Save Userfile
+  //     // await SaveUserFile({
+  //     //   filename: file.name,
+  //     //   filetype: "Excel",
+  //     //   timestamp: Date.now(),
+  //     //   fields: hdr
+  //     // });
+  //     // console.log("User file saved!");
+  //     rows.slice(1).forEach((row) => {
+  //       for (let i = 0; i < hdr.length; i++) {
+  //         if (row[i]) {
+  //           const idx = row[i].indexOf(" - ");
+  //           flat[hdr[i]] = idx !== -1 && idx < 5 ? row[i].slice(0, idx).trim() : row[i];
+  //         }
+  //       }
+  //       console.log(`Processing ${flat["RecordReference_0"]}...`);
+  //       // document.getElementById("fustatus").innerHTML = `Processing ${flat["RecordReference_0"]}...`;
+  //       // const onix = `
+  //       //   <ONIXMessage release="3.0" xmlns="http://ns.editeur.org/onix/3.0/reference">
+  //       //     <Product>
+  //       //     ${json2xml(unflatten(flat))}
+  //       //     </Product>
+  //       //   </ONIXMessage>
+  //       // `;
+  //       // document.getElementById("foview").innerHTML = `${formatXml(onix)}`;
+  //       // await SaveTitleContents(
+  //       //   file.name,
+  //       //   {
+  //       //     RecordReference: `${flat["Product_0_RecordReference_0"]}`,
+  //       //     Title: flat["Product_0_DescriptiveDetail_0_TitleDetail_0_TitleElement_0_TitleText_0"],
+  //       //     Author: flat["Product_0_DescriptiveDetail_0_Contributor_0_PersonName_0"]
+  //       //   },
+  //       //   {
+  //       //     xml: json2xml(unflatten(flat)),
+  //       //     json: JSON.stringify(flat)
+  //       //   }
+  //       // );
+  //       // console.log(`Title/Contents saved for File: ${file.name}, RecordReference: ${flat["RecordReference_0"]}`);
+  //     });
+  //     M.toast({ html: `${file.name} (${file.type}) uploaded Successfully\n` });
+  //   });
+  // };
 } // Class End
 window.customElements.define("bds-file-upload", BdsFileUpload);

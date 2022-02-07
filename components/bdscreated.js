@@ -28,9 +28,9 @@ export class BdsCreated extends HTMLElement {
       } else if (e.target.matches("[download-link]")) {
         document.getElementById("bdsdownload").innerHTML = `<bds-download fileid="${e.target.id.slice(9)}" recid=""></bds-download>`;
       } else if (e.target.matches("[oedit-link]")) {
-        this.innerHTML = `<bds-onix-create fileid="${this.fileid}" recid="${e.target.id}"></bds-onix-create>`;
+        this.innerHTML = `<div class="card"><div class="card-content"><bds-onix-create fileid="${this.fileid}" recid="${e.target.id}"></bds-onix-create></div></div>`;
       } else if (e.target.matches("[onew-link]")) {
-        this.innerHTML = `<bds-onix-create fileid="${this.fileid}" recid=""></bds-onix-create>`;
+        this.innerHTML = `<div class="card"><div class="card-content"><bds-onix-create fileid="${this.fileid}" recid=""></bds-onix-create></div></div>`;
       } else if (e.target.matches("[created-link]")) {
         this.CreatedFilesSearch("");
       } else if (e.target.matches("[titlesback-link]")) {
@@ -52,13 +52,13 @@ export class BdsCreated extends HTMLElement {
   DisplayCreatedFiles(keyword) {
     let created = ``;
     created += `
-      <span class="secondary-content input-field right"><i class="material-icons prefix">search</i><input type="text" id="searchcreated"><label for="search">Search Created</label></span>
-      <br/>
-      <a href="#bdsfilecreate" class="modal-trigger"><span style="padding-top:1rem;"><i class="material-icons left">add</i> Create a New Onix File</span></a>
-      <br/><br/>
-      <span>Showing results for: "${keyword}"</span>
-      
-      <ul class="collection z-depth-1">
+    <div class="card"><div class="card-content">
+      <div class="row">
+        <a href="#bdsfilecreate" class="col s9 modal-trigger"><span style="padding-top:1rem;"><i class="material-icons left">add</i> Create a New Onix File</span></a>
+        <span class="col s3 input-field right"><i class="material-icons prefix">search</i><input type="text" id="searchcreated"><label for="search">Search Created</label></span>
+        <span class="col s12">Showing results for: "${keyword}"</span>
+      </div>
+      <ul class="collection z-depth-1" style="overflow:scroll;height:70vh;">
     `;
     this.createdfiles.forEach((item) => {
       created += `
@@ -77,7 +77,7 @@ export class BdsCreated extends HTMLElement {
         </li>
       `;
     });
-    created += "</ul>";
+    created += "</ul></div></div>";
     return created;
   }
 
@@ -91,15 +91,14 @@ export class BdsCreated extends HTMLElement {
   DisplayCreatedTitles = (fileid, keyword) => {
     let titlesHtml = ``;
     titlesHtml += `
-      <div style="margin-top:1.5rem;">
+    <div class="card"><div class="card-content">
+      <div class="row">
         <a href="#" class="col s5"><i class="material-icons left" created-link>arrow_back</i>Back to Created Files</a>
         <span class="col s4" style="font-size:1.2rem;font-weight:500">${fileid}</span>
-        <a href="#" class="col s3"><i class="material-icons left" onew-link>add</i>Create New Title</a>
-      </div>
-      <div>        
-        <span class="col s9" style="margin-top:2rem;">Showing results for: "${keyword}"</span>
-        <span class="col s3 input-field" style="margin-top:0.5rem;"><i class="material-icons prefix">search</i><input type="text" id="searchcreatedtitles" data-fileid=${fileid}><label for="search">Search Titles</label></span>
-      </div>
+        <a href="#" class="col s3"><i class="material-icons left" onew-link>add</i>Create New Title</a>        
+        <span class="col s3 offset-s9 input-field"><i class="material-icons prefix">search</i><input type="text" id="searchcreatedtitles" data-fileid=${fileid}><label for="search">Search Titles</label></span>
+        <span class="col s12">Showing results for: "${keyword}"</span>
+        </div>
       <ul class="collection z-depth-1">
     `;
     this.titles.forEach((title) => {
@@ -121,7 +120,7 @@ export class BdsCreated extends HTMLElement {
         </li>      
       `;
     });
-    titlesHtml += `</ul>`;
+    titlesHtml += `</ul></div></div>`;
     return titlesHtml;
   };
 }

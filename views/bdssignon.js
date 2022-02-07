@@ -5,7 +5,8 @@ import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9
 export class BDSSignon {
   async getPage() {
     document.getElementById("bdscontent").innerHTML = `
-        <!--<h4>Sign On</h4>-->
+      <div class="card"> <div class="card-content">
+        <span class="card-title">Sign in with your registered Email</span>
         <form id="signon-form">
           <div class="row">
             <div class="input-field col s12">
@@ -21,6 +22,7 @@ export class BDSSignon {
           </div>
           <button class="btn yellow darken-2 z-depth-0">Sign On</button>
         </form>  
+      </div> </div>
     `;
   }
 

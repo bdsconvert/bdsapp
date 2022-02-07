@@ -3,7 +3,9 @@ import { authObj } from "../data/bdsfirebase.js";
 export class BDSProfile {
   async getPage() {
     document.getElementById("bdscontent").innerHTML = `
-      <ul class="container grey lighten-5" style="margin:2em;padding:2em;border:1px solid lightgrey;">
+    <div class="card">
+    <div class="card-content container">
+      <ul>
         <li class="row">
           <span class="col s3 right-align">User:</span>
           <span class="col s9 left-align"><strong>${authObj.displayname}</strong></span>
@@ -21,6 +23,7 @@ export class BDSProfile {
           <span class="col s9 left-align"><strong>${authObj.user.metadata.lastSignInTime}</strong></span>
         </li>      
       </ul>
+    </div>
     </div>
     `;
 

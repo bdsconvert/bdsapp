@@ -1,7 +1,9 @@
 export class BDSContact {
   async getPage() {
     document.getElementById("bdscontent").innerHTML = `
-      <div class="container">
+      <div class="card"> 
+      <div class="card-content container">
+        <span class="card-title">Get in touch with BookDataSolutions</span>
         <p>
           Thank You For Your Interest in BookDataSolutions.com! We also specialize in Consulting in All Areas Related to Book Data Including Customized ONIX Processing And Feeds.
           <br/>
@@ -39,6 +41,7 @@ export class BDSContact {
           <div class="center"><button class="btn yellow darken-2">Submit</button></div>
           <br/>
         </form>  
+      </div> 
       </div>
     `;
   }

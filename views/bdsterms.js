@@ -2,7 +2,8 @@ export class BDSTerms {
   async getPage() {
     // document.getElementById("bdsheader").innerHTML = `<h3 style="text-align:center;">Terms</h3>`;
     document.getElementById("bdscontent").innerHTML = `
-      <div>
+    <div class="card">
+    <div class="card-content container">
       <h5 style="text-align:center;border:2px solid black;">SOFTWARE AS A SERVICE AGREEMENT (V2.0)</h5>
       <p>
         PLEASE READ THIS AGREEMENT BEFORE USING BOOKDATASOLUTIONS SERVICES.  BY ACCESSING BOOKDATASOLUTIONS’ ONIX CONVERSION WEBSITE AS A SERVICE OFFERING (“SaaS”), YOU (“the Customer”) SIGNIFY ACCEPTANCE OF AND AGREE TO THE TERMS AND CONDITIONS OF THIS AGREEMENT. IF YOU DO NOT AGREE TO THE TERMS AND CONDITIONS OF THIS AGREEMENT THAT EXPRESSLY GOVERNS ORDERS FOR BOOKDATASOLUTIONS’ WEBSITE AS A SERVICE OFFERING, SUCH AGREEMENT SHALL SUPERSEDE THIS AGREEMENT.
@@ -32,7 +33,8 @@ export class BDSTerms {
       <p>
         <strong><u>Acceptable Use.</u></strong>  Customer is solely responsible for the content of any postings, data, or transmissions using the Services, or any other use of the Services by Customer or by any person or entity Customer permits to access the Services.  Customer represents and warrants that it will not use the Services in a manner that: (a) prohibited by any law or regulation, or to facilitate the violation of any law or regulation; or (b) will disrupt a third parties’ similar use or Licensed Materials.  If Bookdatasolutions has reasonable grounds to believe that Customer is utilizing the Services for any such illegal or disruptive purpose, Bookdatasolutions may suspend the Services immediately with or without notice to Customer.  Bookdatasolutions may terminate the Agreement if Customer in fact fails to adhere to the foregoing acceptable use standards.
       </p>
-    </div>      
+    </div>   
+    </div>   
   `;
   }
 }

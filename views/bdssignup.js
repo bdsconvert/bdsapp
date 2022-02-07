@@ -4,8 +4,9 @@ import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebase
 export class BDSSignup {
   async getPage() {
     document.getElementById("bdscontent").innerHTML = `
-      <div id="signup">
-          <form id="signup-form">
+      <div id="signup" class="card"> <div class="card-content">
+        <span class="card-title">Register with your Email</span>
+        <form id="signup-form">
             <div class="row">
               <div class="input-field col s12">
                 <input id="signup-email" type="email" class="validate" required/>
@@ -20,7 +21,7 @@ export class BDSSignup {
             </div>
             <button class="btn yellow darken-2 z-depth-0">Sign Up</button>
           </form>
-      </div>    
+      </div> </div>
     `;
   }
 

@@ -139,7 +139,7 @@ export class BdsOnixCreate extends HTMLElement {
       comps += `
         <li>
           <div class="collapsible-header grey lighten-5" id=${comp.id}><span style="width:100%;font-size:0.9em;">${comp.header}</span><i class="material-icons right">expand_more</i></div>
-          <div class="collapsible-body z-depth-4"><${comp.component} order="0"></${comp.component}></div>        
+          <div class="collapsible-body z-depth-0"><${comp.component} order="0"></${comp.component}></div>        
         </li>                             
       `;
     });
@@ -149,22 +149,21 @@ export class BdsOnixCreate extends HTMLElement {
       .collapsible-header{margin-top:0.5rem !important;}
       .collapsible-body{border:1px solid lightgrey !important;}
       </style>
-      <div class="row" style="display:flex;flex-wrap:wrap;">
+      <div class="container">
+      <div class="row">
         <ul class="col s6 collapsible" style="font-weight:400;font-size:1.25rem;overflow-y:scroll;height:70vh;">
-          <!--<li>${BdsSelect2("onixrec", Object.keys(bdsrecs), rec)}</li>-->
-          <!--<li class="col s6">${BdsSelect2("ocfile", this.onixcreatefiles, file)}</li>-->
-          <!--<li class="col s6">${BdsSelect2("onixrec", this.titles, rec)}</li>-->
           ${comps}
         </ul>
         <ul class="col s6 collapsible" style="overflow-y:scroll;height:70vh;">
-          <!--<li class="right" style="padding:1rem">${BdsModalButton("bdscontents", "Create a New Onix File")}</li>-->
           <li style="padding:1rem">${BdsButton("saveoe", "Save Onix Elements")}</li>
           <li><div class="divider"></div></li>
           <li><p id="bdsoe" style="overflow-wrap:break-word"></p></li>
         </ul>
       </div>
+      </div>
     `;
   };
+  // style="display:flex;flex-wrap:wrap;"
 
   viewOnix = () => {
     const ov = document.getElementById("bdsoe");
