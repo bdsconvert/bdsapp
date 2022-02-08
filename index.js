@@ -7,17 +7,6 @@ import { BDSContact } from "./views/bdscontact.js";
 import { BDSProfile } from "./views/bdsprofile.js";
 import { BDSWorkqueue } from "./views/bdsworkqueue.js";
 
-const sidemenu = [
-  { id: "home", lbl: "Home" },
-  { id: "contact", lbl: "Contact" },
-  { id: "policy", lbl: "Terms" },
-  { id: "signup", lbl: "SignUp" },
-  { id: "signon", lbl: "SignOn" },
-  { id: "signout", lbl: "SignOut" },
-  { id: "profile", lbl: "Profile" },
-  { id: "workqueue", txt: "Workqueue" }
-];
-
 export const router = async () => {
   const routes = [
     { path: "/", title: "BookDataSolutions", view: BDSHome },
