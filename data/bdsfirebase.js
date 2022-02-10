@@ -22,7 +22,7 @@ onAuthStateChanged(authObj.auth, (user) => {
     authObj.user = user;
     authObj.bdsuser = user.email;
     authObj.displayname = user.email.split("@")[0].toLowerCase();
-    document.getElementById("loggedinuser").innerHTML = `<i class="material-icons left" page-link id="profile">person_outline</i>${user.email}`;
+    document.getElementById("loggedinuser").innerHTML = `${user.email}`;
     console.log(authObj.user);
     document.querySelectorAll(".logged-in").forEach((item) => (item.style.display = "block"));
     document.querySelectorAll(".logged-out").forEach((item) => (item.style.display = "none"));

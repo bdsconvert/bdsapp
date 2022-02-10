@@ -7,11 +7,14 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;lang=en" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
     <title>bdsapp</title>
   </head>
   <style>
     body {      
+      font-family: Sans;
+      /* padding:1rem; */
       /* font: calc(0.25em + 0.9 * (100vw - 120px) / 100) 'Dancing Script', cursive, fantasy; */
       /* font-size:0.9rem; */
     }
@@ -29,28 +32,32 @@
 
     .logo {
       /* font-family: 'Dancing Script', cursive; */
-      font-size:0.4em;
+      font-family: Times;
+      font-size: 1.8em;
+      font-weight: 600;
     }
     .container {
       width: 95%;
     }
 
     header {
-      border-bottom:1px solid lightgray;
+      /* border-bottom:1px solid lightgray; */
+      /* margin:1rem 1rem 0 1rem;  */
+      box-shadow: 5px 5px 18px #555;
       /* height: 10vh; */
     }    
 
     header, main, footer {
-      padding-left: 200px;
+      /* padding-left: 200px; */
     }
 
     main {
-      margin-top: 2em;
+      margin-top: 0em;
     }
 
     @media only screen and (max-width : 992px) {
       .container {
-        width: 90%;
+        width: 95%;
       }
       header, main, footer {
         padding-left: 0;
@@ -63,34 +70,73 @@
     .input-field input[type=text] { font-size: 0.8em !important; font-weight:200; }
   </style> 
 
-  <body class="grey lighten-4"> 
+  <body class="grey lighten-4 container"> 
+    <nav class="nav-wrapper grey lighten-5">
+      <div class="container">
+        <a href="#" class="logo teal-text">BookDataSolutions</a>
+        <ul class="right hide-on-med-and-down">
+            <li><a href="/" title="Home" class="teal-text waves-effect home" page-link><i class="material-icons left" page-link id="home">home</i></a></li>
+            <li><a href="/contact" title="Contact BDS" class="teal-text waves-effect contact" page-link><i class="material-icons left" page-link id="contact">contact_page</i></a></li>
+            <li><a href="/terms" title="Site Terms" class="teal-text waves-effect terms" page-link><i class="material-icons left" page-link id="policy">policy</i></a></li>               
+        </ul>
+        <a href="#" data-target="mobile" class="teal-text sidenav-trigger right"><i class="material-icons">menu</i></a>  
+      </div>
+    </nav> 
+    <nav class="nav-wrapper gradient">
+      <div class="row container">
+        <div class="col s5 hide-on-med-and-down">
+          <ul>
+            <li><a href="/workqueue" class="waves-effect logged-in workqueue" page-link>Workqueue</a></li>
+            <!-- <li><a href="/uploaded" class="waves-effect logged-in workqueue" page-link>Uploaded Files</a></li> -->
+            <!-- <li><a href="/created" class="waves-effect logged-in workqueue" page-link>Created Files</a></li> -->
+          </ul>
+        </div>
+        <div class="col s12 l2">
+          <ul>
+              <li><h6 id="hdrlbl"></h6></li>
+          </ul>
+        </div>
+        <div class="col s5 hide-on-med-and-down">
+          <ul class="right">
+              <li><a href="/profile" class="waves-effect logged-in" id="loggedinuser" page-link></a></li>
+              <li><a href="/signup" title="Register" class="waves-effect logged-out signup" page-link><i class="material-icons left" page-link id="signup">app_registration</i></a></li>
+              <li><a href="/signon" title="Login" class="waves-effect logged-out signon" page-link><i class="material-icons left" page-link id="signon">login</i></a></li>               
+              <li><a href="/signout" title="Logout" class="waves-effect logged-in signout" page-link><i class="material-icons left" page-link id="signout">logout</i></a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
     <!-- Header Navigation  -->
-    <header>      
-      <!-- <div class="navbar"> -->
-        <!-- <nav class="white z-depth-0 nav-extended"> -->
+    <!-- <header>      
         <nav class="gradient">
-          <div class="nav-wrapper container">
-            
+          <div class="nav-wrapper" style="box-shadow: 5px 5px 18px #555;">
               <a href="/" class="brand-logo home left waves-effect" page-link><i class="material-icons " page-link id="home" style="padding:0 0 0 1rem;">local_library</i><span class="logo" page-link>BDS</span></a>
-              <!-- <a href="/"><span class="teal white-text left" style="font-size:0.8rem;padding:1rem 0 0 1rem;">BDS</span></a> -->
-              <!-- <a href="/"><span id="home" class="brand-logo home teal white-text  left" style="font-size:0.8rem; padding:1.5rem 0 0 1rem;" page-link>BDS</span></a> -->
-              <span class="brand-logo home center" id="hdrlbl"></span>
               <ul class="right hide-on-med-and-down">
-                <li><a href="/profile" class="waves-effect logged-in" id="loggedinuser" page-link></a></li>
-                <li><a href="/signup" class="waves-effect logged-out signup" page-link><i class="material-icons left" page-link id="signup">app_registration</i>SignUp</a></li>
-                <li><a href="/signon" class="waves-effect logged-out signon" page-link><i class="material-icons left" page-link id="signon">login</i>SignOn</a></li>               
-                <li><a href="/signout" class="waves-effect logged-in signout" page-link><i class="material-icons left" page-link id="signout">logout</i>SignOut</a></li>
+                <li><a href="/" title="Home" class="waves-effect home" page-link><i class="material-icons left" page-link id="home">home</i></a></li>
+                <li><a href="/contact" title="Contact BDS" class="waves-effect contact" page-link><i class="material-icons left" page-link id="contact">contact_page</i></a></li>
+                <li><a href="/terms" title="Site Terms" class="waves-effect terms" page-link><i class="material-icons left" page-link id="policy">policy</i></a></li>               
+                <li><a href="/signup" title="Register" class="waves-effect logged-out signup" page-link><i class="material-icons left" page-link id="signup">app_registration</i></a></li>
+                <li><a href="/signon" title="Login" class="waves-effect logged-out signon" page-link><i class="material-icons left" page-link id="signon">login</i></a></li>               
+                <li><a href="/signout" title="Logout" class="waves-effect logged-in signout" page-link><i class="material-icons left" page-link id="signout">logout</i></a></li>
               </ul>
-            
-            <a href="#" data-target="mobile" class="sidenav-trigger right"><i class="material-icons">menu</i></a>  
+              <a href="#" data-target="mobile" class="sidenav-trigger right"><i class="material-icons">menu</i></a>  
           </div> 
         </nav>
-      <!-- </div> -->
-      <!-- <h4 id="hdrlbl"></h4> -->
-    </header>
+        <nav class="grey lighten-4">
+            <div class="nav-wrapper" style="box-shadow: 5px 5px 18px #555;">
+              <ul>
+                  <li><a href="/workqueue" class="teal-text waves-effect logged-in workqueue" page-link>Workqueue</a></li>
+                  <li><a href="/profile" class="teal-text waves-effect logged-in" id="loggedinuser" page-link></a></li>
+                  <li><span class="teal-text brand-logo home center" id="hdrlbl"></span></li>
+              </ul>
+            </div>
+        </nav>
+    </header> -->
+
     <!-- Side Navigation -->
     <sidenav>
-      <div class="gradient white-text sidenav sidenav-fixed collection with-header z-depth-0" id="mobile" style="width:200px;">
+      <div class="gradient white-text sidenav collection with-header z-depth-0" id="mobile" style="width:200px;">
           <a href="#" class="gradient white-text collection-item waves-effect home center" page-link><i class="large material-icons">local_library</i><h5>BDS</h5></a>
           <a href="/" class="gradient white-text sidenav-close collection-item waves-effect home" page-link><i class="material-icons left" page-link id="home">home</i>Home</a>
           <a href="/contact" class="gradient white-text sidenav-close collection-item waves-effect contact" page-link><i class="material-icons left" page-link id="contact">contact_page</i>Contact</a>
@@ -105,7 +151,7 @@
     </sidenav>
     <main id="main">
       <!-- <div id="bdsheader"></div> -->
-      <div class="container" id="bdscontent"></div>    
+      <div id="bdscontent"></div>    
     </bdsmain>
 
     <div id="bdscontents" class="modal"></div>

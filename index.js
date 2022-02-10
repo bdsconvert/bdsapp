@@ -9,7 +9,7 @@ import { BDSWorkqueue } from "./views/bdsworkqueue.js";
 
 export const router = async () => {
   const routes = [
-    { path: "/", title: "BookDataSolutions", view: BDSHome },
+    { path: "/", title: "BDS Home", view: BDSHome },
     { path: "/contact", title: "Contact BDS", view: BDSContact },
     { path: "/terms", title: "Terms", view: BDSTerms },
     { path: "/signup", title: "SignUp", view: BDSSignup },
