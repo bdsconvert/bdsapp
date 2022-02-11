@@ -107,30 +107,36 @@ export class BdsUploaded extends HTMLElement {
     uploaded += `
       <div class="card"><div class="card-content">
         <div class="row">
-          <a href="#bdsfileupload" class="col s9 modal-trigger waves-effect uploadfile" upload-link><i class="material-icons left" page-link id="fileupload">file_upload</i>Upload Onix/Excel File</a>
-          <span class="col s3 input-field"><i class="material-icons prefix">search</i><input type="text" id="searchuploaded"><label for="search">Search Uploaded</label></span>
+          <a href="#bdsfileupload" class="col s6 l9 modal-trigger waves-effect uploadfile" upload-link><i class="material-icons left" page-link id="fileupload">file_upload</i>Upload Onix/Excel File</a>
+          <span class="col s6 l3 input-field"><i class="material-icons prefix">search</i><input type="text" id="searchuploaded"><label for="search">Search Uploaded</label></span>
           <span class="col s12">Showing results for: "${keyword}"</span>
         </div>
         <ul class="collection z-depth-1" style="overflow:scroll;height:70vh;">
     `;
-    this.userfiles.forEach((item) => {
+    this.userfiles.forEach((item, index) => {
       const ed = item.filetype === "Excel" ? "download" : "export";
       const ft = item.filetype === "Excel" ? "download-link" : "export-link";
       const it = item.filetype === "Excel" ? "download" : "output";
       const md = item.filetype === "Excel" ? "modal-trigger" : "";
+      const rb = index % 2 === 0 ? "grey lighten-4" : "";
       uploaded += `
-            <li class="collection-item">
-                <span style="font-size:1.25rem;font-weight:500">${item.filename}</span>
-                <br />
-                <span style="font-size:0.8rem;">File Type: (${item.filetype})</span>
-                <a href="#bdsdownload" class="secondary-content ${md}">
-                  <i class="material-icons left" title="${ed}" id="${ed}-${item.filename}" ${ft}>${it}</i>
-                </a>
-                <a href="#" class="secondary-content">
-                  <i class="material-icons left" title="Titles" id="${item.filename}" file-link>list</i>
-                </a> 
-                <br />
-                <span style="font-size:0.8rem;">Loaded: ${new Date(item.timestamp).toISOString()}</span>
+            <li class="collection-item ${rb}">
+                <div class="row">
+                  <!--<span class="col s1 l1 right-align">${index + 1}.</span>-->
+                  <div class="col s12 l12">
+                    <span style="font-size:1.25rem;font-weight:500">${item.filename}</span>
+                    <br />
+                    <span style="font-size:0.8rem;">File Type: (${item.filetype})</span>
+                    <a href="#bdsdownload" class="secondary-content ${md}">
+                      <i class="material-icons left" title="${ed}" id="${ed}-${item.filename}" ${ft}>${it}</i>
+                    </a>
+                    <a href="#" class="secondary-content">
+                      <i class="material-icons left" title="Titles" id="${item.filename}" file-link>list</i>
+                    </a> 
+                    <br />
+                    <span style="font-size:0.8rem;">Loaded: ${new Date(item.timestamp).toISOString()}</span>
+                  </div>
+                </div>
             </li>
       `;
     });
@@ -150,9 +156,9 @@ export class BdsUploaded extends HTMLElement {
     titlesHtml += `
       <div class="card"><div class="card-content">
       <div class="row">
-        <a href="#" class="col s4"><i class="material-icons left" uploadedback-link>arrow_back</i>Back to Uploaded Files</a>
-        <span class="col s4 center" style="font-size:1.2rem;font-weight:500">${fileid}</span>
-        <span class="col s3 offset-s1 input-field"><i class="material-icons prefix">search</i><input type="text" id="searchtitles" data-fileid=${fileid}><label for="search">Search Titles</label></span>
+        <a href="#" class="col s4 l4"><i class="material-icons left" uploadedback-link>arrow_back</i>Back to Uploaded Files</a>
+        <span class="col s8 l4 center" style="font-size:1.2rem;font-weight:500">${fileid}</span>
+        <span class="col s6 l4 offset-s1 input-field"><i class="material-icons prefix">search</i><input type="text" id="searchtitles" data-fileid=${fileid}><label for="search">Search Titles</label></span>
         <span class="col s12">Showing results for: "${keyword}"</span>
       </div>
       <ul class="collection z-depth-1">

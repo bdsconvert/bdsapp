@@ -19,7 +19,7 @@ export class BDSWorkqueue {
           </ul>
         </div>
       </div>
-      <div class="card-content">
+      <div class="card-content grey lighten-5">
         <div id="cofiles" class="col s12"><bds-created></bds-created></div>    
         <div id="ufiles" class="col s12"><bds-uploaded></bds-uploaded></div>    
       </div>

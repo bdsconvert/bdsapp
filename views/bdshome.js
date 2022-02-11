@@ -4,10 +4,10 @@ export class BDSHome {
     document.getElementById("bdscontent").innerHTML = `
     <div class="card">
       <div class="card-content container">
-        <h4>Welcome to BookDataSolutions</h4>
+        <h4 class="center">Welcome to BookDataSolutions</h4>
                   
           <div class="row">
-            <div class="col s6">
+            <div class="col s6 l5">
               <h5>Book Solutions Made Easy </h5>
               <p>
                 Book data is widely exchanged between publishers, libraries, and book retailers in ONIX formatted files.
@@ -22,15 +22,13 @@ export class BDSHome {
                 Download Excel template file along with sample titles to create book records for uploading and converting to ONIX records.                    
               </p>
             </div>
-            <div class="col s6">
-              <div class="slider">
-                <ul class="slides">
-                  <li><a href="#one!"><img src="../assets/BDS1.png"></a></li>
-                  <li><a href="#two!"><img src="../assets/BDS2.png"></a></li>
-                  <li><a href="#three!"><img src="../assets/BDS3.png"></a></li>
-                  <li><a href="#four!"><img src="../assets/BDS4.png"></a></li>
-                <ul>          
-              </div>
+            <div class="col s6 l6 push-l1 slider">
+              <ul class="slides">
+                <li><a href="#one!"><img src="https://bdsconvert.github.io/bdsapp/assets/BDS1.png"></a></li>
+                <li><a href="#two!"><img src="https://bdsconvert.github.io/bdsapp/assets/BDS2.png"></a></li>
+                <li><a href="#three!"><img src="https://bdsconvert.github.io/bdsapp/assets/BDS3.png"></a></li>
+                <li><a href="#four!"><img src="https://bdsconvert.github.io/bdsapp/assets/BDS4.png"></a></li>
+              <ul>          
             </div>
           </div>
           <p><h5>Convert Data Between Excel and ONIX 3.0/2.1 Files:</h5></p>
