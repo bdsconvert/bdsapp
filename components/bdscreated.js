@@ -26,7 +26,11 @@ export class BdsCreated extends HTMLElement {
         this.fileid = e.target.id;
         this.CreatedTitlesSearch(this.fileid, "");
       } else if (e.target.matches("[download-link]")) {
-        document.getElementById("bdsdownload").innerHTML = `<bds-download fileid="${e.target.id.slice(9)}" recid=""></bds-download>`;
+        document.getElementById(
+          "bdsdownload"
+        ).innerHTML = `<bds-download fileid="${e.target.id.slice(
+          9
+        )}" recid=""></bds-download>`;
       } else if (e.target.matches("[oedit-link]")) {
         this.innerHTML = `<div class="card"><div class="card-content"><bds-onix-create fileid="${this.fileid}" recid="${e.target.id}"></bds-onix-create></div></div>`;
       } else if (e.target.matches("[onew-link]")) {
@@ -45,7 +49,9 @@ export class BdsCreated extends HTMLElement {
       this.createdfiles = JSON.parse(localStorage.getItem(`createdfiles`));
       // console.log(this.createdfiles);
       this.innerHTML = this.DisplayCreatedFiles(keyword);
-      document.getElementById("bdsfilecreate").innerHTML = `<bds-file-create></bds-file-create>`;
+      document.getElementById(
+        "bdsfilecreate"
+      ).innerHTML = `<bds-file-create></bds-file-create>`;
     });
   }
 
@@ -63,17 +69,25 @@ export class BdsCreated extends HTMLElement {
     this.createdfiles.forEach((item) => {
       created += `
         <li class="collection-item">
-            <span style="font-size:1.25rem;font-weight:500">${item.filename}</span>
+            <span style="font-size:1.25rem;font-weight:500">${
+              item.filename
+            }</span>
             <br />
             <span style="font-size:0.8rem;">File Type: (${item.filetype})</span>
             <a class="secondary-content modal-trigger" href="#bdsdownload">
-              <i class="material-icons left" title="Download" id="download-${item.filename}" download-link>download</i>
+              <i class="material-icons left" title="Download" id="download-${
+                item.filename
+              }" download-link>download</i>
             </a>
             <a href="#" class="secondary-content">
-              <i class="material-icons left" title="Titles" id="${item.filename}" otitles-link>list</i>
+              <i class="material-icons left" title="Titles" id="${
+                item.filename
+              }" otitles-link>list</i>
             </a> 
             <br />
-            <span style="font-size:0.8rem;">Created: ${new Date(item.timestamp).toISOString()}</span>
+            <span style="font-size:0.8rem;">Created: ${new Date(
+              item.timestamp
+            ).toLocaleString()}</span>
         </li>
       `;
     });

@@ -33,7 +33,7 @@ export class BDSSignon {
 
     signInWithEmailAndPassword(authObj.auth, email, password)
       .then((cred) => {
-        navigateTo("/");
+        navigateTo("/workqueue");
         M.toast({ html: `${email} Signed In!` });
       })
       .catch((err) => {

@@ -7,7 +7,7 @@ export class BDSProfile {
       subs += `
         <tr>
           <td>${sub.id}</td> 
-          <td>${new Date(sub.Subscribed).toISOString()}</td> 
+          <td>${new Date(sub.Subscribed).toLocaleString()}</td> 
           <td>${sub.Maxtitles}</td> 
         </tr>
       `;

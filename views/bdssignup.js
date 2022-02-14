@@ -1,4 +1,4 @@
-import { authObj } from "../data/bdsfirebase.js";
+import { authObj, SaveUserFile } from "../data/bdsfirebase.js";
 import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-auth.js";
 
 export class BDSSignup {
@@ -31,9 +31,15 @@ export class BDSSignup {
     const password = signupForm["signup-password"].value;
 
     createUserWithEmailAndPassword(authObj.auth, email, password)
-      .then((cred) => {
+      .then(async (cred) => {
+        await SaveUserFile({
+          filename: "profile.prf",
+          filetype: "prf",
+          timestamp: Date.now(),
+          Subscriptions: [{ Subscribed: Date.now(), Maxtitles: 10 }]
+        });
         signupForm.reset();
-        alert(`User "${email}" Registered Successfully`);
+        M.toast({ html: `User "${email}" Registered Successfully` });
       })
       .catch((err) => {
         alert(err.message);

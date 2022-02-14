@@ -1,4 +1,9 @@
-import { GetWorqueueFiles, GetTitles, GetContents, SaveExportTemplate } from "../data/bdsfirebase.js";
+import {
+  GetWorqueueFiles,
+  GetTitles,
+  GetContents,
+  SaveExportTemplate
+} from "../data/bdsfirebase.js";
 import { downloadfile } from "../utils/bdsutil.js";
 import { BdsFileUpload } from "./bdsfileupload.js";
 import { BdsContent } from "./bdscontent.js";
@@ -44,13 +49,19 @@ export class BdsUploaded extends HTMLElement {
       // Title Click
       else if (e.target.matches("[rec-link]")) {
         const rec = document.getElementById(e.target.parentElement.id);
-        document.getElementById("bdscontents").innerHTML = `<bds-content fileid="${this.fileid}" recid="${e.target.parentElement.id}" ttl="${rec.dataset.filename}" ></bds-content>`;
+        document.getElementById(
+          "bdscontents"
+        ).innerHTML = `<bds-content fileid="${this.fileid}" recid="${e.target.parentElement.id}" ttl="${rec.dataset.filename}" ></bds-content>`;
         // this.DisplayContents(e.target.parentElement.id);
       }
 
       // Download Click for Excel input -> Onix output
       else if (e.target.matches("[download-link]")) {
-        document.getElementById("bdsdownload").innerHTML = `<bds-download from="uploaded" fileid="${e.target.id.slice(9)}" recid=""></bds-download>`;
+        document.getElementById(
+          "bdsdownload"
+        ).innerHTML = `<bds-download from="uploaded" fileid="${e.target.id.slice(
+          9
+        )}" recid=""></bds-download>`;
       }
 
       // Export click for Onix input -> csv output
@@ -83,7 +94,9 @@ export class BdsUploaded extends HTMLElement {
       // Save Template Click
       else if (e.target.id === "createsavetemplate") {
         this.SaveTemplate(e.target.id).then(() => {
-          M.toast({ html: `Template ${document.getElementById("template").value} Saved!` });
+          M.toast({
+            html: `Template ${document.getElementById("template").value} Saved!`
+          });
         });
       }
       // Export Download Click
@@ -98,7 +111,9 @@ export class BdsUploaded extends HTMLElement {
       this.userfiles = JSON.parse(localStorage.getItem(`userfiles`));
       this.innerHTML = this.DisplayUploadedFiles(keyword);
       // File upload modal
-      document.getElementById("bdsfileupload").innerHTML = `<bds-file-upload></bds-file-upload>`;
+      document.getElementById(
+        "bdsfileupload"
+      ).innerHTML = `<bds-file-upload></bds-file-upload>`;
     });
   };
 
@@ -122,19 +137,31 @@ export class BdsUploaded extends HTMLElement {
       uploaded += `
             <li class="collection-item ${rb}">
                 <div class="row">
-                  <!--<span class="col s1 l1 right-align">${index + 1}.</span>-->
+                  <!--<span class="col s1 l1 right-align">${
+                    index + 1
+                  }.</span>-->
                   <div class="col s12 l12">
-                    <span style="font-size:1.25rem;font-weight:500">${item.filename}</span>
+                    <span style="font-size:1.25rem;font-weight:500">${
+                      item.filename
+                    }</span>
                     <br />
-                    <span style="font-size:0.8rem;">File Type: (${item.filetype})</span>
+                    <span style="font-size:0.8rem;">File Type: (${
+                      item.filetype
+                    })</span>
                     <a href="#bdsdownload" class="secondary-content ${md}">
-                      <i class="material-icons left" title="${ed}" id="${ed}-${item.filename}" ${ft}>${it}</i>
+                      <i class="material-icons left" title="${ed}" id="${ed}-${
+        item.filename
+      }" ${ft}>${it}</i>
                     </a>
                     <a href="#" class="secondary-content">
-                      <i class="material-icons left" title="Titles" id="${item.filename}" file-link>list</i>
+                      <i class="material-icons left" title="Titles" id="${
+                        item.filename
+                      }" file-link>list</i>
                     </a> 
                     <br />
-                    <span style="font-size:0.8rem;">Loaded: ${new Date(item.timestamp).toISOString()}</span>
+                    <span style="font-size:0.8rem;">Loaded: ${new Date(
+                      item.timestamp
+                    ).toLocaleString()}</span>
                   </div>
                 </div>
             </li>
@@ -210,7 +237,9 @@ export class BdsUploaded extends HTMLElement {
   // };
 
   DisplayExportFields = (fileid) => {
-    const file = JSON.parse(localStorage.getItem("userfiles")).find((file) => file.filename === fileid);
+    const file = JSON.parse(localStorage.getItem("userfiles")).find(
+      (file) => file.filename === fileid
+    );
 
     let flds = "";
     file.fields.forEach((field) => {
@@ -273,9 +302,13 @@ export class BdsUploaded extends HTMLElement {
     this.ClearExportFields();
     const tmplt = document.getElementById(`${template}`);
     if (tmplt) {
-      const file = JSON.parse(localStorage.getItem("userfiles")).find((file) => file.filename === tmplt.dataset.fileid);
+      const file = JSON.parse(localStorage.getItem("userfiles")).find(
+        (file) => file.filename === tmplt.dataset.fileid
+      );
       file.templates[template].forEach((fld) => {
-        document.querySelector(`input[value=${CSS.escape(fld)}]`).checked = true;
+        document.querySelector(
+          `input[value=${CSS.escape(fld)}]`
+        ).checked = true;
         this.SelectExportFields();
       });
     }
@@ -284,8 +317,13 @@ export class BdsUploaded extends HTMLElement {
   SelectExportFields = () => {
     const selectall = document.getElementById("selectall");
     const fields = document.querySelectorAll("p label input[type='checkbox']");
-    const fieldschecked = document.querySelectorAll("p label input[type=checkbox]:checked");
-    selectall.indeterminate = fieldschecked.length > 0 && fieldschecked.length !== fields.length ? true : false;
+    const fieldschecked = document.querySelectorAll(
+      "p label input[type=checkbox]:checked"
+    );
+    selectall.indeterminate =
+      fieldschecked.length > 0 && fieldschecked.length !== fields.length
+        ? true
+        : false;
   };
 
   SelectAllExportFields = () => {
@@ -299,7 +337,9 @@ export class BdsUploaded extends HTMLElement {
   SaveTemplate = async (id) => {
     const fileid = document.getElementById(id).dataset.fileid;
     const template = document.getElementById("template").value;
-    const fieldschecked = document.querySelectorAll("p label input[type=checkbox]:checked");
+    const fieldschecked = document.querySelectorAll(
+      "p label input[type=checkbox]:checked"
+    );
     const flds = Array.from(fieldschecked).map((field) => field.value);
     const et = {};
     et[template] = flds;
@@ -307,7 +347,9 @@ export class BdsUploaded extends HTMLElement {
   };
 
   DownloadTemplate = async (id) => {
-    const fieldschecked = document.querySelectorAll("p label input[type=checkbox]:checked");
+    const fieldschecked = document.querySelectorAll(
+      "p label input[type=checkbox]:checked"
+    );
     const flds = Array.from(fieldschecked).map((field) => field.value);
 
     // Get Titles
