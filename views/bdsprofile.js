@@ -14,7 +14,7 @@ export class BDSProfile {
     });
     document.getElementById("bdscontent").innerHTML = `
     <div class="card">
-      <div class="card-content container">
+      <div class="card-content">
         <ul>
           <li class="row">
             <span class="col s4 right-align">User:</span>

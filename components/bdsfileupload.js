@@ -59,7 +59,9 @@ export class BdsFileUpload extends HTMLElement {
       if (file.type === "text/xml") {
         this.SaveOnixTitles(file, reader.result).then(() => {
           console.log(`${file.name} uploaded Successfully\n`);
-          M.toast({ html: `${file.name} (${file.type}) uploaded Successfully\n` });
+          M.toast({
+            html: `${file.name} (${file.type}) uploaded Successfully\n`
+          });
         });
       } else {
         console.log("Started Processing...");
@@ -67,7 +69,9 @@ export class BdsFileUpload extends HTMLElement {
         this.SaveExcelTitles(file, reader.result).then(() => {
           document.getElementById("fustatus").innerHTML = `Done...`;
           console.log("Done Processing...");
-          M.toast({ html: `${file.name} (${file.type}) uploaded Successfully\n` });
+          M.toast({
+            html: `${file.name} (${file.type}) uploaded Successfully\n`
+          });
         });
       }
     });
@@ -116,7 +120,12 @@ export class BdsFileUpload extends HTMLElement {
         }
       );
     });
-    console.log(rows);
+    // Save title count
+    await SaveUserFile({
+      filename: file.name,
+      filesize: rows.length
+    });
+    // console.log(rows);
     // resolve();
     // });
   };
@@ -211,7 +220,7 @@ export class BdsFileUpload extends HTMLElement {
       const Title = ProductFlat.Product_0_DescriptiveDetail_0_TitleDetail_0_TitleElement_0_TitleText_0;
       const Author = ProductFlat.Product_0_DescriptiveDetail_0_Contributor_0_PersonName_0;
 
-      console.log(RecordReference, Title, Author, Productarray, child.outerHTML);
+      // console.log(RecordReference, Title, Author, Productarray, child.outerHTML);
       await SaveTitleContents(
         file.name,
         {
@@ -228,12 +237,13 @@ export class BdsFileUpload extends HTMLElement {
     }
     const fields = [...ref, ...ntf, ...pid, ...ddg, ...ddm, ...ddc, ...ddt, ...dda, ...ddl, ...dds, ...ddu, ...cdg, ...pdg, ...rmg, ...psg];
 
-    //Save Userfile without fields
+    //Save Userfile with fields and title count
     await SaveUserFile({
       filename: file.name,
       filetype: FileType,
       timestamp: Date.now(),
-      fields: fields
+      fields: fields,
+      filesize: nodes.length
     });
     console.log("User file saved With Fields!");
   };
