@@ -1,4 +1,10 @@
-import { xml2json, json2xml, flatten, unflatten, formatXml } from "../utils/bdsutil.js";
+import {
+  xml2json,
+  json2xml,
+  flatten,
+  unflatten,
+  formatXml
+} from "../utils/bdsutil.js";
 import { SaveUserFile, SaveTitleContents } from "../data/bdsfirebase.js";
 
 export class BdsFileUpload extends HTMLElement {
@@ -97,7 +103,7 @@ export class BdsFileUpload extends HTMLElement {
           row[elem] = row[elem].slice(0, idx).trim();
         }
       }
-
+      // console.log(row);
       const onix = `
           <ONIXMessage release="3.0" xmlns="http://ns.editeur.org/onix/3.0/reference">
             <Product>
@@ -111,8 +117,13 @@ export class BdsFileUpload extends HTMLElement {
         file.name,
         {
           RecordReference: `${row["RecordReference_0"]}`,
-          Title: row["DescriptiveDetail_0_TitleDetail_0_TitleElement_0_TitleText_0"],
-          Author: row["DescriptiveDetail_0_Contributor_0_PersonName_0"]
+          Title:
+            row["DescriptiveDetail_0_TitleDetail_0_TitleElement_0_TitleText_0"],
+          Author:
+            row["DescriptiveDetail_0_Contributor_0_PersonName_0"] ||
+            row["DescriptiveDetail_0_Contributor_0_NamesBeforeKey_0"] +
+              " " +
+              row["DescriptiveDetail_0_Contributor_0_KeyNames_0"]
         },
         {
           xml: `<Product>${json2xml(unflatten(row))}</Product>`,
@@ -133,8 +144,15 @@ export class BdsFileUpload extends HTMLElement {
   SaveOnixTitles = async (file, onix) => {
     const parser = new DOMParser();
     const dom = parser.parseFromString(onix, "application/xml");
-    console.log(dom.documentElement.nodeName === "parsererror" ? "error while parsing" : dom.documentElement.length);
-    const FileType = `Onix${dom.getElementsByTagName("ONIXMessage")[0].getAttribute("release").replace(".", "")}`;
+    console.log(
+      dom.documentElement.nodeName === "parsererror"
+        ? "error while parsing"
+        : dom.documentElement.length
+    );
+    const FileType = `Onix${dom
+      .getElementsByTagName("ONIXMessage")[0]
+      .getAttribute("release")
+      .replace(".", "")}`;
     console.log(FileType);
 
     //Save Userfile without fields
@@ -175,50 +193,94 @@ export class BdsFileUpload extends HTMLElement {
       // Extract distinct fields for excel export
       ref.add("Product_0_RecordReference_0");
       ntf.add("Product_0_NotificationType_0");
-      for (let elem of new Set(objkeys.filter((key) => key.startsWith("Product_0_ProductIdentifier")))) {
+      for (let elem of new Set(
+        objkeys.filter((key) => key.startsWith("Product_0_ProductIdentifier"))
+      )) {
         pid.add(elem);
       }
-      for (let elem of new Set(objkeys.filter((key) => key.startsWith("Product_0_DescriptiveDetail_0_Product")))) {
+      for (let elem of new Set(
+        objkeys.filter((key) =>
+          key.startsWith("Product_0_DescriptiveDetail_0_Product")
+        )
+      )) {
         ddg.add(elem);
       }
-      for (let elem of new Set(objkeys.filter((key) => key.startsWith("Product_0_DescriptiveDetail_0_Measure")))) {
+      for (let elem of new Set(
+        objkeys.filter((key) =>
+          key.startsWith("Product_0_DescriptiveDetail_0_Measure")
+        )
+      )) {
         ddm.add(elem);
       }
-      for (let elem of new Set(objkeys.filter((key) => key.startsWith("Product_0_DescriptiveDetail_0_Collection")))) {
+      for (let elem of new Set(
+        objkeys.filter((key) =>
+          key.startsWith("Product_0_DescriptiveDetail_0_Collection")
+        )
+      )) {
         ddc.add(elem);
       }
-      for (let elem of new Set(objkeys.filter((key) => key.startsWith("Product_0_DescriptiveDetail_0_TitleDetail")))) {
+      for (let elem of new Set(
+        objkeys.filter((key) =>
+          key.startsWith("Product_0_DescriptiveDetail_0_TitleDetail")
+        )
+      )) {
         ddt.add(elem);
       }
-      for (let elem of new Set(objkeys.filter((key) => key.startsWith("Product_0_DescriptiveDetail_0_Contributor")))) {
+      for (let elem of new Set(
+        objkeys.filter((key) =>
+          key.startsWith("Product_0_DescriptiveDetail_0_Contributor")
+        )
+      )) {
         dda.add(elem);
       }
-      for (let elem of new Set(objkeys.filter((key) => key.startsWith("Product_0_DescriptiveDetail_0_Language")))) {
+      for (let elem of new Set(
+        objkeys.filter((key) =>
+          key.startsWith("Product_0_DescriptiveDetail_0_Language")
+        )
+      )) {
         ddl.add(elem);
       }
-      for (let elem of new Set(objkeys.filter((key) => key.startsWith("Product_0_DescriptiveDetail_0_Subject")))) {
+      for (let elem of new Set(
+        objkeys.filter((key) =>
+          key.startsWith("Product_0_DescriptiveDetail_0_Subject")
+        )
+      )) {
         dds.add(elem);
       }
-      for (let elem of new Set(objkeys.filter((key) => key.startsWith("Product_0_DescriptiveDetail_0_Audience")))) {
+      for (let elem of new Set(
+        objkeys.filter((key) =>
+          key.startsWith("Product_0_DescriptiveDetail_0_Audience")
+        )
+      )) {
         ddu.add(elem);
       }
-      for (let elem of new Set(objkeys.filter((key) => key.startsWith("Product_0_CollateralDetail")))) {
+      for (let elem of new Set(
+        objkeys.filter((key) => key.startsWith("Product_0_CollateralDetail"))
+      )) {
         cdg.add(elem);
       }
-      for (let elem of new Set(objkeys.filter((key) => key.startsWith("Product_0_PublishingDetail")))) {
+      for (let elem of new Set(
+        objkeys.filter((key) => key.startsWith("Product_0_PublishingDetail"))
+      )) {
         pdg.add(elem);
       }
-      for (let elem of new Set(objkeys.filter((key) => key.startsWith("Product_0_RelatedMaterial")))) {
+      for (let elem of new Set(
+        objkeys.filter((key) => key.startsWith("Product_0_RelatedMaterial"))
+      )) {
         rmg.add(elem);
       }
-      for (let elem of new Set(objkeys.filter((key) => key.startsWith("Product_0_ProductSupply")))) {
+      for (let elem of new Set(
+        objkeys.filter((key) => key.startsWith("Product_0_ProductSupply"))
+      )) {
         psg.add(elem);
       }
 
       // Save Titles and Contents
       const RecordReference = ProductFlat.Product_0_RecordReference_0;
-      const Title = ProductFlat.Product_0_DescriptiveDetail_0_TitleDetail_0_TitleElement_0_TitleText_0;
-      const Author = ProductFlat.Product_0_DescriptiveDetail_0_Contributor_0_PersonName_0;
+      const Title =
+        ProductFlat.Product_0_DescriptiveDetail_0_TitleDetail_0_TitleElement_0_TitleText_0;
+      const Author =
+        ProductFlat.Product_0_DescriptiveDetail_0_Contributor_0_PersonName_0;
 
       // console.log(RecordReference, Title, Author, Productarray, child.outerHTML);
       await SaveTitleContents(
@@ -233,9 +295,27 @@ export class BdsFileUpload extends HTMLElement {
           json: Productarray
         }
       );
-      console.log(`Title/Contents saved for File: ${file.name}, RecordReference: ${RecordReference}`);
+      console.log(
+        `Title/Contents saved for File: ${file.name}, RecordReference: ${RecordReference}`
+      );
     }
-    const fields = [...ref, ...ntf, ...pid, ...ddg, ...ddm, ...ddc, ...ddt, ...dda, ...ddl, ...dds, ...ddu, ...cdg, ...pdg, ...rmg, ...psg];
+    const fields = [
+      ...ref,
+      ...ntf,
+      ...pid,
+      ...ddg,
+      ...ddm,
+      ...ddc,
+      ...ddt,
+      ...dda,
+      ...ddl,
+      ...dds,
+      ...ddu,
+      ...cdg,
+      ...pdg,
+      ...rmg,
+      ...psg
+    ];
 
     //Save Userfile with fields and title count
     await SaveUserFile({
