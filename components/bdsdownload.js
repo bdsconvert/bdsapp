@@ -8,7 +8,12 @@ export class BdsDownload extends HTMLElement {
     this.uploaded = this.getAttribute("from");
     this.fileid = this.getAttribute("fileid");
     this.recid = this.getAttribute("recid");
-    this.DownloadOnixFile(this.uploaded, this.fileid);
+    this.dwnld = this.getAttribute("dwnld");
+    if (this.dwnld === "Excel") {
+      this.DownloadExcelFile(this.fileid);
+    } else {
+      this.DownloadOnixFile(this.uploaded, this.fileid);
+    }
     this.innerHTML = `
       <span class="right" style="margin:1rem;cursor:pointer;"><i class="material-icons modal-close">close</i></span>
       <br/>
@@ -37,11 +42,7 @@ export class BdsDownload extends HTMLElement {
                   return [p[0].slice(p[0].indexOf("-") + 1), p[1]];
                 });
                 // this.innerHTML += `${formatXml("<Product>" + json2xml(unflatten(Object.fromEntries(json))) + "</Product>")}`;
-                resolve(
-                  "<Product>" +
-                    json2xml(unflatten(Object.fromEntries(json))) +
-                    "</Product>"
-                );
+                resolve("<Product>" + json2xml(unflatten(Object.fromEntries(json))) + "</Product>");
               }
               this.innerHTML += `<br/> Generating Onix for ${title.RecordReference}...`;
             });
@@ -50,11 +51,7 @@ export class BdsDownload extends HTMLElement {
       }); // end for each
       Promise.all(this.recs).then((recs) => {
         const now = new Date(Date.now());
-        const currdatetime = `${now
-          .toISOString()
-          .replace(/-/g, "")
-          .replace(/:/g, "")
-          .slice(0, 13)}Z`;
+        const currdatetime = `${now.toISOString().replace(/-/g, "").replace(/:/g, "").slice(0, 13)}Z`;
         const onix = `
           <ONIXMessage release="3.0" xmlns="http://ns.editeur.org/onix/3.0/reference">
             <Header>
@@ -72,6 +69,41 @@ export class BdsDownload extends HTMLElement {
         // Download
         downloadfile(fileid + ".xml", onix, "data:text/xml;charset=utf-8;");
         this.innerHTML += `<br/> Download Complete`;
+      });
+    });
+  }
+
+  async DownloadExcelFile(fileid) {
+    console.log(fileid);
+    this.innerHTML += `<br/> Download Started <br/> Creating Excel file...`;
+    const fieldschecked = document.querySelectorAll("p label input[type=checkbox]:checked");
+    const flds = Array.from(fieldschecked).map((field) => field.value);
+    const rows = [];
+    rows.push(
+      flds.map((fld) => {
+        return { value: fld };
+      })
+    );
+
+    await GetTitles(fileid, "", 1000); // Retrives and local stores titles
+    const titles = JSON.parse(localStorage.getItem(`titles`));
+    titles.forEach(async (title) => {
+      rows.push(
+        new Promise(async (resolve) => {
+          await GetContents(fileid, title.RecordReference); // Retrieves and local stores contents
+          const content = JSON.parse(localStorage.getItem(`json`));
+          const row = [];
+          flds.forEach((fld) => {
+            row.push({ value: content[fld] ? content[fld] : "" });
+          });
+          resolve(row);
+        })
+      );
+    });
+    Promise.all(rows).then((rows) => {
+      console.log(rows);
+      writeXlsxFile(rows, {}).then((blob) => {
+        downloadfile(fileid + ".xlsx", blob, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
       });
     });
   }

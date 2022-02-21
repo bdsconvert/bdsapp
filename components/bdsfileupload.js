@@ -280,8 +280,10 @@ export class BdsFileUpload extends HTMLElement {
       const Title =
         ProductFlat.Product_0_DescriptiveDetail_0_TitleDetail_0_TitleElement_0_TitleText_0;
       const Author =
-        ProductFlat.Product_0_DescriptiveDetail_0_Contributor_0_PersonName_0;
-
+        ProductFlat.Product_0_DescriptiveDetail_0_Contributor_0_PersonName_0 ||
+        ProductFlat.Product_0_DescriptiveDetail_0_Contributor_0_NamesBeforeKey_0 +
+          " " +
+          ProductFlat.Product_0_DescriptiveDetail_0_Contributor_0_KeyNames_0;
       // console.log(RecordReference, Title, Author, Productarray, child.outerHTML);
       await SaveTitleContents(
         file.name,

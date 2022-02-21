@@ -1,4 +1,10 @@
-import { authObj, GetWorqueueFiles, GetTitles, GetContents, SaveExportTemplate } from "../data/bdsfirebase.js";
+import {
+  authObj,
+  GetWorqueueFiles,
+  GetTitles,
+  GetContents,
+  SaveExportTemplate
+} from "../data/bdsfirebase.js";
 import { downloadfile } from "../utils/bdsutil.js";
 import { BdsFileUpload } from "./bdsfileupload.js";
 import { BdsContent } from "./bdscontent.js";
@@ -46,13 +52,19 @@ export class BdsUploaded extends HTMLElement {
       // Title Click
       else if (e.target.matches("[rec-link]")) {
         const rec = document.getElementById(e.target.parentElement.id);
-        document.getElementById("bdscontents").innerHTML = `<bds-content fileid="${this.fileid}" recid="${e.target.parentElement.id}" ttl="${rec.dataset.filename}" ></bds-content>`;
+        document.getElementById(
+          "bdscontents"
+        ).innerHTML = `<bds-content fileid="${this.fileid}" recid="${e.target.parentElement.id}" ttl="${rec.dataset.filename}" ></bds-content>`;
         // this.DisplayContents(e.target.parentElement.id);
       }
 
       // Download Click for Excel input -> Onix output
       else if (e.target.matches("[download-link]")) {
-        document.getElementById("bdsdownload").innerHTML = `<bds-download from="uploaded" fileid="${e.target.id.slice(9)}" recid=""></bds-download>`;
+        document.getElementById(
+          "bdsdownload"
+        ).innerHTML = `<bds-download from="uploaded" fileid="${e.target.id.slice(
+          9
+        )}" recid=""></bds-download>`;
       }
 
       // Export click for Onix input -> csv output
@@ -92,7 +104,11 @@ export class BdsUploaded extends HTMLElement {
       }
       // Export Download Click
       else if (e.target.id === "download") {
-        this.DownloadTemplate(e.target.id);
+        // this.DownloadTemplate(e.target.id);
+        const fileid = document.getElementById(e.target.id).dataset.fileid;
+        document.getElementById(
+          "bdsdownload"
+        ).innerHTML = `<bds-download from="uploaded" fileid="${fileid}" recid="" dwnld="Excel"></bds-download>`;
       }
     });
   }
@@ -100,12 +116,20 @@ export class BdsUploaded extends HTMLElement {
   UploadedFilesSearch = (keyword) => {
     GetWorqueueFiles(keyword).then((uploadedfiles) => {
       this.userfiles = JSON.parse(localStorage.getItem(`userfiles`));
-      this.totaltitles = this.userfiles.reduce((prev, curr) => prev + (curr.filesize || 0), 0);
-      this.totalsubscription = authObj.subscriptions.reduce((prev, curr) => prev + (curr.Maxtitles || 10), 0);
+      this.totaltitles = this.userfiles.reduce(
+        (prev, curr) => prev + (curr.filesize || 0),
+        0
+      );
+      this.totalsubscription = authObj.subscriptions.reduce(
+        (prev, curr) => prev + (curr.Maxtitles || 10),
+        0
+      );
       console.log(this.totalsubscription);
       this.innerHTML = this.DisplayUploadedFiles(keyword);
       // File upload modal
-      document.getElementById("bdsfileupload").innerHTML = `<bds-file-upload></bds-file-upload>`;
+      document.getElementById(
+        "bdsfileupload"
+      ).innerHTML = `<bds-file-upload></bds-file-upload>`;
     });
   };
 
@@ -135,25 +159,44 @@ export class BdsUploaded extends HTMLElement {
       const it = item.filetype === "Excel" ? "download" : "output";
       const md = item.filetype === "Excel" ? "modal-trigger" : "";
       const rb = index % 2 === 0 ? "grey lighten-4" : "";
-      const ft = this.totaltitles < this.totalsubscription ? (item.filetype === "Excel" ? "download-link" : "export-link") : "";
+      const ft =
+        this.totaltitles < this.totalsubscription
+          ? item.filetype === "Excel"
+            ? "download-link"
+            : "export-link"
+          : "";
       uploaded += `
             <li class="collection-item ${rb}">
                 <div class="row">
-                  <!--<span class="col s1 l1 right-align">${index + 1}.</span>-->
+                  <!--<span class="col s1 l1 right-align">${
+                    index + 1
+                  }.</span>-->
                   <div class="col s12 l12">
-                    <span style="font-size:1.25rem;font-weight:500">${item.filename}</span>
+                    <span style="font-size:1.25rem;font-weight:500">${
+                      item.filename
+                    }</span>
                     <br />
-                    <span style="font-size:0.8rem;">File Type: (${item.filetype})</span>
+                    <span style="font-size:0.8rem;">File Type: (${
+                      item.filetype
+                    })</span>
                     <a href="#bdsdownload" class="secondary-content ${md}">
-                      <i class="material-icons left" title="${ed}" id="${ed}-${item.filename}" ${ft}>${it}</i>
+                      <i class="material-icons left" title="${ed}" id="${ed}-${
+        item.filename
+      }" ${ft}>${it}</i>
                     </a>
                     <a href="#" class="secondary-content">
-                      <i class="material-icons left" title="Titles" id="${item.filename}" ${fl}>list</i>
+                      <i class="material-icons left" title="Titles" id="${
+                        item.filename
+                      }" ${fl}>list</i>
                     </a> 
                     <br />
-                    <span style="font-size:0.8rem;">File Size: ${item.filesize || 0}</span>
+                    <span style="font-size:0.8rem;">File Size: ${
+                      item.filesize || 0
+                    }</span>
                     <br />
-                    <span style="font-size:0.8rem;">Loaded: ${new Date(item.timestamp).toLocaleString()}</span>
+                    <span style="font-size:0.8rem;">Loaded: ${new Date(
+                      item.timestamp
+                    ).toLocaleString()}</span>
                   </div>
                 </div>
             </li>
@@ -229,7 +272,9 @@ export class BdsUploaded extends HTMLElement {
   // };
 
   DisplayExportFields = (fileid) => {
-    const file = JSON.parse(localStorage.getItem("userfiles")).find((file) => file.filename === fileid);
+    const file = JSON.parse(localStorage.getItem("userfiles")).find(
+      (file) => file.filename === fileid
+    );
 
     let flds = "";
     file.fields.forEach((field) => {
@@ -265,7 +310,7 @@ export class BdsUploaded extends HTMLElement {
           </div>
           <div class="col s8 right-align">
             <a class="waves-effect waves-light btn" id="createsavetemplate" data-fileid="${fileid}"><i class="material-icons left">save</i>Create/Save Template</a>
-            <a class="waves-effect waves-light btn" id="download" data-fileid="${fileid}"><i class="material-icons left">download</i>Export</a>
+            <a href="#bdsdownload" class="waves-effect waves-light btn modal-trigger" id="download" data-fileid="${fileid}"><i class="material-icons left">download</i>Export</a>
           </div>
         </div>
         <div class="row">
@@ -292,9 +337,13 @@ export class BdsUploaded extends HTMLElement {
     this.ClearExportFields();
     const tmplt = document.getElementById(`${template}`);
     if (tmplt) {
-      const file = JSON.parse(localStorage.getItem("userfiles")).find((file) => file.filename === tmplt.dataset.fileid);
+      const file = JSON.parse(localStorage.getItem("userfiles")).find(
+        (file) => file.filename === tmplt.dataset.fileid
+      );
       file.templates[template].forEach((fld) => {
-        document.querySelector(`input[value=${CSS.escape(fld)}]`).checked = true;
+        document.querySelector(
+          `input[value=${CSS.escape(fld)}]`
+        ).checked = true;
         this.SelectExportFields();
       });
     }
@@ -303,8 +352,13 @@ export class BdsUploaded extends HTMLElement {
   SelectExportFields = () => {
     const selectall = document.getElementById("selectall");
     const fields = document.querySelectorAll("p label input[type='checkbox']");
-    const fieldschecked = document.querySelectorAll("p label input[type=checkbox]:checked");
-    selectall.indeterminate = fieldschecked.length > 0 && fieldschecked.length !== fields.length ? true : false;
+    const fieldschecked = document.querySelectorAll(
+      "p label input[type=checkbox]:checked"
+    );
+    selectall.indeterminate =
+      fieldschecked.length > 0 && fieldschecked.length !== fields.length
+        ? true
+        : false;
   };
 
   SelectAllExportFields = () => {
@@ -318,7 +372,9 @@ export class BdsUploaded extends HTMLElement {
   SaveTemplate = async (id) => {
     const fileid = document.getElementById(id).dataset.fileid;
     const template = document.getElementById("template").value;
-    const fieldschecked = document.querySelectorAll("p label input[type=checkbox]:checked");
+    const fieldschecked = document.querySelectorAll(
+      "p label input[type=checkbox]:checked"
+    );
     const flds = Array.from(fieldschecked).map((field) => field.value);
     const et = {};
     et[template] = flds;
@@ -326,7 +382,9 @@ export class BdsUploaded extends HTMLElement {
   };
 
   DownloadTemplate = async (id) => {
-    const fieldschecked = document.querySelectorAll("p label input[type=checkbox]:checked");
+    const fieldschecked = document.querySelectorAll(
+      "p label input[type=checkbox]:checked"
+    );
     const flds = Array.from(fieldschecked).map((field) => field.value);
 
     // Get Titles
