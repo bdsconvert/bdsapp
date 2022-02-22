@@ -1,5 +1,5 @@
 import { GetContents } from "../data/bdsfirebase.js";
-import { formatJson, formatXml } from "../utils/bdsutil.js";
+import { xml2json, formatJson, formatXml } from "../utils/bdsutil.js";
 
 export class BdsContent extends HTMLElement {
   constructor() {
@@ -21,6 +21,7 @@ export class BdsContent extends HTMLElement {
     GetContents(this.fileid, this.recid).then(() => {
       document.getElementById(`onix${this.recid}`).innerHTML = formatXml(localStorage.getItem(`xml`));
       document.getElementById(`table${this.recid}`).innerHTML = formatJson(localStorage.getItem(`json`));
+      // console.log(xml2json(nodes[0], "\t"));
     });
   }
 

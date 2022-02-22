@@ -101,7 +101,7 @@ export class BdsDownload extends HTMLElement {
       );
     });
     Promise.all(rows).then((rows) => {
-      console.log(rows);
+      // console.log(rows);
       writeXlsxFile(rows, {}).then((blob) => {
         downloadfile(fileid + ".xlsx", blob, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
       });
