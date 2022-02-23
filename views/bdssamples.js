@@ -15,14 +15,25 @@ export class BDSSamples {
                   </ul>                  
               </div>
               <div>
-                <div id="eoefile" class="col s12"><bds-samples sampletype="Excel"></bds-samples></div>    
-                <div id="eoofile" class="col s12"><bds-samples sampletype="Onix"></bds-samples></div>               
+                <div id="eoefile" class="col s12"><bds-samples sampletype="eoExcel"></bds-samples></div>    
+                <div id="eoofile" class="col s12"><bds-samples sampletype="eoOnix"></bds-samples></div>               
               </div>
             </div>        
           </li>
           <li>
             <div class="collapsible-header grey lighten-5" id=""><span style="width:100%;">Excel From ONIX</span><i class="material-icons right">expand_more</i></div>
-            <div class="collapsible-body"></div>        
+            <div class="collapsible-body">
+              <div class="card-tabs">
+                  <ul id="eotabs" class="tabs">
+                    <li class="tab col s3"><a href="#oeofile" class="active">Onix</a></li>
+                    <li class="tab col s3 active"><a href="#oeefile">Excel</a></li>          
+                  </ul>                  
+              </div>
+              <div>
+                <div id="oeofile" class="col s12"><bds-samples sampletype="oeOnix"></bds-samples></div>               
+                <div id="oeefile" class="col s12"><bds-samples sampletype="oeExcel"></bds-samples></div>    
+              </div>
+            </div>        
           </li>
         </ul>
       </div></div>

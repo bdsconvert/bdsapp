@@ -1,5 +1,5 @@
 import { authObj, GetWorqueueFiles, GetTitles, GetContents, SaveExportTemplate } from "../data/bdsfirebase.js";
-import { downloadfile } from "../utils/bdsutil.js";
+import { formatXml, downloadfile } from "../utils/bdsutil.js";
 import { BdsFileUpload } from "./bdsfileupload.js";
 import { BdsContent } from "./bdscontent.js";
 import { BdsDownload } from "./bdsdownload.js";
@@ -8,19 +8,38 @@ export class BdsSamples extends HTMLElement {
   constructor() {
     super();
     this.sampletype = this.getAttribute("sampletype");
-    if (this.sampletype === "Excel") {
-      this.innerHTML = `
-      <iframe 
-        src="https://onedrive.live.com/embed?cid=56998D3D2BC898D5&resid=56998D3D2BC898D5%21941&authkey=APSwPwNypwc8cOU&em=2" 
-        width="100%" height="360" frameborder="0" scrolling="no">
-      </iframe>    
-    `;
-    } else {
-      this.innerHTML = `
-        <iframe src="https://bdsconvert.github.io/bdsapp/assets/BDSSampleExcelImport.xml" 
-                width="100%" height="360" frameborder="0" scrolling="no">
+    switch (this.sampletype) {
+      case "eoExcel":
+        this.innerHTML = `
+        <iframe 
+          width="100%" height="346" frameborder="0" scrolling="no" 
+          src="https://onedrive.live.com/embed?resid=56998D3D2BC898D5%21941&authkey=%21APSwPwNypwc8cOU&em=2&wdAllowInteractivity=False&wdDownloadButton=True&wdInConfigurator=True">
+        </iframe>   
+        `;
+        break;
+
+      case "eoOnix":
+        fetch("https://bdsconvert.github.io/bdsapp/assets/BDSSampleExcelImport.xml")
+          .then((response) => response.text())
+          .then((data) => {
+            this.innerHTML = `<div style="overflow:scroll;height:50vh;padding:1em;border:1px solid lightgrey;">${formatXml(data)}</div>`;
+          });
+        break;
+
+      case "oeExcel":
+        this.innerHTML = `
+        <iframe 
+          src="https://onedrive.live.com/embed?resid=56998D3D2BC898D5%21944&authkey=%21ANo09HqLVnv6Sw4&em=2&wdAllowInteractivity=False&wdDownloadButton=True&wdInConfigurator=True" 
+          width="100%" height="330" frameborder="0" scrolling="no">
         </iframe>
-      `;
+          `;
+        break;
+
+      case "oeOnix":
+        break;
+
+      default:
+        break;
     }
   }
   connectedCallback() {
