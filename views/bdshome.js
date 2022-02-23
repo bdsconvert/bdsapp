@@ -43,9 +43,9 @@ export class BDSHome {
               Excel input file should have an extention ".xlsx" and Onix files must be saved with extention ".xml".
           </p>
           <p>
-              Create ONIX 3.0/2.1 records in few steps by preparing book data in an Excel spreadsheet.  
+              Create ONIX 3.0 records in few steps by preparing book data in an Excel spreadsheet.  
               Prepare the spreadsheet with book records using a custom layout.   
-              (<a href="https://bookdatasolutions.com/bdsapp/files/ExcelSamples.zip" target="_self"><strong>You can download Excel custom layouts with sample data for ONIX 3.0/2.1 here</strong></a>).  
+              (<a href="https://bdsconvert.github.io/bdsapp/assets/BDSSampleExcel.zip" target="_self"><strong>You can download Excel custom layout with sample data for ONIX 3.0 here</strong><i class="material-icons" title="Download" download-link>download</i></a>).  
               Add remove fields as neccessary by following the field header convention.
               Use ONIX standard code list values/descriptions for ONIX code data columns.
               Upload the spreadsheet from "Work Queue/Upload New File" page.

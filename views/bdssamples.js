@@ -8,7 +8,7 @@ export class BDSSamples {
           <li class="active">
             <div class="collapsible-header grey lighten-5" id=""><span style="width:100%;"><h5>ONIX From Excel</h5></span><i class="material-icons right">expand_more</i></div>
             <div class="collapsible-body">
-              <a href="https://bdsconvert.github.io/bdsapp/assets/BDSSampleExcel.zip" target="_self" class="right"><i class="material-icons left" title="Download" id="" download-link>download</i>Download Excel Input and Onix Ouput Files</a>
+              <a href="https://bdsconvert.github.io/bdsapp/assets/BDSSampleExcel.zip" target="_self" class="right"><i class="material-icons left" title="Download" download-link>download</i>Download Excel Input and Onix Ouput Files</a>
               <div class="card-tabs">
                 <ul id="eotabs" class="tabs">
                     <li class="tab col s3 active"><a href="#eoefile" class="active">Excel</a></li>          
@@ -24,7 +24,7 @@ export class BDSSamples {
           <li>
             <div class="collapsible-header grey lighten-5" id=""><span style="width:100%;"><h5>Excel From ONIX</h5></span><i class="material-icons right">expand_more</i></div>
             <div class="collapsible-body">
-              <a href="#!" class="right"><i class="material-icons left" title="Download" id="" download-link>download</i>Download Onix Input and Excel Ouput Files</a>
+              <a href="https://bdsconvert.github.io/bdsapp/assets/BDSSampleOnix.zip" target="_self" class="right"><i class="material-icons left" title="Download" download-link>download</i>Download Onix Input and Excel Ouput Files</a>
               <div class="card-tabs">
                   <ul id="eotabs" class="tabs">
                     <li class="tab col s3"><a href="#oeofile" class="active">Onix</a></li>
