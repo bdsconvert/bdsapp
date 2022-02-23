@@ -6,13 +6,14 @@ export class BDSSamples {
       <div class="card"><div class="card-content">
         <ul class="collapsible">
           <li class="active">
-            <div class="collapsible-header grey lighten-5" id=""><span style="width:100%;">ONIX From Excel</span><i class="material-icons right">expand_more</i></div>
+            <div class="collapsible-header grey lighten-5" id=""><span style="width:100%;"><h5>ONIX From Excel</h5></span><i class="material-icons right">expand_more</i></div>
             <div class="collapsible-body">
+              <a href="https://bdsconvert.github.io/bdsapp/assets/BDSSampleExcel.zip" target="_self" class="right"><i class="material-icons left" title="Download" id="" download-link>download</i>Download Excel Input and Onix Ouput Files</a>
               <div class="card-tabs">
-                  <ul id="eotabs" class="tabs">
+                <ul id="eotabs" class="tabs">
                     <li class="tab col s3 active"><a href="#eoefile" class="active">Excel</a></li>          
                     <li class="tab col s3"><a href="#eoofile">Onix</a></li>
-                  </ul>                  
+                </ul>                  
               </div>
               <div>
                 <div id="eoefile" class="col s12"><bds-samples sampletype="eoExcel"></bds-samples></div>    
@@ -21,8 +22,9 @@ export class BDSSamples {
             </div>        
           </li>
           <li>
-            <div class="collapsible-header grey lighten-5" id=""><span style="width:100%;">Excel From ONIX</span><i class="material-icons right">expand_more</i></div>
+            <div class="collapsible-header grey lighten-5" id=""><span style="width:100%;"><h5>Excel From ONIX</h5></span><i class="material-icons right">expand_more</i></div>
             <div class="collapsible-body">
+              <a href="#!" class="right"><i class="material-icons left" title="Download" id="" download-link>download</i>Download Onix Input and Excel Ouput Files</a>
               <div class="card-tabs">
                   <ul id="eotabs" class="tabs">
                     <li class="tab col s3"><a href="#oeofile" class="active">Onix</a></li>

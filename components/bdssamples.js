@@ -12,9 +12,9 @@ export class BdsSamples extends HTMLElement {
       case "eoExcel":
         this.innerHTML = `
         <iframe 
-          width="100%" height="346" frameborder="0" scrolling="no" 
-          src="https://onedrive.live.com/embed?resid=56998D3D2BC898D5%21941&authkey=%21APSwPwNypwc8cOU&em=2&wdAllowInteractivity=False&wdDownloadButton=True&wdInConfigurator=True">
-        </iframe>   
+          width="100%" height="330" frameborder="0" scrolling="no" 
+          src="https://onedrive.live.com/embed?resid=56998D3D2BC898D5%21941&authkey=%21APSwPwNypwc8cOU&em=2&wdAllowInteractivity=False&wdInConfigurator=True">
+        </iframe> 
         `;
         break;
 
@@ -29,13 +29,18 @@ export class BdsSamples extends HTMLElement {
       case "oeExcel":
         this.innerHTML = `
         <iframe 
-          src="https://onedrive.live.com/embed?resid=56998D3D2BC898D5%21944&authkey=%21ANo09HqLVnv6Sw4&em=2&wdAllowInteractivity=False&wdDownloadButton=True&wdInConfigurator=True" 
-          width="100%" height="330" frameborder="0" scrolling="no">
+          width="100%" height="330" frameborder="0" scrolling="no" 
+          src="https://onedrive.live.com/embed?resid=56998D3D2BC898D5%21944&authkey=%21ANo09HqLVnv6Sw4&em=2&wdAllowInteractivity=False&wdInConfigurator=True">
         </iframe>
           `;
         break;
 
       case "oeOnix":
+        fetch("https://bdsconvert.github.io/bdsapp/assets/BDSSampleOnixImport.xml")
+          .then((response) => response.text())
+          .then((data) => {
+            this.innerHTML = `<div style="overflow:scroll;height:50vh;padding:1em;border:1px solid lightgrey;">${formatXml(data)}</div>`;
+          });
         break;
 
       default:
