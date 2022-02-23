@@ -21,6 +21,10 @@ export class BDSHome {
                 BookDataSolutions allows you to do conversions with predefined Excel layout for ONIX conversions.
                 Download Excel template file along with sample titles to create book records for uploading and converting to ONIX records.                    
               </p>
+              <br/>
+              <p>        
+                <a href="/samples" page-link>View and Download Sample Onix and Excel Files</a>
+              </p>
             </div>
             <div class="col s6 l6 push-l1 slider">
               <ul class="slides">

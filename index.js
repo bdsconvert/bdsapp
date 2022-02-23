@@ -6,6 +6,7 @@ import { BDSTerms } from "./views/bdsterms.js";
 import { BDSContact } from "./views/bdscontact.js";
 import { BDSProfile } from "./views/bdsprofile.js";
 import { BDSWorkqueue } from "./views/bdsworkqueue.js";
+import { BDSSamples } from "./views/bdssamples.js";
 
 export const router = async () => {
   const routes = [
@@ -16,7 +17,8 @@ export const router = async () => {
     { path: "/signon", title: "SignOn", view: BDSSignon },
     { path: "/signout", title: "SignOut", view: BDSSignout },
     { path: "/profile", title: "Profile", view: BDSProfile },
-    { path: "/workqueue", title: "Workqueue", view: BDSWorkqueue }
+    { path: "/workqueue", title: "Workqueue", view: BDSWorkqueue },
+    { path: "/samples", title: "BdsSamples", view: BDSSamples }
   ];
   let match = routes.find((route) => window.location.pathname === route.path);
   match = match ? match : { path: routes[0].path, title: "BookDataSolutions", view: routes[0].view }; // Go home if no match
