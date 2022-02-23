@@ -8,7 +8,7 @@ export class BDSSamples {
           <li class="active">
             <div class="collapsible-header grey lighten-5" id=""><span style="width:100%;">ONIX From Excel</span><i class="material-icons right">expand_more</i></div>
             <div class="collapsible-body">
-              <div class="card-tabs" style="margin:0 !important;">
+              <div class="card-tabs">
                   <ul id="eotabs" class="tabs">
                     <li class="tab col s3 active"><a href="#eoefile" class="active">Excel</a></li>          
                     <li class="tab col s3"><a href="#eoofile">Onix</a></li>
@@ -16,7 +16,7 @@ export class BDSSamples {
               </div>
               <div>
                 <div id="eoefile" class="col s12"><bds-samples sampletype="Excel"></bds-samples></div>    
-                <div id="eoofile" class="col s12">ONIX File</div>               
+                <div id="eoofile" class="col s12"><bds-samples sampletype="Onix"></bds-samples></div>               
               </div>
             </div>        
           </li>

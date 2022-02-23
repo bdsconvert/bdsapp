@@ -8,13 +8,20 @@ export class BdsSamples extends HTMLElement {
   constructor() {
     super();
     this.sampletype = this.getAttribute("sampletype");
-
-    this.innerHTML = `
-    <iframe 
-      src="https://onedrive.live.com/embed?cid=56998D3D2BC898D5&resid=56998D3D2BC898D5%21941&authkey=APSwPwNypwc8cOU&em=2" 
-      width="100%" height="360" frameborder="0" scrolling="no">
-    </iframe>    
+    if (this.sampletype === "Excel") {
+      this.innerHTML = `
+      <iframe 
+        src="https://onedrive.live.com/embed?cid=56998D3D2BC898D5&resid=56998D3D2BC898D5%21941&authkey=APSwPwNypwc8cOU&em=2" 
+        width="100%" height="360" frameborder="0" scrolling="no">
+      </iframe>    
     `;
+    } else {
+      this.innerHTML = `
+        <iframe src="https://bdsconvert.github.io/bdsapp/assets/BDSSampleExcelImport.xml" 
+                width="100%" height="360" frameborder="0" scrolling="no">
+        </iframe>
+      `;
+    }
   }
   connectedCallback() {
     this.addEventListener("click", (e) => {
