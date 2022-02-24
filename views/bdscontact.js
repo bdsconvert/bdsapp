@@ -13,7 +13,7 @@ export class BDSContact {
           <br/>
           You can get in touch with us at: <strong>support@bookdatasolutions.com</strong>  
         </p>
-        <form id="contact-form" class="container">
+        <form id="contact-form">
           <div class="row">
             <div class="input-field col s12">
               <input id="contact-name" type="text" class="validate" required/>

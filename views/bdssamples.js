@@ -40,7 +40,7 @@ export class BDSSamples {
         </ul>
       </div></div>
     `;
-    M.Collapsible.init(document.querySelectorAll(".collapsible"), { accordion: true });
+    M.Collapsible.init(document.querySelectorAll(".collapsible"), { accordion: false });
     M.Tabs.init(document.querySelectorAll(".tabs", { swipeable: true }));
 
     // <bds-samples></bds-samples>
