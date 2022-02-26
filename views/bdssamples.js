@@ -3,10 +3,15 @@ import { BdsSamples } from "../components/bdssamples.js";
 export class BDSSamples {
   async getPage() {
     document.getElementById("bdscontent").innerHTML = ` 
+      <style>
+        .collapsible-hdr {
+          background-image: linear-gradient(to right, rgba(0, 0, 60, 0.5), rgba(0, 100, 200, 0.5));
+        }
+      </style>
       <div class="card"><div class="card-content">
         <ul class="collapsible">
           <li class="active">
-            <div class="collapsible-header grey lighten-5" id=""><span style="width:100%;"><h5>ONIX From Excel</h5></span><i class="material-icons right">expand_more</i></div>
+            <div class="collapsible-header collapsible-hdr white-text" id=""><span style="width:100%;"><h5>ONIX From Excel</h5></span><i class="material-icons right">expand_more</i></div>
             <div class="collapsible-body">
               <a href="https://bdsconvert.github.io/bdsapp/assets/BDSSampleExcel.zip" target="_self" class="right"><i class="material-icons left" title="Download" download-link>download</i>Download Excel Input and Onix Ouput Files</a>
               <div class="card-tabs">
@@ -22,7 +27,7 @@ export class BDSSamples {
             </div>        
           </li>
           <li>
-            <div class="collapsible-header grey lighten-5" id=""><span style="width:100%;"><h5>Excel From ONIX</h5></span><i class="material-icons right">expand_more</i></div>
+            <div class="collapsible-header collapsible-hdr white-text" id=""><span style="width:100%;"><h5>Excel From ONIX</h5></span><i class="material-icons right">expand_more</i></div>
             <div class="collapsible-body">
               <a href="https://bdsconvert.github.io/bdsapp/assets/BDSSampleOnix.zip" target="_self" class="right"><i class="material-icons left" title="Download" download-link>download</i>Download Onix Input and Excel Ouput Files</a>
               <div class="card-tabs">

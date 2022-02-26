@@ -10,6 +10,11 @@ export class BDSWorkqueue {
 
   async getPage() {
     document.getElementById("bdscontent").innerHTML = ` 
+    <style>
+      .card-content-bk {
+        background-image: linear-gradient(to right, rgba(0, 0, 60, 0.5), rgba(0, 100, 200, 0.5));
+      }
+    </style>
     <div class="card">
       <div class="container">
         <div class="card-tabs">
@@ -19,7 +24,7 @@ export class BDSWorkqueue {
           </ul>
         </div>
       </div>
-      <div class="card-content grey lighten-5">
+      <div class="card-content grey lighten-4">
         <div id="cofiles" class="col s12"><bds-created></bds-created></div>    
         <div id="ufiles" class="col s12"><bds-uploaded></bds-uploaded></div>    
       </div>
