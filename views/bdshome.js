@@ -24,7 +24,7 @@ export class BDSHome {
           </p>
         
           <div class="row valign-wrapper">
-            <div class="col s12 m12 l6">
+            <div class="col s5 m5 l6">
               <p><h5>Convert Data Between Excel and ONIX 3.0/2.1 Files:</h5></p>
               <p>
                   BookDataSolutions.com allows you to Upload Excel and ONIX input files from "Workqueue" page.
@@ -37,10 +37,22 @@ export class BDSHome {
                 <a href="/samples" page-link>View and Download Sample Onix and Excel Files</a>
               </p>
             </div>
-            <div class="col s12 m12 l6"><img class="right" src="https://bdsconvert.github.io/bdsapp/assets/BDSSampleExcel.png"></div>
+            <div class="col s12 m12 l7 slider">
+              <ul class="slides">
+                <li><a href="#!"><img class="materialboxed" src="https://bdsconvert.github.io/bdsapp/assets/BDSSampleExcel.png"></a></li>
+                <li><a href="#!"><img class="materialboxed" src="https://bdsconvert.github.io/bdsapp/assets/BDSSampleOnix.png"></a></li>
+              </ul>
+            </div>
           </div>
           <div class="row valign-wrapper">
-            <div class="col s12 l6"><img src="https://bdsconvert.github.io/bdsapp/assets/BDS2.png"></div>
+            <div class="col s12 m12 l7 slider">
+              <ul class="slides">
+                <li><a href="#!"><img class="materialboxed" src="https://bdsconvert.github.io/bdsapp/assets/BDSUploaded1.png"></a></li>
+                <li><a href="#!"><img class="materialboxed" src="https://bdsconvert.github.io/bdsapp/assets/BDSUploaded2.png"></a></li>
+                <li><a href="#!"><img class="materialboxed" src="https://bdsconvert.github.io/bdsapp/assets/BDSUploaded3.png"></a></li>
+                <li><a href="#!"><img class="materialboxed" src="https://bdsconvert.github.io/bdsapp/assets/BDSUploaded4.png"></a></li>
+              </ul>
+            </div>
             <div class="col s12 l6">
               <p>
                 Download Excel template file along with sample titles to create book records for uploading and converting them to ONIX records.                    
@@ -86,6 +98,7 @@ export class BDSHome {
       </div>    
     </div>
     `;
-    // M.Slider.init(document.querySelectorAll(".slider"), {});
+    M.Slider.init(document.querySelectorAll(".slider"), {});
+    M.Materialbox.init(document.querySelectorAll(".materialboxed"), {});
   }
 }
