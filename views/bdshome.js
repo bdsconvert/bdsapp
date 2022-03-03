@@ -37,17 +37,25 @@ export class BDSHome {
                 <a href="/samples" page-link>View and Download Sample Onix and Excel Files</a>
               </p>
             </div>
-            <div class="col s12 m12 l7 slider">
+            <div class="col s12 m12 l6 slider">
               <ul class="slides">
-                <li><a href="#!"><img class="materialboxed" src="https://bdsconvert.github.io/bdsapp/assets/BDSSampleExcel.png"></a></li>
-                <li><a href="#!"><img class="materialboxed" src="https://bdsconvert.github.io/bdsapp/assets/BDSSampleOnix.png"></a></li>
+                <li>
+                  <a href="#!"><img class="materialboxed" data-caption="Sample Excel" src="https://bdsconvert.github.io/bdsapp/assets/BDSSampleExcel.png"></a>
+                  <div class="caption center-align"><h5>Sample Excel</h5></div>  
+                </li>
+                <li>
+                  <a href="#!"><img class="materialboxed" src="https://bdsconvert.github.io/bdsapp/assets/BDSSampleOnix.png"></a>
+                  <div class="caption center-align"><h5>Sample Onix</h5></div>  
+                </li>
               </ul>
             </div>
           </div>
           <div class="row valign-wrapper">
-            <div class="col s12 m12 l7 slider">
+            <div class="col s12 m12 l6 slider">
               <ul class="slides">
-                <li><a href="#!"><img class="materialboxed" src="https://bdsconvert.github.io/bdsapp/assets/BDSUploaded1.png"></a></li>
+                <li>
+                  <a href="#!"><img class="materialboxed" src="https://bdsconvert.github.io/bdsapp/assets/BDSUploaded1.png"></a>
+                </li>
                 <li><a href="#!"><img class="materialboxed" src="https://bdsconvert.github.io/bdsapp/assets/BDSUploaded2.png"></a></li>
                 <li><a href="#!"><img class="materialboxed" src="https://bdsconvert.github.io/bdsapp/assets/BDSUploaded3.png"></a></li>
                 <li><a href="#!"><img class="materialboxed" src="https://bdsconvert.github.io/bdsapp/assets/BDSUploaded4.png"></a></li>
@@ -77,24 +85,23 @@ export class BDSHome {
                 You should choose the fields you want to see in the Excel file by selecting unique fields from the list.
               </p>
             </div>
-            <div class="col s12 m12 l6"><img class="right" src="https://bdsconvert.github.io/bdsapp/assets/BDS3.png"></div>
+            <div class="col s12 m12 l6 slider">
+              <ul class="slides">
+                <li>
+                  <a href="#!"><img class="materialboxed" src="https://bdsconvert.github.io/bdsapp/assets/BDSCreated1.png"></a>
+                </li>
+                <li><a href="#!"><img class="materialboxed" src="https://bdsconvert.github.io/bdsapp/assets/BDSCreated2.png"></a></li>
+                <li><a href="#!"><img class="materialboxed" src="https://bdsconvert.github.io/bdsapp/assets/BDSCreated3.png"></a></li>
+                <li><a href="#!"><img class="materialboxed" src="https://bdsconvert.github.io/bdsapp/assets/BDSCreated4.png"></a></li>
+              </ul>
+            </div>
           </div>
           <div class="row valign-wrapper">
             <div class="col s12 m12 l6"><img src="https://bdsconvert.github.io/bdsapp/assets/BDS4.png"></div>
             <div class="col s12 m12 l6">
               <p>The generated Output records can be viewed on the web page and are available for downloading.</p>
             </div>
-          </div>  
-            <!--
-            <div class="col s6 m12 l6 push-l1 slider">
-              <ul class="slides">
-                <li><a href="#one!"><img src="https://bdsconvert.github.io/bdsapp/assets/BDSSampleExcel.png"></a></li>
-                <li><a href="#two!"><img src="https://bdsconvert.github.io/bdsapp/assets/BDS2.png"></a></li>
-                <li><a href="#three!"><img src="https://bdsconvert.github.io/bdsapp/assets/BDS3.png"></a></li>
-                <li><a href="#four!"><img src="https://bdsconvert.github.io/bdsapp/assets/BDS4.png"></a></li>
-              <ul>          
-            </div>
-            -->          
+          </div>        
       </div>    
     </div>
     `;
