@@ -49,10 +49,7 @@
     }
 
     header {
-      /* border-bottom:1px solid lightgray; */
-      /* margin:1rem 1rem 1rem 1rem;  */
       box-shadow: 5px 5px 18px #555;
-      /* height: 10vh; */
     }    
 
     header, main, footer {
@@ -92,70 +89,43 @@
   </style> 
 
   <body class="grey lighten-4 container gradient"> 
-  <header>
-    <nav class="nav-wrapper grey lighten-5">
-      <div class="container">
-        <a href="#" class="logo teal-text">BookDataSolutions</a>
-        <ul class="right hide-on-med-and-down">
-            <li><a href="/" title="Home" class="teal-text waves-effect home" page-link><i class="material-icons left" page-link id="home">home</i></a></li>
-            <li><a href="/contact" title="Contact BDS" class="teal-text waves-effect contact" page-link><i class="material-icons left" page-link id="contact">contact_page</i></a></li>
-            <li><a href="/terms" title="Site Terms" class="teal-text waves-effect terms" page-link><i class="material-icons left" page-link id="policy">policy</i></a></li>               
-        </ul>
-        <a href="#" data-target="mobile" class="teal-text sidenav-trigger right"><i class="material-icons">menu</i></a>  
-      </div>
-    </nav> 
-  <!--<div class="navbar-fixed">-->
-    <nav class="nav-wrapper gradient">
-      <div class="row container">
-        <div class="col s5 hide-on-med-and-down">
-          <ul>
-            <li><a href="/workqueue" class="waves-effect logged-in workqueue" page-link>Workqueue</a></li>
+    <header>
+      <nav class="nav-wrapper grey lighten-5">
+        <div class="container">
+          <a href="#" class="logo teal-text">BookDataSolutions</a>
+          <ul class="right hide-on-med-and-down">
+              <li><a href="/" title="Home" class="teal-text waves-effect home" page-link><i class="material-icons left" page-link id="home">home</i></a></li>
+              <li><a href="/contact" title="Contact BDS" class="teal-text waves-effect contact" page-link><i class="material-icons left" page-link id="contact">contact_page</i></a></li>
+              <li><a href="/terms" title="Site Terms" class="teal-text waves-effect terms" page-link><i class="material-icons left" page-link id="policy">policy</i></a></li>               
           </ul>
+          <a href="#" data-target="mobile" class="teal-text sidenav-trigger right"><i class="material-icons">menu</i></a>  
         </div>
-        <div class="col s12 l2">
-          <ul>
-              <li><h5 id="hdrlbl"></h5></li>
-          </ul>
-        </div>
-        <div class="col s5 hide-on-med-and-down">
-          <ul class="right">
-              <li><a href="/profile" class="waves-effect logged-in" id="loggedinuser" page-link></a></li>
-              <li><a href="/signup" title="Register" class="waves-effect logged-out signup" page-link><i class="material-icons left" page-link id="signup">app_registration</i></a></li>
-              <li><a href="/signon" title="Login" class="waves-effect logged-out signon" page-link><i class="material-icons left" page-link id="signon">login</i></a></li>               
-              <li><a href="/signout" title="Logout" class="waves-effect logged-in signout" page-link><i class="material-icons left" page-link id="signout">logout</i></a></li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-  </header>
-  
-    <!-- Header Navigation  -->
-    <!-- <header>      
-        <nav class="gradient">
-          <div class="nav-wrapper" style="box-shadow: 5px 5px 18px #555;">
-              <a href="/" class="brand-logo home left waves-effect" page-link><i class="material-icons " page-link id="home" style="padding:0 0 0 1rem;">local_library</i><span class="logo" page-link>BDS</span></a>
-              <ul class="right hide-on-med-and-down">
-                <li><a href="/" title="Home" class="waves-effect home" page-link><i class="material-icons left" page-link id="home">home</i></a></li>
-                <li><a href="/contact" title="Contact BDS" class="waves-effect contact" page-link><i class="material-icons left" page-link id="contact">contact_page</i></a></li>
-                <li><a href="/terms" title="Site Terms" class="waves-effect terms" page-link><i class="material-icons left" page-link id="policy">policy</i></a></li>               
+      </nav> 
+    
+      <nav class="nav-wrapper gradient">
+        <div class="row container">
+          <div class="col s5 hide-on-med-and-down">
+            <ul>
+              <li><a href="/workqueue" class="waves-effect logged-in workqueue" page-link>Workqueue</a></li>
+            </ul>
+          </div>
+          <div class="col s12 l2">
+            <ul>
+                <li><h5 id="hdrlbl"></h5></li>
+            </ul>
+          </div>
+          <div class="col s5 hide-on-med-and-down">
+            <ul class="right">
+                <li><a href="/profile" class="waves-effect logged-in" id="loggedinuser" page-link></a></li>
                 <li><a href="/signup" title="Register" class="waves-effect logged-out signup" page-link><i class="material-icons left" page-link id="signup">app_registration</i></a></li>
                 <li><a href="/signon" title="Login" class="waves-effect logged-out signon" page-link><i class="material-icons left" page-link id="signon">login</i></a></li>               
                 <li><a href="/signout" title="Logout" class="waves-effect logged-in signout" page-link><i class="material-icons left" page-link id="signout">logout</i></a></li>
-              </ul>
-              <a href="#" data-target="mobile" class="sidenav-trigger right"><i class="material-icons">menu</i></a>  
-          </div> 
-        </nav>
-        <nav class="grey lighten-4">
-            <div class="nav-wrapper" style="box-shadow: 5px 5px 18px #555;">
-              <ul>
-                  <li><a href="/workqueue" class="teal-text waves-effect logged-in workqueue" page-link>Workqueue</a></li>
-                  <li><a href="/profile" class="teal-text waves-effect logged-in" id="loggedinuser" page-link></a></li>
-                  <li><span class="teal-text brand-logo home center" id="hdrlbl"></span></li>
-              </ul>
-            </div>
-        </nav>
-    </header> -->
-
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    
     <!-- Side Navigation -->
     <sidenav>
       <div class="gradient white-text sidenav collection with-header z-depth-0" id="mobile" style="width:200px;">
@@ -168,11 +138,9 @@
           <a href="/signout" class="gradient white-text sidenav-close collection-item waves-effect logged-in signout" page-link><i class="material-icons left signout" page-link id="signout">logout</i>SignOut</a>
           <a href="/profile" class="gradient white-text sidenav-close collection-item waves-effect logged-in profile" page-link><i class="material-icons left" page-link id="profile">person_outline</i>Profile</a>
           <a href="/workqueue" class="gradient white-text sidenav-close collection-item waves-effect logged-in workqueue" page-link><i class="material-icons left" page-link id="workqueue">list</i>Workqueue</a>
-          <!-- <a href="#" class="collection-item waves-effect menuicons"><i class="material-icons right" sidenav_toggle>chevron_left</i></a>   -->
       </div>
     </sidenav>
     <main id="main">
-      <!-- <div id="bdsheader"></div> -->
       <div id="bdscontent"></div>    
     </bdsmain>
 
@@ -186,6 +154,7 @@
     <script src="https://unpkg.com/write-excel-file@1.x/bundle/write-excel-file.min.js"></script>
     <script src="https://smtpjs.com/v3/smtp.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.10.8/xlsx.full.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script type="module" src="index.js"></script>
   </body>
 </html>

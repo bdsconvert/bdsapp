@@ -36,10 +36,20 @@ export class BDSSignup {
           filename: "profile.prf",
           filetype: "prf",
           timestamp: Date.now(),
-          Subscriptions: [{ Subscribed: Date.now(), Maxtitles: 10 }]
+          Subscriptions: [{ id: 1, Subscribed: Date.now(), Maxtitles: 10 }]
         });
-        signupForm.reset();
         M.toast({ html: `User "${email}" Registered Successfully` });
+        // Send success email
+        emailjs.send("service_o2qcu12", "template_hi8z58o", { name: email, email: email }).then(
+          function (response) {
+            console.log("SUCCESS!", response.status, response.text);
+            M.toast({ html: `Successful registration email sent!` });
+          },
+          function (error) {
+            console.log("FAILED...", error);
+          }
+        );
+        signupForm.reset();
       })
       .catch((err) => {
         alert(err.message);

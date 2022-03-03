@@ -41,6 +41,7 @@ export const navigateTo = (url) => {
 document.addEventListener("DOMContentLoaded", (e) => {
   M.Modal.init(document.querySelectorAll(".modal"), {});
   M.Sidenav.init(document.querySelectorAll(".sidenav"), {});
+  emailjs.init("8OLiCZvohFJPEq_TW");
   navigateTo("/");
 });
 //////////////////////////////////////////////////////////////////

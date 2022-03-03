@@ -26,6 +26,7 @@ export class BdsFileCreate extends HTMLElement {
           filetype: "Dat",
           timestamp: Date.now()
         });
+        M.toast({ html: `${newfile} Created Successfully\n` });
       }
     });
   }

@@ -189,24 +189,32 @@ export class BdsOnixCreate extends HTMLElement {
   saveOnix = async (file) => {
     const bdsoeflat = { ...bdsoe };
     let bdsflat = Object.fromEntries(Object.entries(bdsoeflat).sort());
-    await SaveUserFile({
-      filename: file,
-      filetype: "Dat",
-      timestamp: Date.now()
-    });
-    await SaveTitleContents(
-      file,
-      {
-        RecordReference: bdsflat["A1-RecordReference_0"],
-        Title: bdsflat["D3-DescriptiveDetail_0_TitleDetail_0_TitleElement_0_TitleText_0"],
-        Author: bdsflat["E3-DescriptiveDetail_0_Contributor_0_PersonName_0"]
-      },
-      {
-        json: JSON.stringify(bdsflat),
-        xml: ""
-      }
-    );
-    console.log(`Title/Contents saved for File: ${file}, RecordReference: ${bdsflat["A1-RecordReference_0"]}, Title: ${bdsflat["D3-DescriptiveDetail_0_TitleDetail_0_TitleElement_0_TitleText_0"]}`);
+    console.log(bdsflat);
+    const recref = bdsflat["A1-RecordReference_0"];
+    const title = bdsflat["D3-DescriptiveDetail_0_TitleDetail_0_TitleElement_0_TitleText_0"];
+    const author = bdsflat["E3-DescriptiveDetail_0_Contributor_0_PersonName_0"];
+    if (!recref || !title || !author) {
+      alert("Please Provide RecordReference, Title, and Author to save!");
+    } else {
+      await SaveUserFile({
+        filename: file,
+        filetype: "Dat",
+        timestamp: Date.now()
+      });
+      await SaveTitleContents(
+        file,
+        {
+          RecordReference: recref,
+          Title: title,
+          Author: author
+        },
+        {
+          json: JSON.stringify(bdsflat),
+          xml: ""
+        }
+      );
+      console.log(`Title/Contents saved for File: ${file}, RecordReference: ${bdsflat["A1-RecordReference_0"]}, Title: ${bdsflat["D3-DescriptiveDetail_0_TitleDetail_0_TitleElement_0_TitleText_0"]}`);
+    }
   };
 }
 

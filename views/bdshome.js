@@ -37,7 +37,7 @@ export class BDSHome {
                 <a href="/samples" page-link>View and Download Sample Onix and Excel Files</a>
               </p>
             </div>
-            <div class="col s12 m12 l6"><img class="right" src="https://bdsconvert.github.io/bdsapp/assets/BDS1.png"></div>
+            <div class="col s12 m12 l6"><img class="right" src="https://bdsconvert.github.io/bdsapp/assets/BDSSampleExcel.png"></div>
           </div>
           <div class="row valign-wrapper">
             <div class="col s12 l6"><img src="https://bdsconvert.github.io/bdsapp/assets/BDS2.png"></div>
@@ -76,7 +76,7 @@ export class BDSHome {
             <!--
             <div class="col s6 m12 l6 push-l1 slider">
               <ul class="slides">
-                <li><a href="#one!"><img src="https://bdsconvert.github.io/bdsapp/assets/BDS1.png"></a></li>
+                <li><a href="#one!"><img src="https://bdsconvert.github.io/bdsapp/assets/BDSSampleExcel.png"></a></li>
                 <li><a href="#two!"><img src="https://bdsconvert.github.io/bdsapp/assets/BDS2.png"></a></li>
                 <li><a href="#three!"><img src="https://bdsconvert.github.io/bdsapp/assets/BDS3.png"></a></li>
                 <li><a href="#four!"><img src="https://bdsconvert.github.io/bdsapp/assets/BDS4.png"></a></li>
