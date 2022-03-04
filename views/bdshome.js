@@ -78,6 +78,7 @@ export class BDSHome {
                 Excel input file should have an extention ".xlsx" and Onix files must be saved with extention ".xml".
                 BookDataSolutions will process the records and ONIX/Excel file will be generated in the background.
               </p>
+              <p>The generated Output records can be viewed on the web page and are available for downloading.</p>
               <p>
                 To output ONIX 3.0/2.1 records to Excel spreadsheets,
                 upload valid ONIX file from "Workqueue/Upload Files" page.  
@@ -93,12 +94,6 @@ export class BDSHome {
               </ul>
             </div>
           </div>
-          <div class="row valign-wrapper">
-            <div class="col s12 m12 l6"><img src="https://bdsconvert.github.io/bdsapp/assets/BDS4.png"></div>
-            <div class="col s12 m12 l6">
-              <p>The generated Output records can be viewed on the web page and are available for downloading.</p>
-            </div>
-          </div>        
       </div>    
     </div>
     `;
