@@ -21,7 +21,13 @@ export const router = async () => {
     { path: "/samples", title: "BdsSamples", view: BDSSamples }
   ];
   let match = routes.find((route) => window.location.pathname === route.path);
-  match = match ? match : { path: routes[0].path, title: "BookDataSolutions", view: routes[0].view }; // Go home if no match
+  match = match
+    ? match
+    : {
+        path: routes[0].path,
+        title: "BookDataSolutions",
+        view: routes[0].view
+      }; // Go home if no match
   const view = new match.view();
   // document.getElementById("bdsheader").innerHTML = ``;
   await view.getPage();
@@ -44,6 +50,31 @@ document.addEventListener("DOMContentLoaded", (e) => {
   emailjs.init("8OLiCZvohFJPEq_TW");
   navigateTo("/");
 });
+
+document.addEventListener(
+  "contextmenu",
+  (e) => {
+    e.preventDefault();
+  },
+  false
+);
+
+// (function () {
+//   (function a() {
+//     try {
+//       (function b(i) {
+//         if (("" + i / i).length !== 1 || i % 20 === 0) {
+//           (function () {}.constructor("debugger")());
+//         } else {
+//           debugger;
+//         }
+//         b(++i);
+//       })(0);
+//     } catch (e) {
+//       setTimeout(a, 5000);
+//     }
+//   })();
+// })();
 //////////////////////////////////////////////////////////////////
 
 document.body.addEventListener("click", async (e) => {
