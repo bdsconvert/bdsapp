@@ -37,14 +37,15 @@ export class BDSHome {
                 <a href="/samples" page-link>View and Download Sample Onix and Excel Files</a>
               </p>
             </div>
+            
             <div class="col s12 m12 l6 slider">
               <ul class="slides">
                 <li>
-                  <a href="#!"><img class="materialboxed" src="https://bdsconvert.github.io/bdsapp/assets/BDSSampleExcel.png"></a>
+                  <a href="#!"><img class="materialboxed" src="../assets/BDSSampleExcel.png"></a>
                   <div class="caption center-align"><h5>Sample Excel</h5></div>  
                 </li>
                 <li>
-                  <a href="#!"><img class="materialboxed" src="https://bdsconvert.github.io/bdsapp/assets/BDSSampleOnix.png"></a>
+                  <a href="#!"><img class="materialboxed" src="../assets/BDSSampleOnix.png"></a>
                   <div class="caption center-align"><h5>Sample Onix</h5></div>  
                 </li>
               </ul>
