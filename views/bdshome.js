@@ -41,7 +41,7 @@ export class BDSHome {
             <div class="col s12 m12 l6 slider">
               <ul class="slides">
                 <li>
-                  <a href="#!"><img class="materialboxed" src="https://rawcdn.githack.com/bdsconvert/bdsapp/39d6da7df155ff2d89d01772e02cc18e3ff2f74d/assets/BDSSampleExcel.png"></a>
+                  <a href="#!"><img class="materialboxed" src="https://bdsconvert.github.io/bdsapp/assets/BDSSampleExcel.png"></a>
                   <div class="caption center-align"><h5>Sample Excel</h5></div>  
                 </li>
                 <li>
