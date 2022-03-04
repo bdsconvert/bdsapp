@@ -40,7 +40,7 @@ export class BDSHome {
             <div class="col s12 m12 l6 slider">
               <ul class="slides">
                 <li>
-                  <a href="#!"><img class="materialboxed" data-caption="Sample Excel" src="https://bdsconvert.github.io/bdsapp/assets/BDSSampleExcel.png"></a>
+                  <a href="#!"><img class="materialboxed" src="https://bdsconvert.github.io/bdsapp/assets/BDSSampleExcel.png"></a>
                   <div class="caption center-align"><h5>Sample Excel</h5></div>  
                 </li>
                 <li>
@@ -53,9 +53,7 @@ export class BDSHome {
           <div class="row valign-wrapper">
             <div class="col s12 m12 l6 slider">
               <ul class="slides">
-                <li>
-                  <a href="#!"><img class="materialboxed" src="https://bdsconvert.github.io/bdsapp/assets/BDSUploaded1.png"></a>
-                </li>
+                <li><a href="#!"><img class="materialboxed" src="https://bdsconvert.github.io/bdsapp/assets/BDSUploaded1.png"></a></li>
                 <li><a href="#!"><img class="materialboxed" src="https://bdsconvert.github.io/bdsapp/assets/BDSUploaded2.png"></a></li>
                 <li><a href="#!"><img class="materialboxed" src="https://bdsconvert.github.io/bdsapp/assets/BDSUploaded3.png"></a></li>
                 <li><a href="#!"><img class="materialboxed" src="https://bdsconvert.github.io/bdsapp/assets/BDSUploaded4.png"></a></li>
@@ -87,9 +85,7 @@ export class BDSHome {
             </div>
             <div class="col s12 m12 l6 slider">
               <ul class="slides">
-                <li>
-                  <a href="#!"><img class="materialboxed" src="https://bdsconvert.github.io/bdsapp/assets/BDSCreated1.png"></a>
-                </li>
+                <li><a href="#!"><img class="materialboxed" src="https://bdsconvert.github.io/bdsapp/assets/BDSCreated1.png"></a></li>
                 <li><a href="#!"><img class="materialboxed" src="https://bdsconvert.github.io/bdsapp/assets/BDSCreated2.png"></a></li>
                 <li><a href="#!"><img class="materialboxed" src="https://bdsconvert.github.io/bdsapp/assets/BDSCreated3.png"></a></li>
                 <li><a href="#!"><img class="materialboxed" src="https://bdsconvert.github.io/bdsapp/assets/BDSCreated4.png"></a></li>
